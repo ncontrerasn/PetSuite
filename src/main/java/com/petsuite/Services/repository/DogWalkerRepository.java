@@ -1,6 +1,6 @@
-package com.petsuite.repository;
+package com.petsuite.Services.repository;
 
-import com.petsuite.model.DogWalker;
+import com.petsuite.Services.model.DogWalker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DogWalkerRepository extends JpaRepository<DogWalker, Integer>{}

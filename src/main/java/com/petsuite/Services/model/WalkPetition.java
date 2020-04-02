@@ -1,4 +1,4 @@
-package com.petsuite.model;
+package com.petsuite.Services.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -18,47 +17,33 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "walk_invoice")
+@Table(name = "walk_petition")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class WalkInvoice {
+public class WalkPetition {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer walk_invoice_id;
+    private Integer walk_petition_id;
     
     @NotBlank
-    private String walk_invoice_time;
+    private String walk_petition_time;
     
     @NotBlank
-    private String walk_invoice_address;
+    private String walk_petition_address;
     
     @NotBlank
-    private String walk_invoice_date;
+    private String walk_petition_date;
     
-    @NotNull
-    private float walk_invoice_price;
+    private String walk_petition_notes;
     
-    private boolean walk_invoice_status;
-    
-    @NotBlank
-    private String client_user;
-    
-    @NotBlank
-    private String dog_walker_user;
-    
-    @ManyToOne
-    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
-    private Client client_wi;
-    
-    @ManyToOne
-    @JoinColumn(name="dog_walker_user", nullable=false,updatable = false, insertable = false)
-    private DogWalker dogWalker;
+    @OneToOne(mappedBy = "client_p")
+    private Client client;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
-    private Dog dog;
-    
+    private Dog dog_wp;
+       
 }

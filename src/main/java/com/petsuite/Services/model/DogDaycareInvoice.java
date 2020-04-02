@@ -1,5 +1,6 @@
-package com.petsuite.model;
+package com.petsuite.Services.model;
 
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -18,49 +20,47 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "dog")
+@Table(name = "dog_daycare_invoice")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Dog {
+public class DogDaycareInvoice {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer dog_id;
+    private Integer dog_daycare_invoice_id;
     
     @NotBlank
-    private String dog_name;
+    private String dog_daycare_invoice_time;
     
     @NotBlank
-    private String dog_race;
+    private String dog_daycare_invoice_date;
     
     @NotNull
-    private float dog_height;
+    private float dog_daycare_invoice_price;
     
-    @NotNull
-    private float dog_weight;
+    private boolean dog_daycare_invoice_status;
     
-    @NotNull
-    private Integer dog_age;
+    @NotBlank
+    private String dog_daycare_user;
     
-    private String dog_notes;
-    
-    @NotNull
+    @NotBlank
     private String client_user;
     
     @ManyToOne
-    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
-    private Client client_d;
+    @JoinColumn(name="dog_daycare_user", nullable=false,updatable = false, insertable = false)
+    private DogDaycare dogDaycare;
     
-    @OneToOne(mappedBy = "dog_wp")
-    private WalkPetition walkPetition;
+    @ManyToOne
+    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
+    private Client client_i;
+    
+    @OneToMany(mappedBy = "dogDaycareInvoice")
+    private Set<DogDaycareService> dogDaycareServices;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "walk_invoice_id", referencedColumnName = "walk_invoice_id",updatable = false, insertable = false)
-    private WalkInvoice walkInvoice;
-    
-    @OneToOne(mappedBy = "dog")
-    private Client client;
+    @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
+    private Dog dog;
     
 }

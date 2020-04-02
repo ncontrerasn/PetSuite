@@ -1,4 +1,4 @@
-package com.petsuite.model;
+package com.petsuite.Services.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;

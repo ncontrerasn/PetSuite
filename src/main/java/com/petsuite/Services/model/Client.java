@@ -1,4 +1,4 @@
-package com.petsuite.model;
+package com.petsuite.Services.model;
 
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -43,7 +43,7 @@ public class Client {
     private String client_address;
     
     @OneToMany(mappedBy = "client_d")
-    private Set<Dog> dogs;
+    private Set<Dog> dog;
     
     @OneToMany(mappedBy = "client_wi")
     private Set<WalkInvoice> walkInvoices;

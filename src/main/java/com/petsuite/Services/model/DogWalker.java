@@ -1,4 +1,4 @@
-package com.petsuite.model;
+package com.petsuite.Services.model;
 
 import java.util.Set;
 import javax.persistence.Entity;

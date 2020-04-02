@@ -1,6 +1,6 @@
-package com.petsuite.repository;
+package com.petsuite.Services.repository;
 
-import com.petsuite.model.DogDaycareInvoice;
+import com.petsuite.Services.model.DogDaycareInvoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DogDaycareInvoiceRepository extends JpaRepository<DogDaycareInvoice, Integer>{}
