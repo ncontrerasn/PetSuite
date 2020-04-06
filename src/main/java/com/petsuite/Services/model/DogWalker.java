@@ -28,14 +28,14 @@ public class DogWalker {
     @NotBlank
     private String dog_walker_name;
     
-    @NotNull
-    private Integer dog_walker_phone;
+    @NotBlank
+    private String dog_walker_phone;
     
     @NotBlank
     private String dog_walker_e_mail;
     
     @NotNull
-    private float dog_walker_score;
+    private Float dog_walker_score;
     
     @OneToMany(mappedBy = "dogWalker")
     private Set<WalkInvoice> walkInvoices;

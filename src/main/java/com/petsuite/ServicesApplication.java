@@ -1,5 +1,4 @@
-package com.petsuite.Services;
-
+package com.petsuite;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
