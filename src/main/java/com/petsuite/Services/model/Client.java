@@ -54,4 +54,5 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "walk_petition_id", referencedColumnName = "walk_petition_id",updatable = false, insertable = false)
     private WalkPetition client_p;
+
 }

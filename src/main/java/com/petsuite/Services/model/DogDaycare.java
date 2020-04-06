@@ -30,9 +30,12 @@ public class DogDaycare {
     private String dog_daycare_e_mail;
     
     @NotBlank
-    private String dog_daycare_address;
+    private String dog_daycare_password;
     
     @NotBlank
+    private String dog_daycare_address;
+    
+    @NotNull
     private boolean dog_daycare_type;
     
     @NotNull
