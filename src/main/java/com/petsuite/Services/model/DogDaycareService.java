@@ -42,7 +42,7 @@ public class DogDaycareService {
     private Integer dog_daycare_invoice_id;
     
     @ManyToOne
-    @JoinColumn(name="dog_daycare_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
     
     @ManyToOne

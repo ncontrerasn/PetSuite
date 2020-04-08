@@ -50,11 +50,11 @@ public class WalkInvoice {
     private String dog_walker_user;
     
     @ManyToOne
-    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_wi;
     
     @ManyToOne
-    @JoinColumn(name="dog_walker_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="dog_walker_id", nullable=false,updatable = false, insertable = false)
     private DogWalker dogWalker;
     
     @OneToOne(cascade = CascadeType.ALL)

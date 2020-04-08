@@ -22,19 +22,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Client {
+public class Client extends InfoUser{
     
-    @Id
-    private String client_user;
     
-    @NotBlank
-    private String client_password;
-    
+   
     @NotBlank
     private String client_name;
     
-    @NotNull
-    private Integer client_phone;
+    @NotBlank
+    private String client_phone;
     
     @NotBlank
     private String client_e_mail;
@@ -54,5 +50,9 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "walk_petition_id", referencedColumnName = "walk_petition_id",updatable = false, insertable = false)
     private WalkPetition client_p;
+    
+    
+     
+    
 
 }

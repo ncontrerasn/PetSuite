@@ -50,15 +50,16 @@ public class Dog {
     private String client_user;
     
     @ManyToOne
-    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_d;
     
     @OneToOne(mappedBy = "dog_wp")
     private WalkPetition walkPetition;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "walk_invoice_id", referencedColumnName = "walk_invoice_id",updatable = false, insertable = false)
+    @OneToOne(mappedBy = "dog")
     private WalkInvoice walkInvoice;
+    
+    
     
     
     

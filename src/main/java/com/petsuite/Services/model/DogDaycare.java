@@ -1,10 +1,13 @@
 package com.petsuite.Services.model;
 
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,35 +22,37 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DogDaycare {
+public class DogDaycare extends InfoUser{
     
-    @Id
-    private String dog_daycare_user;
     
-    @NotBlank
-    private String dog_daycare_name;
+   
+    
     
     private String dog_daycare_e_mail;
-    
-    @NotBlank
-    private String dog_daycare_password;
-    
+     @NotBlank
+    private String dog_daycare_name;
+       
     @NotBlank
     private String dog_daycare_address;
     
     @NotNull
-    private boolean dog_daycare_type;
+    private Boolean dog_daycare_type;
+    
+    @NotBlank
+    private String dog_daycare_phone;
     
     @NotNull
-    private Integer dog_daycare_phone;
-    
-    @NotNull
-    private float dog_daycare_score;
+    private Float dog_daycare_score;
     
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareService> dogDaycareServices;
     
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
+    
+     
+    
+     
+    
     
 }

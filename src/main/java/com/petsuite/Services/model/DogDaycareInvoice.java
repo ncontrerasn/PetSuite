@@ -49,11 +49,11 @@ public class DogDaycareInvoice {
     private String client_user;
     
     @ManyToOne
-    @JoinColumn(name="dog_daycare_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
     
     @ManyToOne
-    @JoinColumn(name="client_user", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
     
     @OneToMany(mappedBy = "dogDaycareInvoice")
