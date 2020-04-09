@@ -7,6 +7,7 @@ package com.petsuite.Services.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.*;
 
 /**
  *
@@ -17,11 +18,9 @@ import lombok.Data;
 public class InfoUser_Dto {
       
     private String user;
-    
-   
+
     private String password;
    
-   private Integer type;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
-    
-    
+    private Integer type;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
+
 }
