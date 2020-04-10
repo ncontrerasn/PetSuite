@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author huber
  */
 @RestController
-@RequestMapping("/api/dogdaycares")
+@RequestMapping("/api/dog_day_cares")
 public class DogDayCareController {
 
     @Autowired

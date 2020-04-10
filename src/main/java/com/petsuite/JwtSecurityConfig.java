@@ -50,12 +50,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/clients/load").permitAll()
-                
+                .antMatchers("/api/dog_walkers/load").permitAll()
+                .antMatchers("/api/dog_day_cares/load").permitAll()
              
                 .antMatchers("/api/clients/**").access("hasRole('ROLE_CLIENT') or hasRole('ROLE_ADMIN')")
                 
                 .antMatchers("/api/dog_walkers/**").access("hasRole('ROLE_DOGWALKER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/dogdaycares/**").access("hasRole('ROLE_DAYCARE') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/dog_day_cares/**").access("hasRole('ROLE_DOGDAYCARE') or hasRole('ROLE_ADMIN')")
                 .and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and()

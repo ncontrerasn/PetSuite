@@ -112,14 +112,16 @@ public class InfoUserController {
                     if(ul2.get(0)!=null)
                     {
                          user.setRole(u.getRole());
-                        String token = getJWTToken(u.getUser());
+                        String token = tokenController.generate(user);
                         ul2.get(0).setToken(token);
                         return ul2.get(0);
                     }
                 }
-                if(u.getRole()=="ROLE_DOGDAYCARE"){
-                    String sqlG = "SELECT * FROM info_user natural join dog_daycare where client_user = ?";
-                    List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlA, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
+                if("ROLE_DOGDAYCARE".equals(u.getRole())){
+                    
+                    System.out.println("Entramos a la guarderia");
+                    String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
+                    List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
                         rs.getString("dog_daycare_e_mail"),
                         rs.getString("dog_daycare_address"),
                         rs.getBoolean("dog_daycare_type"),
@@ -131,7 +133,7 @@ public class InfoUserController {
                       if(ul2.get(0)!=null)
                       {
                            user.setRole(u.getRole());
-                          String token = getJWTToken(u.getUser());
+                          String token = tokenController.generate(user);
                           ul2.get(0).setToken(token);
                           return ul2.get(0);
                       }
