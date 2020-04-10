@@ -34,6 +34,6 @@ public class InfoUser {
     private String password;
 
    @NotNull
-   private Integer type;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
+   private String role;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
 
 }

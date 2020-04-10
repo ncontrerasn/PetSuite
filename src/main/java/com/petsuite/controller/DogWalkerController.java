@@ -45,7 +45,7 @@ public class DogWalkerController {
            DogWalker realDogWalker= new DogWalker(dogWalker.getDog_walker_name(), dogWalker.getDog_walker_phone(), dogWalker.getDog_walker_e_mail(), dogWalker.getDog_walker_score(), null);
            realDogWalker.setUser(dogWalker.getUser());
            realDogWalker.setPassword(dogWalker.getPassword());
-           realDogWalker.setType(2);
+           realDogWalker.setRole("DOGWALKER");
            dogWalkerRepository.save(realDogWalker);
 
          return dogWalker;

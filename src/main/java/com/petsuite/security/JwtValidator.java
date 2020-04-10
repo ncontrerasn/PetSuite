@@ -1,5 +1,6 @@
 package com.petsuite.security;
 
+import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,20 +12,18 @@ public class JwtValidator {
 
     private String secret = "youtube";
 
-    public JwtUser validate(String token) {
+    public InfoUser_Dto validate(String token) {
 
-        JwtUser jwtUser = null;
+        InfoUser_Dto jwtUser = null;
         try {
             Claims body = Jwts.parser()
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
 
-            jwtUser = new JwtUser();
+            jwtUser = new InfoUser_Dto(body.getSubject(),(String) body.get("userPassword"), (String) body.get("role"));
 
-            jwtUser.setUserName(body.getSubject());
-            jwtUser.setId(Long.parseLong((String) body.get("userId")));
-            jwtUser.setRole((String) body.get("role"));
+          
         }
         catch (Exception e) {
             System.out.println(e);

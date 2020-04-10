@@ -53,7 +53,7 @@ public class DogDayCareController {
             DogDaycare realDogDayCare= new DogDaycare(dogDaycare.getDog_daycare_e_mail(), dogDaycare.getDog_daycare_address(),dogDaycare.getDog_daycare_name(), dogDaycare.getDog_daycare_type() ,dogDaycare.getDog_daycare_phone(), dogDaycare.getDog_daycare_score(), null, null);
             realDogDayCare.setUser(dogDaycare.getUser());
             realDogDayCare.setPassword(dogDaycare.getPassword());
-            realDogDayCare.setType(3);
+            realDogDayCare.setRole("ROLE_DOGDAYCARE");
         
             
          dogDaycareRepository.save(realDogDayCare);

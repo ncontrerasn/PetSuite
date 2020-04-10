@@ -1,5 +1,6 @@
 package com.petsuite.security;
 
+import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.JwtUserDetails;
 import com.petsuite.Services.model.JwtUser;
 import com.petsuite.Services.model.JwtAuthenticationToken;
@@ -30,8 +31,8 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
         String token = jwtAuthenticationToken.getToken();
-
-        JwtUser jwtUser = validator.validate(token);
+        InfoUser_Dto jwtUser=validator.validate(token);
+     
 
         if (jwtUser == null) {
             throw new RuntimeException("JWT Token is incorrect");
@@ -39,7 +40,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList(jwtUser.getRole());
-        return new JwtUserDetails(jwtUser.getUserName(), jwtUser.getId(),
+        return new JwtUserDetails(jwtUser.getUser(), jwtUser.getPassword(),
                 token,
                 grantedAuthorities);
     }

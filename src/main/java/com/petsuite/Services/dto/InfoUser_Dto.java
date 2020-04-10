@@ -21,6 +21,6 @@ public class InfoUser_Dto {
 
     private String password;
    
-    private Integer type;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
+    private String role;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
 
 }

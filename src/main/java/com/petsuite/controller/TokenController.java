@@ -1,5 +1,6 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.JwtUser;
 import com.petsuite.security.JwtGenerator;
 
@@ -20,7 +21,7 @@ public class TokenController {
     }
 
     @PostMapping
-    public String generate(@RequestBody final JwtUser jwtUser) {
+    public String generate(@RequestBody final InfoUser_Dto jwtUser) {
 
         return jwtGenerator.generate(jwtUser);
 

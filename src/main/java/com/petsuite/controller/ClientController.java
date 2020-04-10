@@ -65,7 +65,7 @@ public class ClientController {
                 null);
         realClient.setUser(client.getUser());
         realClient.setPassword(client.getPassword());
-        realClient.setType(1);
+        realClient.setRole("ROLE_CLIENT");
         
         System.out.println("antes de salvar");
          clientRepository.save(realClient);

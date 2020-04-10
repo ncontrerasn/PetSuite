@@ -1,5 +1,6 @@
 package com.petsuite.security;
 
+import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class JwtGenerator {
 
 
-    public String generate(JwtUser jwtUser) {
+    public String generate(InfoUser_Dto jwtUser) {
 
 
         Claims claims = Jwts.claims()
-                .setSubject(jwtUser.getUserName());
-        claims.put("userId", String.valueOf(jwtUser.getId()));
+                .setSubject(jwtUser.getUser());
+        claims.put("userPassword", String.valueOf(jwtUser.getPassword()));
         claims.put("role", jwtUser.getRole());
 
 
