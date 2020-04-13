@@ -31,6 +31,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
  */
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class InfoUserController {
 
     @Autowired

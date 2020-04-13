@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/clients")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class ClientController {
 
     @Autowired

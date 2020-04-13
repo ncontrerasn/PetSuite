@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/dog_day_cares")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class DogDayCareController {
 
     @Autowired
