@@ -24,12 +24,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 public class DogDaycare extends InfoUser{
     
-    
-   
-    
-    
     private String dog_daycare_e_mail;
-     @NotBlank
+    @NotBlank
     private String dog_daycare_name;
        
     @NotBlank
@@ -49,10 +45,5 @@ public class DogDaycare extends InfoUser{
     
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
-    
-     
-    
-     
-    
     
 }

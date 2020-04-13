@@ -5,12 +5,18 @@ import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.basics.Entero;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/dog_walkers")
@@ -29,8 +35,6 @@ public class DogWalkerController {
 
     @PostMapping(value = "/load")
     public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
-        
-           
             
         String sqlB = "SELECT count(*) as users FROM info_user where user = ?";
         List<Entero> ul2= jdbcTemplate.query(sqlB, new Object[]{dogWalker.getUser()}, (rs, rowNum) -> new Entero(
@@ -41,14 +45,33 @@ public class DogWalkerController {
            DogWalker realDogWalker= new DogWalker(dogWalker.getDog_walker_name(), dogWalker.getDog_walker_phone(), dogWalker.getDog_walker_e_mail(), dogWalker.getDog_walker_score(), null);
            realDogWalker.setUser(dogWalker.getUser());
            realDogWalker.setPassword(dogWalker.getPassword());
-           realDogWalker.setType(2);
-            dogWalkerRepository.save(realDogWalker);
-       
-            
+           realDogWalker.setRole("ROLE_DOGWALKER");
+           dogWalkerRepository.save(realDogWalker);
+
          return dogWalker;
-             
         }
    return null;
+    }
+
+    private String getJWTToken(String username) {
+        String secretKey = "mySecretKey";
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("DOGWALKER");
+
+        String token = Jwts
+                .builder()
+                .setId("softtekJWT")
+                .setSubject(username)
+                .claim("authorities",
+                        grantedAuthorities.stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .signWith(SignatureAlgorithm.HS512,
+                        secretKey.getBytes()).compact();
+
+        return "Token " + token;
     }
        
     

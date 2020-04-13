@@ -39,8 +39,12 @@ public class WalkPetition {
     
     private String walk_petition_notes;
     
-    @OneToOne(mappedBy = "client_p")
-    private Client client;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user", referencedColumnName = "user",updatable = false, insertable = false)
+    private Client client_p;
+    
+    
+ 
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)

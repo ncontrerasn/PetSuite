@@ -7,6 +7,7 @@ package com.petsuite.Services.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -14,27 +15,26 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class DogDayCare_Dto {
     
-     private String user;
+    private String user;
+
     private String password;
     
     private String dog_daycare_e_mail;
     
-private String dog_daycare_name;
-
-    
+    private String dog_daycare_name;
 
     private String dog_daycare_address;
-    
 
     private Boolean dog_daycare_type;
-    
 
     private String dog_daycare_phone;
-    
 
     private Float dog_daycare_score;
+
+    private String token;
 
     public DogDayCare_Dto(String dog_daycare_e_mail, String dog_daycare_address, Boolean dog_daycare_type, String dog_daycare_phone, Float dog_daycare_score, String dog_daycare_name) {
         this.dog_daycare_e_mail = dog_daycare_e_mail;

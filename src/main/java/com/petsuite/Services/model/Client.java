@@ -23,8 +23,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class Client extends InfoUser{
-    
-    
    
     @NotBlank
     private String client_name;
@@ -47,12 +45,7 @@ public class Client extends InfoUser{
     @OneToMany(mappedBy = "client_i")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "walk_petition_id", referencedColumnName = "walk_petition_id",updatable = false, insertable = false)
-    private WalkPetition client_p;
-    
-    
-     
-    
+      @OneToOne(mappedBy = "client_p")
+    private WalkPetition walkPetition;
 
 }
