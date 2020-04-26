@@ -17,11 +17,20 @@ public class InfoUser {
     
     @Id
     private String user;
+
+    @NotBlank
+    private String e_mail;
+
+    @NotBlank
+    private String phone;
     
-   @NotBlank
+    @NotBlank
     private String password;
 
-   @NotNull
-   private String role;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
+    @NotBlank
+    private String name;
+
+    @NotNull
+    private String role;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
 
 }

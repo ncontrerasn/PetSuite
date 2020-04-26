@@ -21,15 +21,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class DogWalker extends InfoUser{
-
-    @NotBlank
-    private String dog_walker_name;
-    
-    @NotBlank
-    private String dog_walker_phone;
-    
-    @NotBlank
-    private String dog_walker_e_mail;
     
     @NotNull
     private Float dog_walker_score;

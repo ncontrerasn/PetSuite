@@ -47,39 +47,30 @@ public class InfoUserController {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
-
-
 
     @GetMapping("/all")
     public List<InfoUser> getAllUsers() {
         return infoUserRepository.findAll();
     }
-    
-    
-   
-    
-    
-  
-    
+
     @RequestMapping("/login")
     @ResponseBody
     public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){
 
-        
      String sqlA = "SELECT * FROM info_user where user = ?";
-        String user__user = user.getUser();
+        String user_user = user.getUser();
         String user_password = user.getPassword();
-        
-        
-       
-        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user__user}, (rs, rowNum) -> new InfoUser(
+
+        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user_user}, (rs, rowNum) -> new InfoUser(
                         rs.getString("user"),
+                        rs.getString("e_mail"),
+                        rs.getString("phone"),
                         rs.getString("password"),
+                        rs.getString("name"),
                         rs.getString("role")
                 ));
         InfoUser u;
-        if (ul.isEmpty()==false){
+        if (!ul.isEmpty()){
             u = ul.get(0);
             if (u.getPassword().equals(user_password)){
                 if("ROLE_CLIENT".equals(u.getRole())){
@@ -93,8 +84,6 @@ public class InfoUserController {
                     
                     if(ul2.get(0)!=null)
                     {
-                      //  String token = clientController.getClientJWTToken(u.getUser());
-                      //  ul2.get(0).setToken(token);
                         user.setRole(u.getRole());
                         String token= tokenController.generate(user);
                         ul2.get(0).setToken(token);
@@ -139,14 +128,9 @@ public class InfoUserController {
                           return ul2.get(0);
                       }
                 }
-                
-                
-              
             }
-            
         }
         return null;
-        
     }
 
     private String getJWTToken(String username) {

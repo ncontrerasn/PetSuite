@@ -23,19 +23,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class DogDaycare extends InfoUser{
-    
-    private String dog_daycare_e_mail;
-    @NotBlank
-    private String dog_daycare_name;
        
     @NotBlank
     private String dog_daycare_address;
     
     @NotNull
     private Boolean dog_daycare_type;
-    
-    @NotBlank
-    private String dog_daycare_phone;
     
     @NotNull
     private Float dog_daycare_score;

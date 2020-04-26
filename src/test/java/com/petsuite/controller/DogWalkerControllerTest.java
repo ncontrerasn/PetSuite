@@ -3,24 +3,31 @@ package com.petsuite.controller;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.WalkInvoiceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-class DogControllerTest {
+class DogWalkerControllerTest {
 
     @InjectMocks
-    DogController dogController;
+    DogWalkerController dogWalkerController;
 
     @Mock
     DogRepository dogRepository;
+
+    @Mock
+    WalkInvoiceRepository walkInvoiceRepository;
 
     @BeforeEach
     void setUp() {
@@ -28,28 +35,23 @@ class DogControllerTest {
     }
 
     @Test
-    void testGetAllDogs() {
-
+    void testDogList() {
+        String dogWalkerUser = "ncontrerasn";
         List<Dog> dogs = new ArrayList<>();
-
-        Dog dog = new Dog();
+        List<Integer> dogsIds= new ArrayList<>();
         Dog dog1 = new Dog();
         Dog dog2 = new Dog();
-
         Client client1 = new Client();
-        client1.setUser("ncontrerasn");
-
         Client client2 = new Client();
+
+        dogsIds.add(1);
+        dogsIds.add(2);
+
+        client1.setUser("ncontrerasn");
         client2.setUser("esgonzalezca");
 
-        dog.setClient_id(client1.getUser());
-        dog.setDog_age(4);
-        dog.setDog_height((float)23);
-        dog.setDog_name("Sol");
-        dog.setDog_notes("alérgico a la caca");
-        dog.setDog_weight((float)6);
-
         dog1.setClient_id(client1.getUser());
+        dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
         dog1.setDog_name("Luna");
@@ -57,42 +59,19 @@ class DogControllerTest {
         dog1.setDog_weight((float)8);
 
         dog2.setClient_id(client2.getUser());
+        dog1.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
         dog2.setDog_name("Papo");
         dog2.setDog_notes("llorón");
         dog2.setDog_weight((float)28);
 
-        dogs.add(dog);
         dogs.add(dog1);
         dogs.add(dog2);
 
-        when(dogRepository.findAll()).thenReturn(dogs);
-        assertEquals(3, dogController.getAllDogs().size());
-
-    }
-
-    @Test
-    void createDog(){
-
-        Dog dog = new Dog();
-        Client client = new Client();
-        client.setUser("ncontrerasn");
-
-        dog.setClient_id(client.getUser());
-        dog.setDog_notes("alérgico al chocolate de café del Himalaya");
-        dog.setDog_name("Paquirris");
-        dog.setDog_age(3);
-        dog.setDog_height((float)67);
-        dog.setDog_race("pit bull");
-        dog.setDog_weight((float)22);
-
-        when(dogRepository.save(dog)).thenReturn(dog);
-
-        dog = dogController.createDog(dog);
-        String dogName = dog.getDog_name();
-
-        assertEquals(dog.getDog_name(), dogName);
-
+        when(walkInvoiceRepository.findByDog_walker_id(anyString())).thenReturn(dogsIds);
+        for(int i = 0; i < dogsIds.size(); i++)
+            when(dogRepository.findById(anyInt())).thenReturn(java.util.Optional.of(dogs.get(i)));
+        assertEquals(1, dogWalkerController.dogList(dogWalkerUser).size());
     }
 }

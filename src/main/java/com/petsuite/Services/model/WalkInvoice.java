@@ -17,6 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "walk_invoice")
 @EntityListeners(AuditingEntityListener.class)
@@ -31,12 +33,9 @@ public class WalkInvoice {
     
     @NotBlank
     private String walk_invoice_time;
-    
+
     @NotBlank
-    private String walk_invoice_address;
-    
-    @NotBlank
-    private String walk_invoice_date;
+    private LocalDateTime walk_invoice_date;
     
     @NotNull
     private float walk_invoice_price;
@@ -44,10 +43,10 @@ public class WalkInvoice {
     private boolean walk_invoice_status;
     
     @NotBlank
-    private String client_user;
+    private String client_id;
     
     @NotBlank
-    private String dog_walker_user;
+    private String dog_walker_id;
     
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
