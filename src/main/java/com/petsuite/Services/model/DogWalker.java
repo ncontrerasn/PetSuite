@@ -21,8 +21,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class DogWalker extends InfoUser{
-   
-     
+
     @NotBlank
     private String dog_walker_name;
     
@@ -37,8 +36,5 @@ public class DogWalker extends InfoUser{
     
     @OneToMany(mappedBy = "dogWalker")
     private Set<WalkInvoice> walkInvoices;
-    
-    
-    
-    
+
 }

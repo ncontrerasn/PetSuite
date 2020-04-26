@@ -72,7 +72,7 @@ public class ClientController {
          clientRepository.save(realClient);
          return client;
         }
-   return null;
+    return null;
     }
 
     public String getClientJWTToken(String username) {

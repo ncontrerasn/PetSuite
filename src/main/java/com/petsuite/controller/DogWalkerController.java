@@ -1,9 +1,11 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.DogWalker_Dto;
+import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.repository.DogWalkerRepository;
+import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.basics.Entero;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,6 +27,9 @@ public class DogWalkerController {
 
     @Autowired
     DogWalkerRepository dogWalkerRepository;
+
+    @Autowired
+    WalkInvoiceRepository walkInvoiceRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -51,7 +56,7 @@ public class DogWalkerController {
 
          return dogWalker;
         }
-   return null;
+    return null;
     }
 
     private String getJWTToken(String username) {
@@ -74,8 +79,7 @@ public class DogWalkerController {
 
         return "Token " + token;
     }
-       
-    
+
     @RequestMapping(value="/login")
     @ResponseBody
     public boolean walkerLogin(@Valid @RequestBody DogWalker dogWalker){
@@ -101,4 +105,6 @@ public class DogWalkerController {
         }*/
         return false;
     }
+
+
 }

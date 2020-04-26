@@ -1,6 +1,5 @@
 package com.petsuite.Services.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -36,18 +35,18 @@ public class Dog {
     private String dog_race;
     
     @NotNull
-    private float dog_height;
+    private Float dog_height;
     
     @NotNull
-    private float dog_weight;
+    private Float dog_weight;
     
     @NotNull
     private Integer dog_age;
     
     private String dog_notes;
-    
-    @NotNull
-    private String client_user;
+
+    @NotBlank
+    private String client_id;
     
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
@@ -58,9 +57,5 @@ public class Dog {
     
     @OneToOne(mappedBy = "dog")
     private WalkInvoice walkInvoice;
-    
-    
-    
-    
     
 }
