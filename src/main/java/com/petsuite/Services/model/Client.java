@@ -45,7 +45,7 @@ public class Client extends InfoUser{
     @OneToMany(mappedBy = "client_i")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
     
-      @OneToOne(mappedBy = "client_p")
+    @OneToOne(mappedBy = "client_p")
     private WalkPetition walkPetition;
 
 }
