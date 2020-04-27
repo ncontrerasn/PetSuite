@@ -1,5 +1,6 @@
 package com.petsuite.Services.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -22,7 +23,7 @@ public class Client extends InfoUser{
 
     @NotBlank
     private String client_address;
-    
+    @JsonManagedReference
     @OneToMany(mappedBy = "client_d")
     private Set<Dog> dogs;
     

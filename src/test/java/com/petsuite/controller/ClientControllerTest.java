@@ -38,14 +38,14 @@ class ClientControllerTest {
         Client client = new Client();
         client.setUser("ncontrerasn");
 
-        dog1.setClient_id(client.getUser());
+        dog1.setUser(client.getUser());
         dog1.setDog_age(4);
         dog1.setDog_height((float)23);
         dog1.setDog_name("Sol");
         dog1.setDog_notes("alérgico a la caca");
         dog1.setDog_weight((float)6);
 
-        dog2.setClient_id(client.getUser());
+        dog2.setUser(client.getUser());
         dog2.setDog_age(7);
         dog2.setDog_height((float)34);
         dog2.setDog_name("Luna");
