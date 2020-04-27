@@ -45,12 +45,17 @@ public class ClientController {
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {
 
+        System.out.println("Entramos al load client");
         if(!infoUserRepository.existsById(client.getUser())){
             Client realClient=new Client(client.getClient_address(),
                     null,null,null,null);
             realClient.setUser(client.getUser());
             realClient.setPassword(client.getPassword());
             realClient.setRole("ROLE_CLIENT");
+            realClient.setClient_address(client.getClient_address());
+            realClient.setPhone(client.getClient_phone());
+            realClient.setName(client.getClient_name());
+            realClient.setE_mail(client.getClient_e_mail());
             clientRepository.save(realClient);
             return client;
         }

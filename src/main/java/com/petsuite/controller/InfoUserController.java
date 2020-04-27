@@ -76,9 +76,9 @@ public class InfoUserController {
                 if("ROLE_CLIENT".equals(u.getRole())){
                     String sqlC = "SELECT * FROM info_user natural join client where user = ?";
                     List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
-                        rs.getString("client_name"),
-                        rs.getString("client_phone"),
-                        rs.getString("client_e_mail"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
                         rs.getString("client_address")
                     ));
                     
@@ -94,9 +94,9 @@ public class InfoUserController {
                 if("ROLE_DOGWALKER".equals(u.getRole())){
                     String sqlP = "SELECT * FROM info_user natural join dog_walker where user = ?";
                     List<DogWalker_Dto> ul2= jdbcTemplate.query(sqlP, new Object[]{user.getUser()}, (rs, rowNum) -> new DogWalker_Dto(
-                        rs.getString("dog_walker_name"),
-                        rs.getString("dog_walker_phone"),
-                        rs.getString("dog_walker_e_mail"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
                         rs.getFloat("dog_walker_score")
                     ));
                     if(ul2.get(0)!=null)
@@ -108,16 +108,15 @@ public class InfoUserController {
                     }
                 }
                 if("ROLE_DOGDAYCARE".equals(u.getRole())){
-                    
-                    System.out.println("Entramos a la guarderia");
+
                     String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
                     List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
-                        rs.getString("dog_daycare_e_mail"),
+                        rs.getString("e_mail"),
                         rs.getString("dog_daycare_address"),
                         rs.getBoolean("dog_daycare_type"),
-                        rs.getString("dog_daycare_phone"),
+                        rs.getString("phone"),
                         rs.getFloat("dog_daycare_score"),
-                        rs.getString("dog_daycare_name")
+                        rs.getString("name")
                     ));
                     
                       if(ul2.get(0)!=null)

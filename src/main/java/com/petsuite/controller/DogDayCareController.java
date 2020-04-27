@@ -54,6 +54,10 @@ public class DogDayCareController {
             realDogDayCare.setUser(dogDaycare.getUser());
             realDogDayCare.setPassword(dogDaycare.getPassword());
             realDogDayCare.setRole("ROLE_DOGDAYCARE");
+            realDogDayCare.setName(dogDaycare.getDog_daycare_name());
+            realDogDayCare.setDog_daycare_score((float)3.0);
+            realDogDayCare.setE_mail(dogDaycare.getDog_daycare_e_mail());
+            realDogDayCare.setPhone(dogDaycare.getDog_daycare_phone());
             dogDaycareRepository.save(realDogDayCare);
 
             return dogDaycare;
