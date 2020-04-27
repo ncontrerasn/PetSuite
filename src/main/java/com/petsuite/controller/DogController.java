@@ -22,9 +22,26 @@ public class DogController {
     }
 
     @PostMapping("/register")
-    public Dog createDog(@Valid @RequestBody Dog dog){
-        dog = dogRepository.save(dog);
+    public Dog_Dto createDog(@Valid @RequestBody Dog_Dto dog){
+        Dog dogReal=new Dog(dog.getDog_id(), dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getClient_id(), null, null, null);
+        
+        
+        dogReal = dogRepository.save(dogReal);
+        
+        if(dogReal!=null)
         return dog;
+        else
+        return null;
     }
+    
+    @PostMapping("/findmydog")
+    public List<Dog> finDogsById(@Valid @RequestBody String client_id){
+        System.out.println("El usuario que me llego es: "+ client_id);
+        System.out.println(dogRepository.findByUser(client_id));
+        return dogRepository.findByUser(client_id);
+      
+    }
+    
+    
 
 }

@@ -1,5 +1,6 @@
 package com.petsuite.Services.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -46,10 +47,10 @@ public class Dog {
     private String dog_notes;
 
     @NotBlank
-    private String client_id;
-    
+    private String user;
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private Client client_d;
     
     @OneToOne(mappedBy = "dog_wp")
@@ -57,5 +58,18 @@ public class Dog {
     
     @OneToOne(mappedBy = "dog")
     private WalkInvoice walkInvoice;
+
+    public Dog(Integer dog_id, String dog_name, String dog_race, Float dog_height, Float dog_weight, Integer dog_age, String dog_notes, String client_id) {
+        this.dog_id = dog_id;
+        this.dog_name = dog_name;
+        this.dog_race = dog_race;
+        this.dog_height = dog_height;
+        this.dog_weight = dog_weight;
+        this.dog_age = dog_age;
+        this.dog_notes = dog_notes;
+        this.user = client_id;
+    }
+    
+    
     
 }

@@ -55,6 +55,8 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/clients/**").access("hasRole('ROLE_CLIENT') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/dog_walkers/**").access("hasRole('ROLE_DOGWALKER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/dog_day_cares/**").access("hasRole('ROLE_DOGDAYCARE') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/dogs/register").access("hasRole('ROLE_CLIENT') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/dogs/findmydog").access("hasRole('ROLE_CLIENT') or hasRole('ROLE_ADMIN')")
                 
                 .and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint)

@@ -12,6 +12,7 @@ import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.basics.Entero;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,11 +42,19 @@ public class DogDayCareController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/all")
-    public List<DogDaycare> getAllDogDaycares() {
-        return dogDaycareRepository.findAll();
+     @GetMapping("/all")
+    public List<DogDayCare_Dto> getAllClients() {
+        List<DogDaycare> listaClientes=dogDaycareRepository.findAll();
+        List<DogDayCare_Dto> listaClientDto= new ArrayList<DogDayCare_Dto>();
+        for (int i = 0; i < listaClientes.size(); i++) {
+            DogDaycare cliente=listaClientes.get(i);
+            DogDayCare_Dto clientDto=new DogDayCare_Dto(cliente.getUser(), cliente.getPassword(),cliente.getE_mail(),cliente.getName(), cliente.getDog_daycare_address(),cliente.getDog_daycare_type(),  cliente.getPhone(), cliente.getDog_daycare_score(),null,null);
+            listaClientDto.add(clientDto);
+             
+        }
+        
+        return listaClientDto;
     }
-    
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCare_Dto createDogDaycare(@Valid @RequestBody DogDayCare_Dto dogDaycare) {
 

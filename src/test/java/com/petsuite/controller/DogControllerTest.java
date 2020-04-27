@@ -1,5 +1,6 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
@@ -42,21 +43,21 @@ class DogControllerTest {
         Client client2 = new Client();
         client2.setUser("esgonzalezca");
 
-        dog.setClient_id(client1.getUser());
+        dog.setUser(client1.getUser());
         dog.setDog_age(4);
         dog.setDog_height((float)23);
         dog.setDog_name("Sol");
         dog.setDog_notes("alérgico a la caca");
         dog.setDog_weight((float)6);
 
-        dog1.setClient_id(client1.getUser());
+        dog1.setUser(client1.getUser());
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
         dog1.setDog_name("Luna");
         dog1.setDog_notes("alérgico al polvo");
         dog1.setDog_weight((float)8);
 
-        dog2.setClient_id(client2.getUser());
+        dog2.setUser(client2.getUser());
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
         dog2.setDog_name("Papo");
@@ -78,19 +79,23 @@ class DogControllerTest {
         Dog dog = new Dog();
         Client client = new Client();
         client.setUser("ncontrerasn");
-
-        dog.setClient_id(client.getUser());
+       
+        dog.setUser(client.getUser());
+        
         dog.setDog_notes("alérgico al chocolate de café del Himalaya");
         dog.setDog_name("Paquirris");
         dog.setDog_age(3);
         dog.setDog_height((float)67);
         dog.setDog_race("pit bull");
         dog.setDog_weight((float)22);
+        
+         Dog_Dto dtoDog=new Dog_Dto(dog.getDog_id(), dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getUser());
+
 
         when(dogRepository.save(dog)).thenReturn(dog);
 
-        dog = dogController.createDog(dog);
-        String dogName = dog.getDog_name();
+        dtoDog = dogController.createDog(dtoDog);
+        String dogName = dtoDog.getDog_name();
 
         assertEquals(dog.getDog_name(), dogName);
 

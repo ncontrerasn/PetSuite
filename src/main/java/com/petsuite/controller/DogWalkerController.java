@@ -39,10 +39,17 @@ public class DogWalkerController {
     DogRepository dogRepository;
 
     @GetMapping(value = "/all")
-    public List<DogWalker> getAllWalkers(){
-        return dogWalkerRepository.findAll();
+    public List<DogWalker_Dto> getAllClients() {
+        List<DogWalker> listapaseadors=dogWalkerRepository.findAll();
+        List<DogWalker_Dto> listaClientDto= new ArrayList<DogWalker_Dto>();
+        for (int i = 0; i < listapaseadors.size(); i++) {
+            DogWalker paseador=listapaseadors.get(i);
+            DogWalker_Dto walkerDto=new DogWalker_Dto(paseador.getUser(), paseador.getPassword(),paseador.getName(),paseador.getPhone(), paseador.getE_mail(), paseador.getDog_walker_score(),null,null);
+            listaClientDto.add(walkerDto);
+             
+        }
+        return listaClientDto;
     }
-
     @PostMapping(value = "/load")
     public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
 
