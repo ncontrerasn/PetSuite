@@ -50,7 +50,7 @@ class DogWalkerControllerTest {
         client1.setUser("ncontrerasn");
         client2.setUser("esgonzalezca");
 
-        dog1.setClient_id(client1.getUser());
+        dog1.setUser(client1.getUser());
         dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
@@ -58,7 +58,7 @@ class DogWalkerControllerTest {
         dog1.setDog_notes("alérgico al polvo");
         dog1.setDog_weight((float)8);
 
-        dog2.setClient_id(client2.getUser());
+        dog2.setUser(client2.getUser());
         dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
@@ -91,7 +91,7 @@ class DogWalkerControllerTest {
         client1.setUser("ncontrerasn");
         client2.setUser("esgonzalezca");
 
-        dog1.setClient_id(client1.getUser());
+        dog1.setUser(client1.getUser());
         dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
@@ -99,7 +99,7 @@ class DogWalkerControllerTest {
         dog1.setDog_notes("alérgico al polvo");
         dog1.setDog_weight((float)8);
 
-        dog2.setClient_id(client2.getUser());
+        dog2.setUser(client2.getUser());
         dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
@@ -132,7 +132,7 @@ class DogWalkerControllerTest {
         client1.setUser("ncontrerasn");
         client2.setUser("esgonzalezca");
 
-        dog1.setClient_id(client1.getUser());
+        dog1.setUser(client1.getUser());
         dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
@@ -140,7 +140,7 @@ class DogWalkerControllerTest {
         dog1.setDog_notes("alérgico al polvo");
         dog1.setDog_weight((float)8);
 
-        dog2.setClient_id(client2.getUser());
+        dog2.setUser(client2.getUser());
         dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
