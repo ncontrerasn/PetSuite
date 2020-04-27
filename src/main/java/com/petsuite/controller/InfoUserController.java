@@ -114,15 +114,16 @@ public class InfoUserController {
                     }
                 }
                 if("ROLE_DOGDAYCARE".equals(u.getRole())){
-                    
-                    System.out.println("Entramos a la guarderia");
+
                     String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
                     List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
                         rs.getString("e_mail"),
                         rs.getString("dog_daycare_address"),
                         rs.getBoolean("dog_daycare_type"),
                         rs.getString("phone"),
-                        rs.getFloat("score"),
+
+                        rs.getFloat("dog_daycare_score"),
+
                         rs.getString("name")
                     ));
                     

@@ -58,11 +58,36 @@ public class DogWalkerController {
             realDogWalker.setUser(dogWalker.getUser());
             realDogWalker.setPassword(dogWalker.getPassword());
             realDogWalker.setRole("ROLE_DOGWALKER");
+            realDogWalker.setName(dogWalker.getDog_walker_name());
+            realDogWalker.setDog_walker_score((float)3.0);
+            realDogWalker.setPhone(dogWalker.getDog_walker_phone());
+            realDogWalker.setE_mail(dogWalker.getDog_walker_e_mail());
             dogWalkerRepository.save(realDogWalker);
 
             return dogWalker;
         }
     return null;
+    }
+
+    @PostMapping(value = "/PendingDogList")
+    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody String dogWalker){
+
+        List<Optional<Dog>> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_true(dogWalker);
+        for(int i = 0; i < dogs_ids.size() - 1; i++)
+            dogs.add(dogRepository.findById(dogs_ids.get(i)));
+        return dogs;
+    }
+
+    @PostMapping(value = "/CompletedDogList")
+    public List<Optional<Dog>> CompletedDogList(@Valid @RequestBody String dogWalker){
+
+        List<Optional<Dog>> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_false(dogWalker);
+        for(int i = 0; i < dogs_ids.size() - 1; i++)
+            dogs.add(dogRepository.findById(dogs_ids.get(i)));
+        return dogs;
+
     }
 
     @PostMapping(value = "/dogList")
