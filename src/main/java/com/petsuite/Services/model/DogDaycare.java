@@ -11,9 +11,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -27,15 +30,29 @@ public class DogDaycare extends InfoUser{
     @NotBlank
     private String dog_daycare_address;
     
+    
+     
+   
     @NotNull
     private Boolean dog_daycare_type;
     
+    
+     
+ 
     @NotNull
     private Float dog_daycare_score;
     
+    
+     
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareService> dogDaycareServices;
     
+    
+     
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
     

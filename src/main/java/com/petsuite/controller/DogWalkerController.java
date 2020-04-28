@@ -41,16 +41,10 @@ public class DogWalkerController {
     DogRepository dogRepository;
 
     @GetMapping(value = "/all")
-    public List<DogWalker_Dto> getAllClients() {
-        List<DogWalker> listapaseadors=dogWalkerRepository.findAll();
-        List<DogWalker_Dto> listaClientDto= new ArrayList<DogWalker_Dto>();
-        for (int i = 0; i < listapaseadors.size(); i++) {
-            DogWalker paseador=listapaseadors.get(i);
-            DogWalker_Dto walkerDto=new DogWalker_Dto(paseador.getUser(), paseador.getPassword(),paseador.getName(),paseador.getPhone(), paseador.getE_mail(), paseador.getDog_walker_score(),null,null);
-            listaClientDto.add(walkerDto);
-             
-        }
-        return listaClientDto;
+    public List<DogWalker> getAllClients() {
+       
+        
+        return dogWalkerRepository.findAll();
     }
     @PostMapping(value = "/load")
     public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
@@ -93,22 +87,20 @@ public class DogWalkerController {
     }
 
     @PostMapping(value = "/dogList")
-    public List<Dog_Dto> dogList(@Valid @RequestBody Cadena dogWalker){
+    public List<Dog> dogList(@Valid @RequestBody Cadena dogWalker){
 
-        List<Dog_Dto> dogs = new ArrayList<>();
+        List<Dog> dogs = new ArrayList<>();
         List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id(dogWalker.getCadena());
         System.out.println("Tamanio lista es: "+ dogs_ids.size());
         
        System.out.println("probando el repo: "+ dogRepository.findByDogId(1).getDog_name());
        for(int i = 0; i < dogs_ids.size() ; i++){
-           Dog realDogg=dogRepository.findByDogId(i+1);
-           Dog_Dto myDogDto=new Dog_Dto(realDogg.getDog_id(), realDogg.getDog_name(), realDogg.getDog_race(), realDogg.getDog_height(), realDogg.getDog_weight(), realDogg.getDog_age(), realDogg.getDog_notes(), realDogg.getUser());
-             dogs.add(myDogDto);
+          dogs.add(dogRepository.findByDogId(dogs_ids.get(i)));
        }
-        System.out.println("tamanio de dogs: "+dogs.size());
+       
       /*    
         System.out.println(dogs);*/
-       System.out.println(dogs.get(0));
+      
         return dogs;
     }
 

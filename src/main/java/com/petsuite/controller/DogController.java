@@ -39,7 +39,7 @@ public class DogController {
     public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
         System.out.println("El usuario que me llego es: "+ user);
         //System.out.println(dogRepository.findByUser(client_id));
-       // String usuario= user.getCadena().trim();
+        //String usuario= user.getCadena()trim();
         //System.out.println("Mi nombre es: jose"+ " y el nombre que me llega es: "+ usuario);
         return dogRepository.findByUser(user.getCadena());
       

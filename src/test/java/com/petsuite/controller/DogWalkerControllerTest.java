@@ -4,6 +4,7 @@ import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
+import com.petsuite.basics.Cadena;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -51,7 +52,7 @@ class DogWalkerControllerTest {
         client2.setUser("esgonzalezca");
 
         dog1.setUser(client1.getUser());
-        dog1.setClient_d(client1);
+        //dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
         dog1.setDog_name("Luna");
@@ -59,7 +60,7 @@ class DogWalkerControllerTest {
         dog1.setDog_weight((float)8);
 
         dog2.setUser(client2.getUser());
-        dog2.setClient_d(client2);
+        //dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
         dog2.setDog_name("Papo");
@@ -72,7 +73,8 @@ class DogWalkerControllerTest {
         when(walkInvoiceRepository.findByDog_walker_id(anyString())).thenReturn(dogsIds);
         for(int i = 0; i < dogsIds.size(); i++)
             when(dogRepository.findById(anyInt())).thenReturn(java.util.Optional.of(dogs.get(i)));
-        assertEquals(1, dogWalkerController.dogList(dogWalkerUser).size());
+        //Cadena nombre= new Cadena()
+        assertEquals(1, dogWalkerController.dogList(new Cadena("dogWalkerUser")).size());
     }
 
     @Test
@@ -92,7 +94,7 @@ class DogWalkerControllerTest {
         client2.setUser("esgonzalezca");
 
         dog1.setUser(client1.getUser());
-        dog1.setClient_d(client1);
+        //dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
         dog1.setDog_name("Luna");
@@ -100,7 +102,7 @@ class DogWalkerControllerTest {
         dog1.setDog_weight((float)8);
 
         dog2.setUser(client2.getUser());
-        dog2.setClient_d(client2);
+        //dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
         dog2.setDog_name("Papo");
@@ -133,7 +135,7 @@ class DogWalkerControllerTest {
         client2.setUser("esgonzalezca");
 
         dog1.setUser(client1.getUser());
-        dog1.setClient_d(client1);
+       // dog1.setClient_d(client1);
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
         dog1.setDog_name("Luna");
@@ -141,7 +143,7 @@ class DogWalkerControllerTest {
         dog1.setDog_weight((float)8);
 
         dog2.setUser(client2.getUser());
-        dog2.setClient_d(client2);
+        //dog2.setClient_d(client2);
         dog2.setDog_age(5);
         dog2.setDog_height((float)45);
         dog2.setDog_name("Papo");

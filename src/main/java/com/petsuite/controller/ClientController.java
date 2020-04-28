@@ -39,16 +39,9 @@ public class ClientController {
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/all")
-    public List<Client_Dto> getAllClients() {
-        List<Client> listaClientes=clientRepository.findAll();
-        List<Client_Dto> listaClientDto= new ArrayList<Client_Dto>();
-        for (int i = 0; i < listaClientes.size(); i++) {
-            Client cliente=listaClientes.get(i);
-            Client_Dto clientDto=new Client_Dto(cliente.getUser(), cliente.getPassword(), cliente.getName(), cliente.getPhone(), cliente.getE_mail(), cliente.getClient_address(),null,null);
-            listaClientDto.add(clientDto);
-        }
-        
-        return listaClientDto;
+    public List<Client> getAllClients() {
+       
+        return clientRepository.findAll();
     }
     
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario

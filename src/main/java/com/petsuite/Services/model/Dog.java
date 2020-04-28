@@ -12,9 +12,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -48,14 +51,20 @@ public class Dog {
 
     @NotBlank
     private String user;
-    @JsonBackReference
+    
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private Client client_d;
     
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog_wp")
     private WalkPetition walkPetition;
     
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog")
     private WalkInvoice walkInvoice;
 

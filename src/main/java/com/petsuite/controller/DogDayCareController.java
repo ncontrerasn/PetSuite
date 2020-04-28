@@ -43,17 +43,10 @@ public class DogDayCareController {
     private JdbcTemplate jdbcTemplate;
 
      @GetMapping("/all")
-    public List<DogDayCare_Dto> getAllClients() {
-        List<DogDaycare> listaClientes=dogDaycareRepository.findAll();
-        List<DogDayCare_Dto> listaClientDto= new ArrayList<DogDayCare_Dto>();
-        for (int i = 0; i < listaClientes.size(); i++) {
-            DogDaycare cliente=listaClientes.get(i);
-            DogDayCare_Dto clientDto=new DogDayCare_Dto(cliente.getUser(), cliente.getPassword(),cliente.getE_mail(),cliente.getName(), cliente.getDog_daycare_address(),cliente.getDog_daycare_type(),  cliente.getPhone(), cliente.getDog_daycare_score(),null,null);
-            listaClientDto.add(clientDto);
-             
-        }
+    public List<DogDaycare> getAllClients() {
+       
         
-        return listaClientDto;
+        return dogDaycareRepository.findAll();
     }
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCare_Dto createDogDaycare(@Valid @RequestBody DogDayCare_Dto dogDaycare) {
