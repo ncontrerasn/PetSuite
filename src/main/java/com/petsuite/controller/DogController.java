@@ -3,6 +3,7 @@ package com.petsuite.controller;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.basics.Cadena;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -35,10 +36,12 @@ public class DogController {
     }
     
     @PostMapping("/findmydog")
-    public List<Dog> finDogsById(@Valid @RequestBody String client_id){
-        System.out.println("El usuario que me llego es: "+ client_id);
-        System.out.println(dogRepository.findByUser(client_id));
-        return dogRepository.findByUser(client_id);
+    public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
+        System.out.println("El usuario que me llego es: "+ user);
+        //System.out.println(dogRepository.findByUser(client_id));
+       // String usuario= user.getCadena().trim();
+        //System.out.println("Mi nombre es: jose"+ " y el nombre que me llega es: "+ usuario);
+        return dogRepository.findByUser(user.getCadena());
       
     }
     

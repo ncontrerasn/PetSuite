@@ -1,12 +1,14 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.DogWalker_Dto;
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
+import com.petsuite.basics.Cadena;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,12 +93,22 @@ public class DogWalkerController {
     }
 
     @PostMapping(value = "/dogList")
-    public List<Optional<Dog>> dogList(@Valid @RequestBody String dogWalker){
+    public List<Dog_Dto> dogList(@Valid @RequestBody Cadena dogWalker){
 
-        List<Optional<Dog>> dogs = new ArrayList<>();
-        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id(dogWalker);
-        for(int i = 0; i < dogs_ids.size() - 1; i++)
-            dogs.add(dogRepository.findById(dogs_ids.get(i)));
+        List<Dog_Dto> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id(dogWalker.getCadena());
+        System.out.println("Tamanio lista es: "+ dogs_ids.size());
+        
+       System.out.println("probando el repo: "+ dogRepository.findByDogId(1).getDog_name());
+       for(int i = 0; i < dogs_ids.size() ; i++){
+           Dog realDogg=dogRepository.findByDogId(i+1);
+           Dog_Dto myDogDto=new Dog_Dto(realDogg.getDog_id(), realDogg.getDog_name(), realDogg.getDog_race(), realDogg.getDog_height(), realDogg.getDog_weight(), realDogg.getDog_age(), realDogg.getDog_notes(), realDogg.getUser());
+             dogs.add(myDogDto);
+       }
+        System.out.println("tamanio de dogs: "+dogs.size());
+      /*    
+        System.out.println(dogs);*/
+       System.out.println(dogs.get(0));
         return dogs;
     }
 
