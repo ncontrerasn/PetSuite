@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "walk_petition")
@@ -40,10 +43,19 @@ public class WalkPetition {
     
     private String walk_petition_notes;
     
+    private String user;
+    
+    private String dog_id;
+    
+    
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user", referencedColumnName = "user",updatable = false, insertable = false)
     private Client client_p;
 
+    @Getter(AccessLevel.NONE)
+@Setter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
     private Dog dog_wp;
