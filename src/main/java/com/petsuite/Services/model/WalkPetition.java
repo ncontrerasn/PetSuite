@@ -45,7 +45,7 @@ public class WalkPetition {
     
     private String user;
     
-    private String dog_id;
+    private Integer dog_id;
     
     
     @Getter(AccessLevel.NONE)

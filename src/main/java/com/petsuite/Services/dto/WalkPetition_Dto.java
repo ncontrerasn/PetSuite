@@ -34,7 +34,7 @@ public class WalkPetition_Dto {
     
     private String user;
     
-    private String dog_id;
+    private Integer dog_id;
 
   
     
