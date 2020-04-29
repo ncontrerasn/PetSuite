@@ -89,7 +89,7 @@ class DogControllerTest {
         dog.setDog_race("pit bull");
         dog.setDog_weight((float)22);
         
-         Dog_Dto dtoDog=new Dog_Dto(dog.getDog_id(), dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getUser());
+         Dog_Dto dtoDog=new Dog_Dto(dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getUser());
 
 
         when(dogRepository.save(dog)).thenReturn(dog);

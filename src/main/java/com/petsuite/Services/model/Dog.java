@@ -53,23 +53,22 @@ public class Dog {
     private String user;
     
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private Client client_d;
     
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog_wp")
     private WalkPetition walkPetition;
     
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog")
     private WalkInvoice walkInvoice;
 
-    public Dog(Integer dog_id, String dog_name, String dog_race, Float dog_height, Float dog_weight, Integer dog_age, String dog_notes, String client_id) {
-        this.dog_id = dog_id;
+    public Dog(String dog_name, String dog_race, Float dog_height, Float dog_weight, Integer dog_age, String dog_notes, String client_id) {
         this.dog_name = dog_name;
         this.dog_race = dog_race;
         this.dog_height = dog_height;
@@ -78,7 +77,5 @@ public class Dog {
         this.dog_notes = dog_notes;
         this.user = client_id;
     }
-    
-    
-    
+
 }

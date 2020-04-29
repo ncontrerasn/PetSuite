@@ -22,21 +22,31 @@ public class WalkPetitionController {
     WalkPetitionRepository walkPetitionRepository;
 
     @GetMapping("/all")
-    public List<WalkPetition> getAllDogs() {
+    public List<WalkPetition> getAllPetitions() {
         return walkPetitionRepository.findAll();
     }
 
     @PostMapping("/create")
     public WalkPetition_Dto createPeititon(@Valid @RequestBody WalkPetition_Dto walkPetition){
-       WalkPetition walkPetitionReal= new WalkPetition(walkPetition.getWalk_petition_id(), walkPetition.getWalk_petition_date_time(), walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
-        
-        
-        walkPetitionReal = walkPetitionRepository.save(walkPetitionReal);
-        
-        if(walkPetitionReal!=null)
-        return walkPetition;
-        else
-        return null;
+
+        List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
+
+        List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
+
+
+        if (allWalkPetitionsOfClient.isEmpty() && allWalkPetitionsOfDog.isEmpty()) {
+            WalkPetition walkPetitionReal = new WalkPetition(walkPetition.getWalk_petition_date_time(), walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
+
+
+            walkPetitionReal = walkPetitionRepository.save(walkPetitionReal);
+
+            if (walkPetitionReal != null)
+                return walkPetition;
+            else
+                return null;
+        }else{
+            return null;
+        }
     }
     
     @PostMapping("/findmydog")

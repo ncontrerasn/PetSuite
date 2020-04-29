@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WalkPetition_Dto {
-
-    private Integer walk_petition_id;
     
     
     private LocalDateTime walk_petition_date_time;
@@ -34,11 +32,7 @@ public class WalkPetition_Dto {
     
     private String user;
     
-    private String dog_id;
+    private Integer dog_id;
 
-  
-    
-    
-    
     
 }

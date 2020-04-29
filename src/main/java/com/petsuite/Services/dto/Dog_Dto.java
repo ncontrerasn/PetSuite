@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 public class Dog_Dto {
 
-    private int dog_id;
     private String dog_name;
     private String dog_race;
     private float dog_height;

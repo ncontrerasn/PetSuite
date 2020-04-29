@@ -27,7 +27,7 @@ public class DogWalker extends InfoUser{
     
      
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogWalker")
     private Set<WalkInvoice> walkInvoices;
 

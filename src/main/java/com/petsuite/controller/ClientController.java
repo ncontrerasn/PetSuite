@@ -5,9 +5,11 @@ import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.InfoUser;
+import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.ClientRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.Services.repository.WalkPetitionRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/clients")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class ClientController {
+
+    @Autowired
+    WalkPetitionRepository walkPetitionRepository;
 
     @Autowired
     ClientRepository clientRepository;
@@ -67,6 +72,11 @@ public class ClientController {
     @PostMapping("/dogList")
     public List<Dog> myDogList(@Valid @RequestBody String user){
         return dogRepository.findByUser(user);
+    }
+
+    @PostMapping("/mypetition")
+    public List<WalkPetition> myPetition(@Valid @RequestBody String user){
+        return walkPetitionRepository.findPetitionsByUser(user);
     }
 
     public String getClientJWTToken(String username) {
