@@ -29,28 +29,24 @@ public class Client extends InfoUser{
     
      
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client_d")
     private Set<Dog> dogs;
     
     
      
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client_wi")
     private Set<WalkInvoice> walkInvoices;
 
     
      
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client_i")
     private Set<DogDaycareInvoice> dogDaycareInvoices;
     
     
      
     @Getter(AccessLevel.NONE)
-@Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "client_p")
     private WalkPetition walkPetition;
 

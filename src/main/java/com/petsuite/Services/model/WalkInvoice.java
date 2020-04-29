@@ -34,7 +34,7 @@ public class WalkInvoice {
     @NotBlank
     private String walk_invoice_time;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime walk_invoice_date;
     
     @NotNull
