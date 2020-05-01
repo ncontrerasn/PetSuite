@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class WalkPetition_Dto {
     
     
-    private LocalDateTime walk_petition_date_time;
+    private String walk_petition_date_time;
     
     
     private String walk_petition_address;
@@ -33,6 +33,8 @@ public class WalkPetition_Dto {
     private String user;
     
     private Integer dog_id;
+    
+    private Integer precio_proposal;
 
     
 }

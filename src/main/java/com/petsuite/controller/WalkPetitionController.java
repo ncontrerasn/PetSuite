@@ -8,6 +8,7 @@ import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.basics.Cadena;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -28,26 +29,40 @@ public class WalkPetitionController {
 
     @PostMapping("/create")
     public WalkPetition_Dto createPeititon(@Valid @RequestBody WalkPetition_Dto walkPetition){
+        
+        System.out.println("El perro es: "+walkPetition.getDog_id());
 
-        List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
+//        List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
 
-        List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
+  //      List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
 
 
-        if (allWalkPetitionsOfClient.isEmpty() && allWalkPetitionsOfDog.isEmpty()) {
-            WalkPetition walkPetitionReal = new WalkPetition(walkPetition.getWalk_petition_date_time(), walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
+    //    if (allWalkPetitionsOfClient.isEmpty() && allWalkPetitionsOfDog.isEmpty()) {
+    
+        System.out.println("La fecha que me llegó es: "+ walkPetition.getWalk_petition_date_time());
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(walkPetition.getWalk_petition_date_time(), formatter);
+            
+            dateTime.plusHours(-5);
+
+            System.out.println("La fecha que voy a meter es: "+ dateTime);
+             
+            
+            WalkPetition walkPetitionReal = new WalkPetition(dateTime, walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
+            System.out.println("Lo final final es: "+ walkPetitionReal.getWalk_petition_date_time());
+            
 
 
             walkPetitionReal = walkPetitionRepository.save(walkPetitionReal);
 
-            if (walkPetitionReal != null)
+           if (walkPetitionReal != null)
                 return walkPetition;
             else
                 return null;
-        }else{
-            return null;
+        //}
         }
-    }
+    
     
     @PostMapping("/findmydog")
     public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
