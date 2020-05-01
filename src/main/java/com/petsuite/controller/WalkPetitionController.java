@@ -9,6 +9,7 @@ import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.basics.Cadena;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -62,7 +63,7 @@ public class WalkPetitionController {
             else
                 return null;
         //}
-        }
+        
 
     }
 
@@ -79,10 +80,25 @@ public class WalkPetitionController {
     }
 
     @PostMapping("/findbyuser")
-    public List<WalkPetition> finPetitionByUser(@Valid @RequestBody String user){
-        return walkPetitionRepository.findPetitionsByUser(user);
+    public List<WalkPetition> finPetitionByUserWithProposalPrice(@Valid @RequestBody Cadena user){
+        System.out.println("El nombre que entra es: "+user.getCadena() );
+        List<WalkPetition> lista= walkPetitionRepository.findPetitionsByUser(user.getCadena());
+        List <WalkPetition> listaReal= new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getPrice()!=null)
+                listaReal.add(lista.get(i));
+        }
+        return listaReal;
     }
-    
+     @PostMapping("/propose")
+    public  Dog_Dto proposePrice(@Valid @RequestBody WalkPetition_Dto walkPetition_Dto){
+         
+         WalkPetition petition= walkPetitionRepository.findPetitionsById(walkPetition_Dto.getWalk_petition_id());
+         System.out.println("El precio que se propone: "+ walkPetition_Dto.getPrecio_proposal());
+         petition.setPrice(walkPetition_Dto.getPrecio_proposal());
+         walkPetitionRepository.save(petition); 
+        return null;
+    }
     
 
 }

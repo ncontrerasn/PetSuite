@@ -53,6 +53,8 @@ public class WalkPetition {
     @NotNull
     private Integer dog_id;
     
+    private Integer price;
+    
     
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
