@@ -45,8 +45,10 @@ public class WalkPetition {
     
     private String walk_petition_notes;
 
+
     @NotBlank
     private String user;
+
 
     @NotNull
     private Integer dog_id;
