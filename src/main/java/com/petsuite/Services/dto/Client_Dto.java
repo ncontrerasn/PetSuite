@@ -31,6 +31,8 @@ public class Client_Dto {
     private String client_address;
     
     private String token;
+    
+    private String client_role;
 
     public Client_Dto(String client_name, String client_phone, String client_e_mail, String client_address) {
         this.client_name = client_name;

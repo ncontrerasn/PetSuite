@@ -47,57 +47,49 @@ public class InfoUserController {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
-
-
 
     @GetMapping("/all")
     public List<InfoUser> getAllUsers() {
         return infoUserRepository.findAll();
     }
-    
-    
-   
-    
-    
-  
-    
+
     @RequestMapping("/login")
     @ResponseBody
     public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){
 
-        
      String sqlA = "SELECT * FROM info_user where user = ?";
-        String user__user = user.getUser();
+        String user_user = user.getUser();
         String user_password = user.getPassword();
-        
-        
-       
-        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user__user}, (rs, rowNum) -> new InfoUser(
+
+        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user_user}, (rs, rowNum) -> new InfoUser(
                         rs.getString("user"),
+                        rs.getString("e_mail"),
+                        rs.getString("phone"),
                         rs.getString("password"),
+                        rs.getString("name"),
                         rs.getString("role")
                 ));
         InfoUser u;
-        if (ul.isEmpty()==false){
+        if (!ul.isEmpty()){
             u = ul.get(0);
             if (u.getPassword().equals(user_password)){
                 if("ROLE_CLIENT".equals(u.getRole())){
                     String sqlC = "SELECT * FROM info_user natural join client where user = ?";
                     List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
-                        rs.getString("client_name"),
-                        rs.getString("client_phone"),
-                        rs.getString("client_e_mail"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
                         rs.getString("client_address")
                     ));
                     
                     if(ul2.get(0)!=null)
                     {
-                      //  String token = clientController.getClientJWTToken(u.getUser());
-                      //  ul2.get(0).setToken(token);
                         user.setRole(u.getRole());
                         String token= tokenController.generate(user);
+                        ul2.get(0).setUser(u.getUser());
                         ul2.get(0).setToken(token);
+                        ul2.get(0).setClient_role(u.getRole());
+                        
                         
                         return ul2.get(0);
                     }
@@ -105,9 +97,9 @@ public class InfoUserController {
                 if("ROLE_DOGWALKER".equals(u.getRole())){
                     String sqlP = "SELECT * FROM info_user natural join dog_walker where user = ?";
                     List<DogWalker_Dto> ul2= jdbcTemplate.query(sqlP, new Object[]{user.getUser()}, (rs, rowNum) -> new DogWalker_Dto(
-                        rs.getString("dog_walker_name"),
-                        rs.getString("dog_walker_phone"),
-                        rs.getString("dog_walker_e_mail"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
                         rs.getFloat("dog_walker_score")
                     ));
                     if(ul2.get(0)!=null)
@@ -115,20 +107,24 @@ public class InfoUserController {
                          user.setRole(u.getRole());
                         String token = tokenController.generate(user);
                         ul2.get(0).setToken(token);
+                        ul2.get(0).setUser(u.getUser());
+                        ul2.get(0).setDog_walker_role(u.getRole());
+                        
                         return ul2.get(0);
                     }
                 }
                 if("ROLE_DOGDAYCARE".equals(u.getRole())){
-                    
-                    System.out.println("Entramos a la guarderia");
+
                     String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
                     List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
-                        rs.getString("dog_daycare_e_mail"),
+                        rs.getString("e_mail"),
                         rs.getString("dog_daycare_address"),
                         rs.getBoolean("dog_daycare_type"),
-                        rs.getString("dog_daycare_phone"),
+                        rs.getString("phone"),
+
                         rs.getFloat("dog_daycare_score"),
-                        rs.getString("dog_daycare_name")
+
+                        rs.getString("name")
                     ));
                     
                       if(ul2.get(0)!=null)
@@ -136,17 +132,14 @@ public class InfoUserController {
                            user.setRole(u.getRole());
                           String token = tokenController.generate(user);
                           ul2.get(0).setToken(token);
+                          ul2.get(0).setUser(u.getUser());
+                          ul2.get(0).setDog_daycare_role(u.getRole());
                           return ul2.get(0);
                       }
                 }
-                
-                
-              
             }
-            
         }
         return null;
-        
     }
 
     private String getJWTToken(String username) {

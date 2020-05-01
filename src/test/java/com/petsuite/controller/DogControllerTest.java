@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ class DogControllerTest {
     DogRepository dogRepository;
 
     @BeforeEach
-    void setUp() throws Exception{
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -33,64 +32,72 @@ class DogControllerTest {
     void testGetAllDogs() {
 
         List<Dog> dogs = new ArrayList<>();
+
         Dog dog = new Dog();
         Dog dog1 = new Dog();
-        Client client = new Client();
-        client.setUser("ncontrerasn");
+        Dog dog2 = new Dog();
 
-        dog.setClient_id(client.getUser());
+        Client client1 = new Client();
+        client1.setUser("ncontrerasn");
+
+        Client client2 = new Client();
+        client2.setUser("esgonzalezca");
+
+        dog.setUser(client1.getUser());
         dog.setDog_age(4);
         dog.setDog_height((float)23);
-        dog.setDog_id(1);
         dog.setDog_name("Sol");
         dog.setDog_notes("alérgico a la caca");
         dog.setDog_weight((float)6);
 
-        dog1.setClient_id(client.getUser());
+        dog1.setUser(client1.getUser());
         dog1.setDog_age(7);
         dog1.setDog_height((float)34);
-        dog1.setDog_id(1);
         dog1.setDog_name("Luna");
         dog1.setDog_notes("alérgico al polvo");
         dog1.setDog_weight((float)8);
 
+        dog2.setUser(client2.getUser());
+        dog2.setDog_age(5);
+        dog2.setDog_height((float)45);
+        dog2.setDog_name("Papo");
+        dog2.setDog_notes("llorón");
+        dog2.setDog_weight((float)28);
+
         dogs.add(dog);
         dogs.add(dog1);
+        dogs.add(dog2);
 
         when(dogRepository.findAll()).thenReturn(dogs);
-        assertEquals(2, dogController.getAllDogs().size());
+        assertEquals(3, dogController.getAllDogs().size());
 
     }
 
     @Test
     void createDog(){
-        Dog_Dto dog_dto = new Dog_Dto();
+
         Dog dog = new Dog();
         Client client = new Client();
         client.setUser("ncontrerasn");
+       
+        dog.setUser(client.getUser());
+        
+        dog.setDog_notes("alérgico al chocolate de café del Himalaya");
+        dog.setDog_name("Paquirris");
+        dog.setDog_age(3);
+        dog.setDog_height((float)67);
+        dog.setDog_race("pit bull");
+        dog.setDog_weight((float)22);
+        
+         Dog_Dto dtoDog=new Dog_Dto(dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getUser());
 
-        dog_dto.setClient_id(client.getUser());
-        dog_dto.setDog_notes("alérgico al chocolate de café del Himalaya");
-        dog_dto.setDog_name("Paquirris");
-        dog_dto.setDog_age(3);
-        dog_dto.setDog_height((float)67);
-        dog_dto.setDog_race("pit bull");
-        dog_dto.setDog_weight((float)22);
-
-        dog.setClient_id(dog_dto.getClient_id());
-        dog.setDog_notes(dog_dto.getDog_notes());
-        dog.setDog_name(dog_dto.getDog_name());
-        dog.setDog_age(dog_dto.getDog_age());
-        dog.setDog_height(dog_dto.getDog_height());
-        dog.setDog_race(dog_dto.getDog_race());
-        dog.setDog_weight(dog_dto.getDog_weight());
 
         when(dogRepository.save(dog)).thenReturn(dog);
 
-        dog_dto = dogController.createDog(dog_dto);
-        String dogName = dog_dto.getDog_name();
+        dtoDog = dogController.createDog(dtoDog);
+        String dogName = dtoDog.getDog_name();
 
-        assertEquals(dog_dto.getDog_name(), dogName);
+        assertEquals(dog.getDog_name(), dogName);
 
     }
 }
