@@ -38,6 +38,7 @@ public class WalkPetitionController {
             WalkPetition walkPetitionReal = new WalkPetition(walkPetition.getWalk_petition_date_time(), walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
 
 
+
             walkPetitionReal = walkPetitionRepository.save(walkPetitionReal);
 
             if (walkPetitionReal != null)
@@ -48,11 +49,21 @@ public class WalkPetitionController {
             return null;
         }
     }
+
+    @DeleteMapping("/abort")
+    @ResponseBody
+    public void deletePetition(@Valid @RequestBody Integer Petition_id){
+        walkPetitionRepository.deletePetition(Petition_id);
+    }
     
-    @PostMapping("/findmydog")
-    public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
-       return null;
-      
+    @PostMapping("/findbydog")
+    public List<WalkPetition> finPetitionByDog(@Valid @RequestBody String dog){
+       return walkPetitionRepository.findPetitionsByDog(dog);
+    }
+
+    @PostMapping("/findbyuser")
+    public List<WalkPetition> finPetitionByUser(@Valid @RequestBody String user){
+        return walkPetitionRepository.findPetitionsByUser(user);
     }
     
     
