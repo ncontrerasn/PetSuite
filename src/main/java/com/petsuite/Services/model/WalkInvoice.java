@@ -46,6 +46,8 @@ public class WalkInvoice {
     private Float walk_invoice_duration;
 
     private String walk_invoice_notes;
+
+    private Float walker_score;
     
     @NotBlank
     private String client_id;

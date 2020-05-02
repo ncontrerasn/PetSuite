@@ -27,6 +27,9 @@ public class WalkInvoiceController {
     @Autowired
     WalkPetitionRepository walkPetitionRepository;
 
+    @Autowired
+    DogWalkerRepository dogWalkerRepository;
+
     @GetMapping("/all")
     public List<WalkInvoice> getAllInvoices() {
         return walkInvoiceRepository.findAll();
@@ -52,9 +55,20 @@ public class WalkInvoiceController {
                 return walkinvoiceReal;
             else
                 return null;
-        }else{
+        }else
             return null;
+    }
+
+    @PostMapping("/score")//para pedir otro paseo debe estar calificado al paseador. Pero para comenzar un paseo, se hace un recibo con status 0, cuando se califica al paseador, se pone status 1, cuando se califica ya es porque se ha terminado el paseo
+    public Cadena scoreDogWalker(@Valid @RequestBody WalkInvoice_Dto walkInvoice_dto){//se podria hacer un dto solo con id factura, id paseador y puntaje
+        int updatedInvoice = walkInvoiceRepository.scoreWalker(walkInvoice_dto.getWalker_score(), walkInvoice_dto.getWalk_invoice_id());
+        if(updatedInvoice == 1){
+            float score = walkInvoiceRepository.scoreAvg(walkInvoice_dto.getDog_walker_id());
+            int updatedWalkerScore = dogWalkerRepository.updateScore(score, walkInvoice_dto.getDog_walker_id());
+            if(updatedWalkerScore == 1)
+                return new Cadena("Paseador calificado correctamente");
         }
+        return new Cadena("Error calificando al paseador");
     }
 
 }
