@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/walkinvoice")
+@RequestMapping("/api/walkinvoices")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class WalkInvoiceController {
 
@@ -35,16 +35,16 @@ public class WalkInvoiceController {
     @PostMapping("/create")
     public WalkInvoice createInvoice(@Valid @RequestBody WalkInvoice_Dto walkinvoice){
 
-        List<WalkPetition> WalkPetitions = walkPetitionRepository.findPetitionsByDogAndByUser(walkinvoice.getDog_id().toString(),walkinvoice.getClient_id());
+        WalkPetition WalkPetitions = walkPetitionRepository.findPetitionsByDogAndByUser(walkinvoice.getDog_id().toString(),walkinvoice.getClient_id());
 
-        if (!WalkPetitions.isEmpty()) {
+        if (WalkPetitions!=null) {
 
-            WalkInvoice walkinvoiceReal = new WalkInvoice(WalkPetitions.get(0).getWalk_petition_date_time(),
-                    WalkPetitions.get(0).getWalk_petition_address(), WalkPetitions.get(0).getWalk_petition_duration(),
-                    WalkPetitions.get(0).getWalk_petition_notes(), WalkPetitions.get(0).getUser(), WalkPetitions.get(0).getDog_id(),
-                    walkinvoice.getDog_walker_id(), walkinvoice.getWalk_invoice_price(), walkinvoice.isWalk_invoice_status());
+            WalkInvoice walkinvoiceReal = new WalkInvoice(WalkPetitions.getWalk_petition_date_time(),
+                    WalkPetitions.getWalk_petition_address(), WalkPetitions.getWalk_petition_duration(),
+                    WalkPetitions.getWalk_petition_notes(), WalkPetitions.getUser(), WalkPetitions.getDog_id(),
+                    walkinvoice.getDog_walker_id(), walkinvoice.getWalk_invoice_price(),walkinvoice.getWalk_invoice_status());
 
-            walkPetitionRepository.deletePetition(WalkPetitions.get(0).getWalk_petition_id());
+            walkPetitionRepository.deletePetition(WalkPetitions.getWalk_petition_id());
 
             walkinvoiceReal = walkInvoiceRepository.save(walkinvoiceReal);
 

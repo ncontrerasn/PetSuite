@@ -1,10 +1,13 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Dog_Dto;
+import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.Dog;
+import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.basics.Cadena;
 import java.time.LocalDateTime;
@@ -22,10 +25,20 @@ public class WalkPetitionController {
 
     @Autowired
     WalkPetitionRepository walkPetitionRepository;
+    
+    @Autowired
+    WalkInvoiceController walkInvoiceController;
+
 
     @GetMapping("/all")
     public List<WalkPetition> getAllPetitions() {
-        return walkPetitionRepository.findAll();
+         List<WalkPetition> lista= walkPetitionRepository.findAll();
+        List <WalkPetition> listaReal= new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getPrice()==null)
+                listaReal.add(lista.get(i));
+        }
+        return listaReal;
     }
 
     @PostMapping("/create")
@@ -96,7 +109,31 @@ public class WalkPetitionController {
          WalkPetition petition= walkPetitionRepository.findPetitionsById(walkPetition_Dto.getWalk_petition_id());
          System.out.println("El precio que se propone: "+ walkPetition_Dto.getPrecio_proposal());
          petition.setPrice(walkPetition_Dto.getPrecio_proposal());
+         petition.setWalk_petition_walker_user(walkPetition_Dto.getWalk_petition_walker_user());
          walkPetitionRepository.save(petition); 
+        return null;
+    }
+    
+     @PostMapping("/denyoraccept")
+    public  Dog_Dto denyPetition(@Valid @RequestBody WalkInvoice_Dto walkInvoice_Dto){
+        
+        String status=walkInvoice_Dto.getWalk_invoice_status();
+        if(status.equals("Aceptar")){
+            walkInvoiceController.createInvoice(walkInvoice_Dto);
+            
+            
+            
+        }else{
+            WalkPetition petition= walkPetitionRepository.findPetitionsByDogAndByUser(walkInvoice_Dto.getDog_id().toString(),walkInvoice_Dto.getClient_id());
+            petition.setWalk_petition_walker_user(null);
+            petition.setPrice(null);
+            
+            
+            
+        }
+        
+         
+        
         return null;
     }
     

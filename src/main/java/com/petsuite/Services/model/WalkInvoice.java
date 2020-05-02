@@ -18,6 +18,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "walk_invoice")
@@ -37,7 +40,7 @@ public class WalkInvoice {
     @NotNull
     private float walk_invoice_price;
     
-    private boolean walk_invoice_status;
+    private String walk_invoice_status;
 
     @NotBlank
     private String walk_invoice_address;
@@ -56,14 +59,21 @@ public class WalkInvoice {
     @NotNull
     private Integer dog_id;
     
+    
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_wi;
     
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="dog_walker_id", nullable=false,updatable = false, insertable = false)
     private DogWalker dogWalker;
     
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
     private Dog dog;
@@ -71,7 +81,7 @@ public class WalkInvoice {
     public WalkInvoice(LocalDateTime walk_invoice_date, String walk_invoice_address,
                        Float walk_invoice_duration, String walk_invoice_notes,
                        String client_id, Integer dog_id, String dog_walker_id,
-                       Float walk_invoice_price, Boolean walk_invoice_status) {
+                       Float walk_invoice_price, String walk_invoice_status) {
         this.walk_invoice_date = walk_invoice_date;
         this.walk_invoice_address = walk_invoice_address;
         this.walk_invoice_duration = walk_invoice_duration;

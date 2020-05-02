@@ -44,6 +44,8 @@ public class WalkPetition {
     private Float walk_petition_duration;
     
     private String walk_petition_notes;
+    
+    private String walk_petition_walker_user;
 
 
     @NotBlank

@@ -22,7 +22,7 @@ public class WalkInvoice_Dto {
 
     private float walk_invoice_price;
 
-    private boolean walk_invoice_status;
+    private String walk_invoice_status;
 
     private String client_id;
 

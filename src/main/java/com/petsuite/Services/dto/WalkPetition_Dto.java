@@ -37,6 +37,7 @@ public class WalkPetition_Dto {
     
     private Integer precio_proposal;
     
+     private String walk_petition_walker_user;
     
 
     
