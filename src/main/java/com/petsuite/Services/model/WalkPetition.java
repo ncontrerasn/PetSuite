@@ -47,16 +47,13 @@ public class WalkPetition {
     
     private String walk_petition_walker_user;
 
-
     @NotBlank
     private String user;
-
 
     @NotNull
     private Integer dog_id;
     
     private Integer price;
-    
     
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

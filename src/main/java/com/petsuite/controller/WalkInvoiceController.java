@@ -12,10 +12,15 @@ import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.basics.Cadena;
 import java.time.LocalDateTime;
+
+import com.petsuite.basics.CadenaDoble;
+import com.petsuite.basics.Entero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/walkinvoices")

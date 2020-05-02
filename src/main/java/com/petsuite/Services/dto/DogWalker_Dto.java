@@ -19,11 +19,17 @@ import lombok.NoArgsConstructor;
 public class DogWalker_Dto {
      
     private String user;
+
     private String password;
+
     private String dog_walker_name;
+
     private String dog_walker_phone;
+
     private String dog_walker_e_mail;
+
     private Float dog_walker_score;
+
     private String token;
     private String dog_walker_role;
 
