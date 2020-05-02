@@ -7,6 +7,7 @@ import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.basics.Cadena;

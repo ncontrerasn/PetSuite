@@ -110,6 +110,7 @@ public class WalkPetitionController {
          System.out.println("El precio que se propone: "+ walkPetition_Dto.getPrecio_proposal());
          petition.setPrice(walkPetition_Dto.getPrecio_proposal());
          petition.setWalk_petition_walker_user(walkPetition_Dto.getWalk_petition_walker_user());
+         
          walkPetitionRepository.save(petition); 
         return null;
     }
