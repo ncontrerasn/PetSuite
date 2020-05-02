@@ -33,6 +33,11 @@ public interface WalkInvoiceRepository extends JpaRepository<WalkInvoice, Intege
 
     @Transactional
     @Modifying
+    @Query(value = "UPDATE walk_invoice SET walk_invoice_status = ?1 WHERE walk_invoice_id = ?2", nativeQuery = true)
+    Integer updateInvoiceStatus(String status, int id);
+
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE walk_invoice SET walker_score = ?1 WHERE walk_invoice_id = ?2", nativeQuery = true)
     Integer scoreWalker(float score, int walk_invoice_id);
 

@@ -102,4 +102,24 @@ public class WalkInvoiceController {
         return dogs;
     }
 
+    @PostMapping("/updateInvoiceStatus")
+    public Cadena updateInvoiceStatus(@Valid @RequestBody Entero entero){
+        Optional<WalkInvoice> walkInvoice = walkInvoiceRepository.findById(entero.getEntero());
+        String status = walkInvoice.get().getWalk_invoice_status();
+        Integer updated;
+        switch(status){
+            case "Aceptado":
+                updated = walkInvoiceRepository.updateInvoiceStatus("En progreso", entero.getEntero());
+                if(updated == 1)
+                    return new Cadena("Estado actualizado");
+                break;
+            case "En progreso":
+                updated = walkInvoiceRepository.updateInvoiceStatus("Terminado", entero.getEntero());
+                if(updated == 1)
+                    return new Cadena("Estado actualizado");
+                break;
+        }
+        return new Cadena("Error actualizando recibo");
+    }
+
 }
