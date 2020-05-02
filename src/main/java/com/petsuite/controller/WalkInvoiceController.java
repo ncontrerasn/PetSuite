@@ -31,6 +31,9 @@ public class WalkInvoiceController {
     @Autowired
     DogWalkerRepository dogWalkerRepository;
 
+    @Autowired
+    DogRepository dogRepository;
+
     @GetMapping("/all")
     public List<WalkInvoice> getAllInvoices() {
         return walkInvoiceRepository.findAll();
@@ -70,6 +73,33 @@ public class WalkInvoiceController {
                 return new Cadena("Paseador calificado correctamente");
         }
         return new Cadena("Error calificando al paseador");
+    }
+
+    @PostMapping("/invoicesByStatus")
+    public List<WalkInvoice> invoicesByStatus(@Valid @RequestBody Cadena cadena){
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByStatus(cadena.getCadena());
+        return walkInvoices;
+    }
+
+    @PostMapping("/invoicesByWalker")//devuleve todos los recibos sin importar el estado
+    public List<WalkInvoice> invoicesByWalker(@Valid @RequestBody Cadena cadena){
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalker(cadena.getCadena());
+        return walkInvoices;
+    }
+
+    @PostMapping("/invoicesByWalkerAndStatus")//devuleve todos los recibos de paseos con un estado especifico. Se podria unir con el de arriba
+    public List<WalkInvoice> findByWalkerAndStatus(@Valid @RequestBody CadenaDoble cadenaDoble){
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadenaDoble.getCadena1(), cadenaDoble.getCadena2());
+        return walkInvoices;
+    }
+
+    @PostMapping("/dogsByWalkerAndStatusAccepted")
+    public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){
+        List<Dog> dogs = new ArrayList<>();
+        List<Integer> accepted = walkInvoiceRepository.findByWalkerAndStatusAccepted(cadena.getCadena(), "Aceptado");
+        for(int i = 0; i < accepted.size(); i++)
+            dogs.add(dogRepository.findByDogId(accepted.get(i)));
+        return dogs;
     }
 
 }

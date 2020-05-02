@@ -19,7 +19,6 @@ public interface WalkPetitionRepository extends JpaRepository<WalkPetition, Inte
 
     @Query(value = "SELECT * FROM walk_petition WHERE dog_id = ?1 AND WHERE user = ?2", nativeQuery = true)
     WalkPetition findPetitionsByDogAndByUser(String dog_id, String client_id);
-
     
     @Modifying
     @Transactional
