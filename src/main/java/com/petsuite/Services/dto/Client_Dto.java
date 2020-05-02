@@ -19,19 +19,12 @@ import lombok.NoArgsConstructor;
 public class Client_Dto {
     
     private String user;
-
     private String password;
- 
     private String client_name;
-  
     private String client_phone;
-
     private String client_e_mail;
-
     private String client_address;
-    
     private String token;
-    
     private String client_role;
 
     public Client_Dto(String client_name, String client_phone, String client_e_mail, String client_address) {
@@ -40,8 +33,5 @@ public class Client_Dto {
         this.client_e_mail = client_e_mail;
         this.client_address = client_address;
     }
-    
-    
-    
-    
+
 }

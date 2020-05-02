@@ -30,14 +30,20 @@ public class WalkPetitionController {
     WalkInvoiceController walkInvoiceController;
 
     @GetMapping("/all")
-    public List<WalkPetition> getAllPetitions() {
-         List<WalkPetition> lista= walkPetitionRepository.findAll();
-        List <WalkPetition> listaReal= new ArrayList<>();
-        for (int i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getPrice()==null)
-                listaReal.add(lista.get(i));
+    public List<WalkPetition_Dto> getAllPetitions() {
+        List<WalkPetition> lista= walkPetitionRepository.findAll();
+        List<WalkPetition_Dto> listaDtos = new ArrayList<>();
+        for(int j = 0; j < lista.size(); j++){
+            WalkPetition walkPetition = lista.get(0);
+            Optional<Dog> dog = dogRepository.findById(walkPetition.getDog_id());
+            if(lista.get(j).getPrice() == null)
+                listaDtos.add(new WalkPetition_Dto(walkPetition.getWalk_petition_id(), walkPetition.getWalk_petition_date_time().toString(),
+                        walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(),
+                        walkPetition.getUser(), walkPetition.getDog_id(), walkPetition.getPrice(), walkPetition.getWalk_petition_walker_user(),
+                        dog.get().getDog_name(), dog.get().getDog_race(), dog.get().getDog_height(), dog.get().getDog_weight(), dog.get().getDog_age(),
+                        dog.get().getDog_notes()));
         }
-        return listaReal;
+        return listaDtos;
     }
 
     @PostMapping("/create")

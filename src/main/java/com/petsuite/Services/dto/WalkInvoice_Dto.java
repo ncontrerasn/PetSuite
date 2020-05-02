@@ -19,16 +19,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WalkInvoice_Dto {
 
-
     private Integer walk_invoice_id;
     private float walk_invoice_price;
-
     private String walk_invoice_status;
-
     private String client_id;
-
     private String dog_walker_id;
-
     private Integer dog_id;
     private Float walker_score;
 

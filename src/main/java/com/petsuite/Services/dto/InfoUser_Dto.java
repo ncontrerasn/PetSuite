@@ -21,21 +21,11 @@ import lombok.*;
 public class InfoUser_Dto {
       
     private String user;
-
     private String password;
-   
     private String role;//tipo 1 cliente, tipo 2 paseador, tipo 3 paseador;
-    
-    
-     
+
     /*private String e_mail;
-
-    
     private String phone;
-    
-    
-    
     private String name;*/
-
 
 }
