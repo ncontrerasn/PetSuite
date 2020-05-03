@@ -58,10 +58,10 @@ public class WalkPetitionController {
 
 //        List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
 
-  //      List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
+         List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
 
 
-    //    if (allWalkPetitionsOfClient.isEmpty() && allWalkPetitionsOfDog.isEmpty()) {
+         if (allWalkPetitionsOfDog.isEmpty()) {
     
         System.out.println("La fecha que me llegó es: "+ walkPetition.getWalk_petition_date_time());
             
@@ -85,9 +85,9 @@ public class WalkPetitionController {
                 return walkPetition;
             else
                 return null;
-        //}
+        }
         
-
+        return null;
     }
 
     @DeleteMapping("/abort")

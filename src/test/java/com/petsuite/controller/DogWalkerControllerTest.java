@@ -79,7 +79,7 @@ class DogWalkerControllerTest {
 
     @Test
     void testPendingDogList() {
-        String dogWalkerUser = "ncontrerasn";
+        Cadena dogWalkerUser = new Cadena("ncontrerasn");
         List<Dog> dogs = new ArrayList<>();
         List<Integer> dogsIds= new ArrayList<>();
         Dog dog1 = new Dog();
@@ -115,7 +115,7 @@ class DogWalkerControllerTest {
         when(walkInvoiceRepository.findByDog_walker_id_and_status_true(anyString())).thenReturn(dogsIds);
         for(int i = 0; i < dogsIds.size(); i++)
             when(dogRepository.findById(anyInt())).thenReturn(java.util.Optional.of(dogs.get(i)));
-        assertEquals(1, dogWalkerController.PendingDogList(dogWalkerUser).size());
+        assertEquals(1, dogWalkerController.PendingDogList((dogWalkerUser)).size());
     }
 
     @Test

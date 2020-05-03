@@ -47,7 +47,7 @@ public class Client extends InfoUser{
     
      
     @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "client_p")
-    private WalkPetition walkPetition;
+    @OneToMany(mappedBy = "client_p")
+    private Set<WalkPetition> walkPetitions;
 
 }
