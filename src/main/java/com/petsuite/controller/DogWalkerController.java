@@ -66,11 +66,11 @@ public class DogWalkerController {
     }
 
     @PostMapping(value = "/PendingDogList")
-    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody String dogWalker){
+    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody Cadena dogWalker){
 
         List<Optional<Dog>> dogs = new ArrayList<>();
-        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_true(dogWalker);
-        for(int i = 0; i < dogs_ids.size() - 1; i++)
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_true(dogWalker.getCadena());
+        for(int i = 0; i < dogs_ids.size(); i++)
             dogs.add(dogRepository.findById(dogs_ids.get(i)));
         return dogs;
     }

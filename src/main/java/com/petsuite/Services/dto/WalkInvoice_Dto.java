@@ -27,7 +27,7 @@ public class WalkInvoice_Dto {
 
     private String client_id;
 
-    private String dog_walker_id;
+    private String  dog_walker_id;
 
     private Integer dog_id;
     private Float walker_score;

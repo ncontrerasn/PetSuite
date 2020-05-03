@@ -39,7 +39,7 @@ public class WalkPetitionController {
         List<WalkPetition> lista= walkPetitionRepository.findAll();
         List<WalkPetition_Dto> listaDtos = new ArrayList<>();
         for(int j = 0; j < lista.size(); j++){
-            WalkPetition walkPetition = lista.get(0);
+            WalkPetition walkPetition = lista.get(j);
             Optional<Dog> dog = dogRepository.findById(walkPetition.getDog_id());
             if(lista.get(j).getPrice() == null)
                 listaDtos.add(new WalkPetition_Dto(walkPetition.getWalk_petition_id(), walkPetition.getWalk_petition_date_time().toString(),
@@ -103,15 +103,29 @@ public class WalkPetitionController {
     }
 
     @PostMapping("/findbyuser")
-    public List<WalkPetition> finPetitionByUserWithProposalPrice(@Valid @RequestBody Cadena user){
-        System.out.println("El nombre que entra es: "+user.getCadena() );
+    public List<WalkPetition_Dto> finPetitionByUserWithProposalPrice(@Valid @RequestBody Cadena user){
+        System.out.println("El nombre que entra es: , nos vamos con "+user.getCadena() );
         List<WalkPetition> lista= walkPetitionRepository.findPetitionsByUser(user.getCadena());
-        List <WalkPetition> listaReal= new ArrayList<>();
-        for (int i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getPrice()!=null)
-                listaReal.add(lista.get(i));
+       
+        
+        
+         List<WalkPetition_Dto> listaDtos = new ArrayList<>();
+        for(int j = 0; j < lista.size(); j++){
+            if(lista.get(j).getPrice()!=null){
+                System.out.println("No es nulo");
+            WalkPetition walkPetition = lista.get(j);
+            Optional<Dog> dog = dogRepository.findById(walkPetition.getDog_id());
+
+                listaDtos.add(new WalkPetition_Dto(walkPetition.getWalk_petition_id(), walkPetition.getWalk_petition_date_time().toString(),
+                        walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(),
+                        walkPetition.getUser(), walkPetition.getDog_id(), walkPetition.getPrice(), walkPetition.getWalk_petition_walker_user(),
+                        dog.get().getDog_name(), dog.get().getDog_race(), dog.get().getDog_height(), dog.get().getDog_weight(), dog.get().getDog_age(),
+                        dog.get().getDog_notes()));
         }
-        return listaReal;
+        }
+        return listaDtos;
+        
+        
     }
      @PostMapping("/propose")
     public  Dog_Dto proposePrice(@Valid @RequestBody WalkPetition_Dto walkPetition_Dto){

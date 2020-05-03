@@ -70,6 +70,7 @@ public class WalkInvoiceController {
 
     @PostMapping("/score")//para pedir otro paseo debe estar calificado al paseador. Pero para comenzar un paseo, se hace un recibo con status 0, cuando se califica al paseador, se pone status 1, cuando se califica ya es porque se ha terminado el paseo
     public Cadena scoreDogWalker(@Valid @RequestBody WalkInvoice_Dto walkInvoice_dto){//se podria hacer un dto solo con id factura, id paseador y puntaje
+        System.out.println("Diego va a calificar con id : "+ walkInvoice_dto.getWalk_invoice_id()+ " y con score : "+ walkInvoice_dto.getWalker_score());  
         int updatedInvoice = walkInvoiceRepository.scoreWalker(walkInvoice_dto.getWalker_score(), walkInvoice_dto.getWalk_invoice_id());
         if(updatedInvoice == 1){
             float score = walkInvoiceRepository.scoreAvg(walkInvoice_dto.getDog_walker_id());
@@ -97,34 +98,76 @@ public class WalkInvoiceController {
         List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadenaDoble.getCadena1(), cadenaDoble.getCadena2());
         return walkInvoices;
     }
+    
+    @PostMapping("/invoicesAccepted")
+    public List<WalkInvoice> findByStatusAccepted(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego necesita saber si entraste");
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
+        return walkInvoices;
+    }
+    
+    
+    @PostMapping("/invoicesProgress")
+    public List<WalkInvoice> findByStatusProgress(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego esta solicitando los del progreso");
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "En Progreso");
+        return walkInvoices;
+    }
+    
+        @PostMapping("/invoicesEndedWalkers")
+    public List<WalkInvoice> findByStatusEndedWalker(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego esta solicitando los que terminaron ahora si");
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Terminado");
+        return walkInvoices;
+    }
+    
+    @PostMapping("/invoicesEndedClient")
+    public List<WalkInvoice> findByStatusEndedClient(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego esta solicitando los que terminaron ahora si, pero con cliente");
+        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByUserAndStatus( cadena.getCadena(), "Terminado");
+        return walkInvoices;
+    }
+    
+    
+    
 
-    @PostMapping("/dogsByWalkerAndStatusAccepted")
+    @PostMapping("/dogsByWalkerAndStatusProgress")
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){
         List<Dog> dogs = new ArrayList<>();
-        List<Integer> accepted = walkInvoiceRepository.findByWalkerAndStatusAccepted(cadena.getCadena(), "Aceptado");
+        List<Integer> accepted = walkInvoiceRepository.findByWalkerAndStatusAccepted(cadena.getCadena(), "En progreso");
         for(int i = 0; i < accepted.size(); i++)
             dogs.add(dogRepository.findByDogId(accepted.get(i)));
         return dogs;
     }
 
     @PostMapping("/updateInvoiceStatus")
-    public Cadena updateInvoiceStatus(@Valid @RequestBody Entero entero){
+    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{
         Optional<WalkInvoice> walkInvoice = walkInvoiceRepository.findById(entero.getEntero());
         String status = walkInvoice.get().getWalk_invoice_status();
-        Integer updated;
+        
+        
+        
+        
         switch(status){
-            case "Aceptado":
-                updated = walkInvoiceRepository.updateInvoiceStatus("En progreso", entero.getEntero());
-                if(updated == 1)
-                    return new Cadena("Estado actualizado");
+            case "Aceptar":
+                
+                
+               walkInvoice.get().setWalk_invoice_status("En progreso");
+               walkInvoiceRepository.save(walkInvoice.get());
+                
+                if(walkInvoice.get().getWalk_invoice_status() == "En progreso")
+                    
+                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
                 break;
             case "En progreso":
-                updated = walkInvoiceRepository.updateInvoiceStatus("Terminado", entero.getEntero());
-                if(updated == 1)
-                    return new Cadena("Estado actualizado");
+               walkInvoice.get().setWalk_invoice_status("Terminado");
+               walkInvoiceRepository.save(walkInvoice.get());
+               
+                if(walkInvoice.get().getWalk_invoice_status() == "Terminado")
+                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
                 break;
         }
-        return new Cadena("Error actualizando recibo");
+        return null; 
     }
 
 }
