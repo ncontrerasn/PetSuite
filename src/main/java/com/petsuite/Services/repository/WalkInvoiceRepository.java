@@ -53,4 +53,7 @@ public interface WalkInvoiceRepository extends JpaRepository<WalkInvoice, Intege
 
     @Query(value = "SELECT AVG(walker_score) FROM walk_invoice WHERE dog_walker_id = ?1", nativeQuery = true)
     Float scoreAvg(String walker_id);
+
+    @Query(value = "SELECT * FROM walk_invoice WHERE walk_invoice_status = ?1 AND client_id = ?2 AND dog_id = ?3", nativeQuery = true)
+    List<WalkInvoice> findByStatusAndUserAndDog(String walk_invoice_status, String client_id, String dog_id);
 }

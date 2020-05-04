@@ -33,6 +33,9 @@ public class WalkPetitionController {
     @Autowired
     WalkInvoiceController walkInvoiceController;
 
+    @Autowired
+    WalkInvoiceRepository walkInvoiceRepository;
+
 
     @GetMapping("/all")
     public List<WalkPetition_Dto> getAllPetitions() {
@@ -56,12 +59,16 @@ public class WalkPetitionController {
         
         System.out.println("El perro es: "+walkPetition.getDog_id());
 
-//        List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
+//       List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
 
          List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
 
+         List<WalkInvoice> WalkInvoicesAcepted = walkInvoiceRepository.findByStatusAndUserAndDog("Aceptar",walkPetition.getUser(),walkPetition.getDog_id().toString());
 
-         if (allWalkPetitionsOfDog.isEmpty()) {
+        List<WalkInvoice> WalkInvoicesInProgress = walkInvoiceRepository.findByStatusAndUserAndDog("En progreso",walkPetition.getUser(),walkPetition.getDog_id().toString());
+
+
+         if (allWalkPetitionsOfDog.isEmpty() && WalkInvoicesAcepted.isEmpty() && WalkInvoicesInProgress.isEmpty()) {
     
         System.out.println("La fecha que me llegó es: "+ walkPetition.getWalk_petition_date_time());
             
