@@ -88,7 +88,7 @@ public class InfoUserController {
                         String token= tokenController.generate(user);
                         ul2.get(0).setUser(u.getUser());
                         ul2.get(0).setToken(token);
-                        ul2.get(0).setClient_role(u.getRole());
+                        ul2.get(0).setRole(u.getRole());
                         
                         
                         return ul2.get(0);
@@ -108,7 +108,7 @@ public class InfoUserController {
                         String token = tokenController.generate(user);
                         ul2.get(0).setToken(token);
                         ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setDog_walker_role(u.getRole());
+                        ul2.get(0).setRole(u.getRole());
                         
                         return ul2.get(0);
                     }
@@ -133,7 +133,7 @@ public class InfoUserController {
                           String token = tokenController.generate(user);
                           ul2.get(0).setToken(token);
                           ul2.get(0).setUser(u.getUser());
-                          ul2.get(0).setDog_daycare_role(u.getRole());
+                          ul2.get(0).setRole(u.getRole());
                           return ul2.get(0);
                       }
                 }

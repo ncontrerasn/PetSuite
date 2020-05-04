@@ -31,7 +31,7 @@ public class DogWalker_Dto {
     private Float dog_walker_score;
 
     private String token;
-    private String dog_walker_role;
+    private String role;
 
     public DogWalker_Dto(String dog_walker_name, String dog_walker_phone, String dog_walker_e_mail, Float dog_walker_score) {
         this.dog_walker_name = dog_walker_name;
