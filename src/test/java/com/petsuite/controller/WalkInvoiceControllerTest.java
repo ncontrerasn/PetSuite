@@ -1,6 +1,7 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.WalkInvoice_Dto;
+import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.model.WalkPetition;
@@ -81,23 +82,14 @@ class WalkInvoiceControllerTest {
     @Test
     void createInvoice() {
 
-        Dog dog1 = new Dog();
-
-        dog1.setDog_id(1);
-        dog1.setUser("htovars");
-        dog1.setDog_age(7);
-        dog1.setDog_height((float)34);
-        dog1.setDog_name("Luna");
-        dog1.setDog_notes("alérgico al polvo");
-        dog1.setDog_weight((float)8);
-
         WalkInvoice_Dto In_Dto = new WalkInvoice_Dto();
 
         In_Dto.setDog_walker_id("esgonzalezca");
         In_Dto.setWalk_invoice_price((float)35);
         In_Dto.setWalker_score((float)4.0);
-        In_Dto.setWalk_invoice_status("false");
-
+        In_Dto.setWalk_invoice_status("aceptado");
+        In_Dto.setDog_id(1);
+        In_Dto.setClient_id("htovars");
 
         List<WalkInvoice> Invoices = new ArrayList<>();
 
@@ -131,8 +123,13 @@ class WalkInvoiceControllerTest {
         In.setWalk_invoice_status(In_Dto.getWalk_invoice_status());
         In.setWalk_invoice_notes(Petitions.get(0).getWalk_petition_notes());
 
+        doNothing().when(walkPetitionRepository).deletePetition(anyInt());
 
-        when(walkInvoiceRepository.save(any())).thenReturn(Invoices.add(In));
+        Petitions.remove(0);
+
+        when(walkInvoiceRepository.save(any())).thenReturn(In);
+
+        Invoices.add(In);
 
         assertEquals(0,Petitions.size());
         assertEquals((Integer)1,walkInvoiceController.createInvoice(In_Dto).getWalk_invoice_id());
