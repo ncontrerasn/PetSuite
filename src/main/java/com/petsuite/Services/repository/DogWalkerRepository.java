@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface DogWalkerRepository extends JpaRepository<DogWalker, Float>{
+public interface DogWalkerRepository extends JpaRepository<DogWalker, String>{
 
     @Transactional
     @Modifying

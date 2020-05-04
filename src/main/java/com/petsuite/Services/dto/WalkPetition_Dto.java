@@ -34,5 +34,6 @@ public class WalkPetition_Dto {
     private Float dog_weight;
     private Integer dog_age;
     private String dog_notes;
+    //private Float dog_walker_score;
 
 }

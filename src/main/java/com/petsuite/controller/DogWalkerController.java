@@ -9,6 +9,7 @@ import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.basics.Cadena;
+import com.petsuite.basics.Flotante;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,15 @@ public class DogWalkerController {
         for(int i = 0; i < dogs_ids.size() - 1; i++)
             dogs.add(dogRepository.findById(dogs_ids.get(i)));
         return dogs;
+
+    }
+    
+    @PostMapping(value = "/getCalification")
+    public Flotante getQualifications(@Valid @RequestBody Cadena cadena){
+        System.out.println("Me esta llengando el usuario para flotante: "+ cadena.getCadena());
+        Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena());
+        
+        return new Flotante(dogWalker.get().getDog_walker_score());
 
     }
 

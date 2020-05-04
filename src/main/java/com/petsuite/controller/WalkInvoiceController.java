@@ -168,6 +168,7 @@ public class WalkInvoiceController {
 
     @PostMapping("/dogsByWalkerAndStatusProgress")
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego esta buscando todos los perros en progreso");
         List<Dog> dogs = new ArrayList<>();
         List<Integer> accepted = walkInvoiceRepository.findByWalkerAndStatusAccepted(cadena.getCadena(), "En progreso");
         for(int i = 0; i < accepted.size(); i++)

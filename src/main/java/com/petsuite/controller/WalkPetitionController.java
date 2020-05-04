@@ -108,6 +108,9 @@ public class WalkPetitionController {
     public List<WalkPetition> finPetitionByDog(@Valid @RequestBody String dog){
        return walkPetitionRepository.findPetitionsByDog(dog);
     }
+    
+    
+    
 
     @PostMapping("/findbyuser")
     public List<WalkPetition_Dto> finPetitionByUserWithProposalPrice(@Valid @RequestBody Cadena user){
