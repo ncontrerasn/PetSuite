@@ -100,18 +100,42 @@ public class WalkInvoiceController {
     }
     
     @PostMapping("/invoicesAccepted")
-    public List<WalkInvoice> findByStatusAccepted(@Valid @RequestBody Cadena cadena){
-        System.out.println("Diego necesita saber si entraste");
+    public List<WalkInvoice_Dto> findByStatusAccepted(@Valid @RequestBody Cadena cadena){
+        System.out.println("Diego necesita saber si entraste a lo acpetado");
         List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
-        return walkInvoices;
+        List<WalkInvoice_Dto> listaReal= new ArrayList<>();
+        for (int i = 0; i < walkInvoices.size(); i++) {
+            Dog dog = dogRepository.findByDogId(walkInvoices.get(i).getDog_id());
+            WalkInvoice_Dto invoice_Dto=new WalkInvoice_Dto(walkInvoices.get(i).getWalk_invoice_id(), walkInvoices.get(i).getWalk_invoice_price(),walkInvoices.get(i).getWalk_invoice_status(),walkInvoices.get(i).getClient_id(), walkInvoices.get(i).getDog_walker_id(),walkInvoices.get(i).getWalk_invoice_notes(), walkInvoices.get(i).getDog_id(), walkInvoices.get(i).getWalker_score(),walkInvoices.get(i).getWalk_invoice_date(),walkInvoices.get(i).getWalk_invoice_address(),walkInvoices.get(i).getWalk_invoice_duration(),null,null,0,0);
+            invoice_Dto.setDog_name(dog.getDog_name());
+            invoice_Dto.setDog_height(dog.getDog_height());
+            invoice_Dto.setDog_race(dog.getDog_race());
+            invoice_Dto.setDog_weight(dog.getDog_weight());
+            listaReal.add(invoice_Dto);
+            
+        }
+        
+        return listaReal;
     }
     
     
     @PostMapping("/invoicesProgress")
-    public List<WalkInvoice> findByStatusProgress(@Valid @RequestBody Cadena cadena){
+    public List<WalkInvoice_Dto> findByStatusProgress(@Valid @RequestBody Cadena cadena){
         System.out.println("Diego esta solicitando los del progreso");
-        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "En Progreso");
-        return walkInvoices;
+       List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "En progreso");
+        List<WalkInvoice_Dto> listaReal= new ArrayList<>();
+        for (int i = 0; i < walkInvoices.size(); i++) {
+            Dog dog = dogRepository.findByDogId(walkInvoices.get(i).getDog_id());
+            WalkInvoice_Dto invoice_Dto=new WalkInvoice_Dto(walkInvoices.get(i).getWalk_invoice_id(), walkInvoices.get(i).getWalk_invoice_price(),walkInvoices.get(i).getWalk_invoice_status(),walkInvoices.get(i).getClient_id(), walkInvoices.get(i).getDog_walker_id(),walkInvoices.get(i).getWalk_invoice_notes(), walkInvoices.get(i).getDog_id(), walkInvoices.get(i).getWalker_score(),walkInvoices.get(i).getWalk_invoice_date(),walkInvoices.get(i).getWalk_invoice_address(),walkInvoices.get(i).getWalk_invoice_duration(),null,null,0,0);
+            invoice_Dto.setDog_name(dog.getDog_name());
+            invoice_Dto.setDog_height(dog.getDog_height());
+            invoice_Dto.setDog_race(dog.getDog_race());
+            invoice_Dto.setDog_weight(dog.getDog_weight());
+            listaReal.add(invoice_Dto);
+            
+        }
+        
+        return listaReal;
     }
     
         @PostMapping("/invoicesEndedWalkers")
