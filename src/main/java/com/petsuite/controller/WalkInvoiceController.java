@@ -146,10 +146,21 @@ public class WalkInvoiceController {
     }
     
     @PostMapping("/invoicesEndedClient")
-    public List<WalkInvoice> findByStatusEndedClient(@Valid @RequestBody Cadena cadena){
+    public List<WalkInvoice_Dto> findByStatusEndedClient(@Valid @RequestBody Cadena cadena){
         System.out.println("Diego esta solicitando los que terminaron ahora si, pero con cliente");
-        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByUserAndStatus( cadena.getCadena(), "Terminado");
-        return walkInvoices;
+        System.out.println("Diego esta solicitando los del progreso");
+       List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByUserAndStatus(cadena.getCadena(), "Terminado");
+        List<WalkInvoice_Dto> listaReal= new ArrayList<>();
+        for (int i = 0; i < walkInvoices.size(); i++) {
+            Dog dog = dogRepository.findByDogId(walkInvoices.get(i).getDog_id());
+            WalkInvoice_Dto invoice_Dto=new WalkInvoice_Dto(walkInvoices.get(i).getWalk_invoice_id(), walkInvoices.get(i).getWalk_invoice_price(),walkInvoices.get(i).getWalk_invoice_status(),walkInvoices.get(i).getClient_id(), walkInvoices.get(i).getDog_walker_id(),walkInvoices.get(i).getWalk_invoice_notes(), walkInvoices.get(i).getDog_id(), walkInvoices.get(i).getWalker_score(),walkInvoices.get(i).getWalk_invoice_date(),walkInvoices.get(i).getWalk_invoice_address(),walkInvoices.get(i).getWalk_invoice_duration(),null,null,0,0);
+            invoice_Dto.setDog_name(dog.getDog_name());
+            invoice_Dto.setDog_height(dog.getDog_height());
+            invoice_Dto.setDog_race(dog.getDog_race());
+            invoice_Dto.setDog_weight(dog.getDog_weight());
+            listaReal.add(invoice_Dto);
+    }
+        return listaReal;
     }
     
     
