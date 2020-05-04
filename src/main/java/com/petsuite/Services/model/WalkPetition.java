@@ -1,14 +1,6 @@
 package com.petsuite.Services.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -44,19 +36,20 @@ public class WalkPetition {
     private Float walk_petition_duration;
     
     private String walk_petition_notes;
-
+    
+    private String walk_petition_walker_user;
 
     @NotBlank
     private String user;
 
-
     @NotNull
     private Integer dog_id;
     
+    private Integer price;
     
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user", referencedColumnName = "user",updatable = false, insertable = false)
     private Client client_p;
 

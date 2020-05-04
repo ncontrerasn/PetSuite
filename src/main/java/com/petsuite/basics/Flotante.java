@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cadena {
-    
-    String cadena;
-    
+public class Flotante {
+    Float flotante;
 }
