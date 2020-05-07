@@ -10,6 +10,8 @@ import com.petsuite.Services.repository.ClientRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
+import com.petsuite.basics.Cadena;
+import com.petsuite.basics.CadenaDoble;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -18,7 +20,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.PostUpdate;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,6 +83,41 @@ public class ClientController {
     public List<WalkPetition> myPetition(@Valid @RequestBody String user){
         return walkPetitionRepository.findPetitionsByUser(user);
     }
+
+    @PostMapping("/updateaddress")
+    public String updateAddress(@Valid @RequestBody CadenaDoble user){
+
+        int Worked = 0;
+
+        Worked = clientRepository.updateAddressByUser(user.getCadena2(),user.getCadena1());
+
+        if (Worked==1){
+
+            return user.getCadena2();
+        }
+
+        return null;
+
+    }
+
+    @PostMapping("/updatepassword")
+    public String updateUserPassword(@Valid @RequestBody CadenaDoble user){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateUserPassword(user.getCadena2(),user.getCadena1());
+
+        if (Worked==1){
+
+            return "Worked";
+
+        }
+
+        return null;
+
+    }
+
+
 
     public String getClientJWTToken(String username) {
         String secretKey = "mySecretKey";
