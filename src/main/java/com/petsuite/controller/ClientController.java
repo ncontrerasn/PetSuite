@@ -84,36 +84,115 @@ public class ClientController {
         return walkPetitionRepository.findPetitionsByUser(user);
     }
 
-    @PostMapping("/updateaddress")
-    public String updateAddress(@Valid @RequestBody CadenaDoble user){
+    public Integer updateAddress(String user, String address){
 
         int Worked = 0;
 
-        Worked = clientRepository.updateAddressByUser(user.getCadena2(),user.getCadena1());
+        Worked = clientRepository.updateAddressByUser(address,user);
 
-        if (Worked==1){
-
-            return user.getCadena2();
-        }
-
-        return null;
+        return Worked;
 
     }
 
-    @PostMapping("/updatepassword")
-    public String updateUserPassword(@Valid @RequestBody CadenaDoble user){
+    public Integer updateUserPassword(String user, String password){
+
+        if (password!=null)
+        {
+            int Worked = 0;
+
+            Worked = infoUserRepository.updateUserPassword(password,user);
+
+            return Worked;
+        }
+
+        return 0;
+
+    }
+
+    public Integer updateName(String user, String name){
 
         int Worked = 0;
 
-        Worked = infoUserRepository.updateUserPassword(user.getCadena2(),user.getCadena1());
+        Worked = infoUserRepository.updateClientName(name,user);
 
-        if (Worked==1){
+        return Worked;
 
-            return "Worked";
+    }
 
+    public Integer updatePhone(String user, String Phone){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateClientPhone(Phone,user);
+
+        return Worked;
+
+    }
+
+    public Integer updateMail(String user, String Mail){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateClientEmail(Mail,user);
+
+        return Worked;
+
+    }
+
+    @PostMapping("/update")
+    public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){
+
+        System.out.println(user_dto);
+
+        Client_Dto Cli_Dto = user_dto;
+
+        int uppdateReturns = 0;
+
+        InfoUser checkUser = infoUserRepository.findUser(user_dto.getUser());
+
+        if (checkUser.getUser()!=null)
+        {
+
+            uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());
+
+            if (uppdateReturns!=1)
+            {
+                Cli_Dto.setPassword(null);
+            }
+
+            uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getClient_address());
+
+            if (uppdateReturns!=1)
+            {
+                Cli_Dto.setClient_address(null);
+            }
+
+            uppdateReturns = updateName(user_dto.getUser(),user_dto.getClient_name());
+
+            if (uppdateReturns!=1)
+            {
+                Cli_Dto.setClient_name(null);
+            }
+
+            uppdateReturns = updatePhone(user_dto.getUser(),user_dto.getClient_phone());
+
+            if (uppdateReturns!=1)
+            {
+                Cli_Dto.setClient_phone(null);
+            }
+
+            uppdateReturns = updateMail(user_dto.getUser(),user_dto.getClient_e_mail());
+
+            if (uppdateReturns!=1)
+            {
+                Cli_Dto.setClient_e_mail(null);
+            }
+
+        }else{
+            Cli_Dto = new Client_Dto();
         }
 
-        return null;
+        return Cli_Dto;
 
     }
 
