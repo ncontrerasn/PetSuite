@@ -41,6 +41,13 @@ public class DogDaycareService {
     @NotNull
     private Integer dog_daycare_invoice_id;
     
+     @NotNull
+    private Integer dog_daycare_id;
+     
+     
+    
+    
+    
     @ManyToOne
     @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;

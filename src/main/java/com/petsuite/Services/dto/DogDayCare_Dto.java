@@ -37,6 +37,7 @@ public class DogDayCare_Dto {
     private String token;
     
     private String role;
+    public Float dog_daycare_price_base;
 
     public DogDayCare_Dto(String dog_daycare_e_mail, String dog_daycare_address, Boolean dog_daycare_type, String dog_daycare_phone, Float dog_daycare_score, String dog_daycare_name) {
         this.dog_daycare_e_mail = dog_daycare_e_mail;

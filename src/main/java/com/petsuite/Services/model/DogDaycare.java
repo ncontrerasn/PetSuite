@@ -42,6 +42,9 @@ public class DogDaycare extends InfoUser{
     @NotNull
     private Float dog_daycare_score;
     
+     @NotNull
+    private Float dog_daycare_base_price;
+    
     
      
     @Getter(AccessLevel.NONE)
