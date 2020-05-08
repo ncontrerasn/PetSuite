@@ -75,8 +75,8 @@ public class ClientController {
     }
 
     @PostMapping("/dogList")
-    public List<Dog> myDogList(@Valid @RequestBody String user){
-        return dogRepository.findByUser(user);
+    public List<Dog> myDogList(@Valid @RequestBody Cadena user){
+        return dogRepository.findByUser(user.getCadena());
     }
 
     @PostMapping("/mypetition")
@@ -148,9 +148,9 @@ public class ClientController {
 
         int uppdateReturns = 0;
 
-        InfoUser checkUser = infoUserRepository.findUser(user_dto.getUser());
+        String checkUser = infoUserRepository.findUser(user_dto.getUser());
 
-        if (checkUser.getUser()!=null)
+        if (checkUser!=null)
         {
 
             uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());

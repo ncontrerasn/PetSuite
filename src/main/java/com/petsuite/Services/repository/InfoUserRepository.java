@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public interface InfoUserRepository extends JpaRepository<InfoUser, String>{
 
     @Transactional
@@ -32,7 +33,7 @@ public interface InfoUserRepository extends JpaRepository<InfoUser, String>{
     @Query(value = "UPDATE info_user SET e_mail = ?1 WHERE user = ?2", nativeQuery = true)
     Integer updateClientEmail(String e_mail, String user);
 
-    @Query(value = "SELECT * FROM info_user WHERE user = ?1", nativeQuery = true)
-    InfoUser findUser(String user);
+    @Query(value = "SELECT user FROM info_user WHERE user = ?1", nativeQuery = true)
+    String findUser(String user);
 
 }

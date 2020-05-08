@@ -3,6 +3,7 @@ package com.petsuite.controller;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.basics.Cadena;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,7 +56,11 @@ class ClientControllerTest {
         dogs.add(dog1);
         dogs.add(dog2);
 
+        Cadena cad = new Cadena();
+
+        cad.setCadena("ncontrerasn");
+
         when(dogRepository.findByUser(anyString())).thenReturn(dogs);
-        assertEquals(2, clientController.myDogList("ncontrerasn").size());
+        assertEquals(2, clientController.myDogList(cad).size());
     }
 }
