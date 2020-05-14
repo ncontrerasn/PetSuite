@@ -9,6 +9,7 @@ import com.petsuite.Services.model.DogDaycareService;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.ClientRepository;
+import com.petsuite.Services.repository.DogDaycareServiceRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 public class DogDaycareServiceController {
 
     @Autowired
-    WalkPetitionRepository walkPetitionRepository;
+    DogDaycareServiceRepository dogDaycareServiceRepository;
 
     @Autowired
     ClientRepository clientRepository;
@@ -51,26 +52,28 @@ public class DogDaycareServiceController {
         return clientRepository.findAll();
     }
     
-    @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
-    public Client_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) {
+    @GetMapping("/myServices")
+    public List<DogDaycareService> getMyServices(@RequestParam(value = "user") String user) {
+        System.out.println("Quiero verificar mis servicios de "+ user);
+       
+        return dogDaycareServiceRepository.findMyServicesByUser(user);
+    }
 
-    /*   
-        DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDog_daycare_invoice_name(), care_Service_Dto.getDog_daycare_invoice_description(), care_Service_Dto.getDog_daycare_invoice_price(), care_Service_Dto.getDog_daycare_user(), null, care_Service_Dto.getDog_daycare_id(), null, null);
+    
+    @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
+    public DogDayCare_Service_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) {
+
+        System.out.println("Diego entro a crear un servicio");
+        DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDogdaycare_Service_Name(), care_Service_Dto.getDogdaycare_Service_Description(), care_Service_Dto.getDogdaycare_Service_Price(), care_Service_Dto.getDogdaycare_Service_ClientId(), null);
         
         
         
-            Client realClient=new Client(client.getClient_address(),
-                    null,null,null,null);
-            realClient.setUser(client.getUser());
-            realClient.setPassword(client.getPassword());
-            realClient.setRole("ROLE_CLIENT");
-            realClient.setClient_address(client.getClient_address());
-            realClient.setPhone(client.getClient_phone());
-            realClient.setName(client.getClient_name());
-            realClient.setE_mail(client.getClient_e_mail());
-            clientRepository.save(realClient);
-            return client;
-        }*/
+            if(daycareService!=null){
+                dogDaycareServiceRepository.save(daycareService);
+                return care_Service_Dto;
+                
+            }
+        
         return null;
     }
 
@@ -79,10 +82,7 @@ public class DogDaycareServiceController {
         return dogRepository.findByUser(user);
     }
 
-    @PostMapping("/mypetition")
-    public List<WalkPetition> myPetition(@Valid @RequestBody String user){
-        return walkPetitionRepository.findPetitionsByUser(user);
-    }
+   
 
     public String getClientJWTToken(String username) {
         String secretKey = "mySecretKey";

@@ -22,21 +22,20 @@ public class DogDayCare_Service_Dto {
     
     
  @NotBlank
-    private String dog_daycare_invoice_name;
+    private String dogdaycare_Service_Name;
     
-    private String dog_daycare_invoice_description;
+    private String dogdaycare_Service_Description;
 
     @NotNull
-    private float dog_daycare_invoice_price;
+    private float dogdaycare_Service_Price;
     
     @NotBlank
-    private String dog_daycare_user;
+    private String dogdaycare_Service_ClientId;
     
-    @NotNull
-    private Integer dog_daycare_invoice_id;
+    /*@NotNull
+    private Integer dog_daycare_invoice_id;*/
     
-     @NotNull
-    private Integer dog_daycare_id;
+   
      
 
     

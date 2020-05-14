@@ -56,8 +56,8 @@ public class DogDaycareInvoice {
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
     
-    @OneToMany(mappedBy = "dogDaycareInvoice")
-    private Set<DogDaycareService> dogDaycareServices;
+   /* @OneToMany(mappedBy = "dogDaycareInvoice")
+    private Set<DogDaycareService> dogDaycareServices;*/
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)

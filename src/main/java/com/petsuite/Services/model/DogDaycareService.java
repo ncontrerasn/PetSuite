@@ -10,8 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -28,32 +30,37 @@ public class DogDaycareService {
     private Integer dog_daycare_service_id;
     
     @NotBlank
-    private String dog_daycare_invoice_name;
+    private String dogdaycare_Service_Name;
     
-    private String dog_daycare_invoice_description;
+    
+    
+
+
+@NotBlank
+    
+    private String dogdaycare_Service_Description;
 
     @NotNull
-    private float dog_daycare_invoice_price;
+    private float dogdaycare_Service_Price;
     
     @NotBlank
-    private String dog_daycare_user;
+    private String user;
     
-    @NotNull
-    private Integer dog_daycare_invoice_id;
+  /*  @NotNull
+    private Integer dog_daycare_invoice_id;*/
     
-     @NotNull
-    private Integer dog_daycare_id;
+    
      
      
     
     
-    
+     @Getter(AccessLevel.NONE)
     @ManyToOne
-    @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
+    @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
     
-    @ManyToOne
+  /*  @ManyToOne
     @JoinColumn(name="dog_daycare_invoice_id", nullable=false,updatable = false, insertable = false)
-    private DogDaycareInvoice dogDaycareInvoice;
+    private DogDaycareInvoice dogDaycareInvoice;*/
 
 }
