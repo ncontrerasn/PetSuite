@@ -29,28 +29,18 @@ public class DogDaycare extends InfoUser{
        
     @NotBlank
     private String dog_daycare_address;
-    
-    
-     
    
     @NotNull
     private Boolean dog_daycare_type;
-    
-    
-     
- 
+
     @NotNull
     private Float dog_daycare_score;
-    
-    
      
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycare")
     private Set<DogDaycareService> dogDaycareServices;
-    
-    
-     
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycare")
