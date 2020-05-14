@@ -54,7 +54,7 @@ public class DogDaycareServiceController {
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) {
 
-       
+    /*   
         DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDog_daycare_invoice_name(), care_Service_Dto.getDog_daycare_invoice_description(), care_Service_Dto.getDog_daycare_invoice_price(), care_Service_Dto.getDog_daycare_user(), null, care_Service_Dto.getDog_daycare_id(), null, null);
         
         
@@ -70,7 +70,7 @@ public class DogDaycareServiceController {
             realClient.setE_mail(client.getClient_e_mail());
             clientRepository.save(realClient);
             return client;
-        }
+        }*/
         return null;
     }
 

@@ -60,9 +60,9 @@ public class DogDayCareController {
     
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCare_Dto createDogDaycare(@Valid @RequestBody DogDayCare_Dto dogDaycare) {
-
+        System.out.println("Diego entro");
         if(!infoUserRepository.existsById(dogDaycare.getUser())){
-            DogDaycare realDogDayCare= new DogDaycare(dogDaycare.getDog_daycare_address(), dogDaycare.getDog_daycare_type() , dogDaycare.getDog_daycare_score(),dogDaycare.getDog_daycare_price_base(), null, null);
+            DogDaycare realDogDayCare= new DogDaycare(dogDaycare.getDog_daycare_address(), dogDaycare.getDog_daycare_type() , dogDaycare.getDog_daycare_score(),dogDaycare.getDog_daycare_price_base(),dogDaycare.getDog_daycare_tax(), null, null);
             realDogDayCare.setUser(dogDaycare.getUser());
             realDogDayCare.setPassword(dogDaycare.getPassword());
             realDogDayCare.setRole("ROLE_DOGDAYCARE");
