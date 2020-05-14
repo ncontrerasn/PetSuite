@@ -1,13 +1,6 @@
 package com.petsuite.Services.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -16,6 +9,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "dog_daycare_service")
@@ -31,13 +26,8 @@ public class DogDaycareService {
     
     @NotBlank
     private String dogdaycare_Service_Name;
-    
-    
-    
 
-
-@NotBlank
-    
+    @NotBlank
     private String dogdaycare_Service_Description;
 
     @NotNull
@@ -48,19 +38,14 @@ public class DogDaycareService {
     
   /*  @NotNull
     private Integer dog_daycare_invoice_id;*/
-    
-    
-     
-     
-    
-    
-     @Getter(AccessLevel.NONE)
+
+    @Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
-    
-  /*  @ManyToOne
-    @JoinColumn(name="dog_daycare_invoice_id", nullable=false,updatable = false, insertable = false)
-    private DogDaycareInvoice dogDaycareInvoice;*/
+
+    @OneToMany
+    @JoinColumn(name="dogDaycareService", nullable=false,updatable = false, insertable = false)
+    private Set<DogDayCareService_DogDayCareInvoice> dogDayCareService_dogDayCareInvoices;
 
 }
