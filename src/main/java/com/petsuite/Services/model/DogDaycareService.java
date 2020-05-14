@@ -42,8 +42,10 @@ public class DogDaycareService {
     @Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
-    private DogDaycare dogDaycare;
-
+    private DogDaycare dogDaycareServices;
+    
+    
+    @Getter(AccessLevel.NONE) 
     @OneToMany
     @JoinColumn(name="dogDaycareService", nullable=false,updatable = false, insertable = false)
     private Set<DogDayCareService_DogDayCareInvoice> dogDayCareService_dogDayCareInvoices;

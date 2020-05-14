@@ -50,8 +50,8 @@ public class DogDaycare extends InfoUser{
     
      
     @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "dogDaycare")
+    //@Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "dogDaycareServices")
     private Set<DogDaycareService> dogDaycareServices;
     
     

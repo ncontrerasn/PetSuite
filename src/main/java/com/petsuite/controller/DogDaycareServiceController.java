@@ -64,7 +64,7 @@ public class DogDaycareServiceController {
     public DogDayCare_Service_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) {
 
         System.out.println("Diego entro a crear un servicio");
-        DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDogdaycare_Service_Name(), care_Service_Dto.getDogdaycare_Service_Description(), care_Service_Dto.getDogdaycare_Service_Price(), care_Service_Dto.getDogdaycare_Service_ClientId(), null);
+        DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDogdaycare_Service_Name(), care_Service_Dto.getDogdaycare_Service_Description(), care_Service_Dto.getDogdaycare_Service_Price(), care_Service_Dto.getDogdaycare_Service_ClientId(), null,null);
         
         
         

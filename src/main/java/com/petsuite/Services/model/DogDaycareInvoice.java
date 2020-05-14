@@ -14,8 +14,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -48,18 +50,20 @@ public class DogDaycareInvoice {
     @NotBlank
     private String client_user;
     
+    @Getter(AccessLevel.NONE)
+    
     @ManyToOne
     @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
-    
+    @Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
-    
+    @Getter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
     private Dog dog;
-
+@Getter(AccessLevel.NONE) 
     @OneToMany(mappedBy = "dogDaycareInvoice")
     private Set<DogDayCareService_DogDayCareInvoice> dogDayCareService_dogDayCareInvoices;
     
