@@ -27,23 +27,18 @@ public class DogController {
         Dog dogReal=new Dog(dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getClient_id());
 
         dogReal = dogRepository.save(dogReal);
-        
+
         if(dogReal!=null)
-        return dog;
+            return dog;
         else
-        return null;
+            return null;
     }
-    
+
     @PostMapping("/findmydog")
     public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
         System.out.println("El usuario que me llego es: "+ user);
-        //System.out.println(dogRepository.findByUser(client_id));
-        //String usuario= user.getCadena()trim();
-        //System.out.println("Mi nombre es: jose"+ " y el nombre que me llega es: "+ usuario);
         return dogRepository.findByUser(user.getCadena());
-      
     }
-    
-    
 
 }
+

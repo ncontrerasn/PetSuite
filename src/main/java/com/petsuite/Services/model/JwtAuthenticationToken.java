@@ -29,3 +29,4 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
         return null;
     }
 }
+

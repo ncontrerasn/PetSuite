@@ -3,12 +3,10 @@ package com.petsuite.Services.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,22 +19,22 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 public class WalkPetition {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer walk_petition_id;
-    
+
     @NotNull
     private LocalDateTime walk_petition_date_time;
-    
+
     @NotBlank
     private String walk_petition_address;
-    
+
     @NotNull
     private Float walk_petition_duration;
-    
+
     private String walk_petition_notes;
-    
+
     private String walk_petition_walker_user;
 
     @NotBlank
@@ -44,9 +42,9 @@ public class WalkPetition {
 
     @NotNull
     private Integer dog_id;
-    
+
     private Integer price;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @ManyToOne(cascade = CascadeType.ALL)

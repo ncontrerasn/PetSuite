@@ -1,41 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- *
- * @author sergi
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DogDayCare_Dto {
-    
+
     private String user;
-
     private String password;
-    
     private String dog_daycare_e_mail;
-    
     private String dog_daycare_name;
-
     private String dog_daycare_address;
-
     private Boolean dog_daycare_type;
-
     private String dog_daycare_phone;
-
     private Float dog_daycare_score;
-
     private String token;
-    
     private String role;
     public Float dog_daycare_price_base;
     public Float dog_daycare_tax;
@@ -50,7 +32,6 @@ public class DogDayCare_Dto {
         this.dog_daycare_price_base=dog_daycare_price_base;
         this.dog_daycare_tax=dog_daycare_tax;
     }
-    
-    
-    
+
 }
+

@@ -14,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 public class InfoUser {
-    
+
     @Id
     private String user;
 
@@ -23,7 +23,7 @@ public class InfoUser {
 
     @NotBlank
     private String phone;
-    
+
     @NotBlank
     private String password;
 

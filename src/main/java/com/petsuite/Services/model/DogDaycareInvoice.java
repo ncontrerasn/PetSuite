@@ -28,43 +28,45 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class DogDaycareInvoice {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dog_daycare_invoice_id;
-    
+
     @NotBlank
     private String dog_daycare_invoice_time;
-    
+
     @NotBlank
     private String dog_daycare_invoice_date;
-    
+
     @NotNull
     private float dog_daycare_invoice_price;
-    
+
     private boolean dog_daycare_invoice_status;
-    
+
     @NotBlank
     private String dog_daycare_user;
-    
+
     @NotBlank
     private String client_user;
-    
+
     @Getter(AccessLevel.NONE)
-    
     @ManyToOne
     @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
+
     @Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
+
     @Getter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
     private Dog dog;
-@Getter(AccessLevel.NONE) 
+
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycareInvoice")
     private Set<DogDayCareService_DogDayCareInvoice> dogDayCareService_dogDayCareInvoices;
-    
+
 }

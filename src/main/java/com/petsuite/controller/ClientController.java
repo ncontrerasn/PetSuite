@@ -1,10 +1,8 @@
-  package com.petsuite.controller;
+package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
-import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
-import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.ClientRepository;
 import com.petsuite.Services.repository.DogRepository;
@@ -12,7 +10,6 @@ import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,16 +36,15 @@ public class ClientController {
 
     @Autowired
     InfoUserRepository infoUserRepository;
-    
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/all")
     public List<Client> getAllClients() {
-       
         return clientRepository.findAll();
     }
-    
+
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {
 
@@ -101,4 +97,6 @@ public class ClientController {
     }
 
 }
+
+
 
