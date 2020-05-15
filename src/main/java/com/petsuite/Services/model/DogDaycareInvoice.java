@@ -34,35 +34,35 @@ public class DogDaycareInvoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dog_daycare_invoice_id;
 
-    @NotBlank
+     @NotNull
     private LocalDateTime dog_daycare_invoice_date;
 
-    @NotBlank
+    @NotNull
     private Float dog_daycare_invoice_duration;
 
     @NotNull
-    private float dog_daycare_invoice_price;
+    private Float dog_daycare_invoice_price;
 
-    private boolean dog_daycare_invoice_status;
+    private Boolean dog_daycare_invoice_status;
 
     @NotBlank
     private String dog_daycare_id;
 
     @NotBlank
-    private String client_id;
+    private String client_id ;
     
     
-       @NotNull
+       @NotNull 
     private Integer dog_id; 
        
    
 
-    @Getter(AccessLevel.NONE)
+    //@Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
     private DogDaycare dogDaycare;
 
-    @Getter(AccessLevel.NONE)
+    //@Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
