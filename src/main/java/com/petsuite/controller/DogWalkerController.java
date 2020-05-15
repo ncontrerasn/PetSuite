@@ -1,141 +1,114 @@
 package com.petsuite.controller;
 
-import com.petsuite.Services.dto.Client_Dto;
-import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
-import com.petsuite.Services.dto.InfoUser_Dto;
-import com.petsuite.Services.model.InfoUser;
+import com.petsuite.Services.model.Dog;
+import com.petsuite.Services.model.DogWalker;
+import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.Services.repository.WalkInvoiceRepository;
+import com.petsuite.basics.Cadena;
+import com.petsuite.basics.Flotante;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(value = "/api/dog_walkers")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
-public class InfoUserController {
+public class DogWalkerController {
+
+    @Autowired
+    DogWalkerRepository dogWalkerRepository;
+
+    @Autowired
+    WalkInvoiceRepository walkInvoiceRepository;
 
     @Autowired
     InfoUserRepository infoUserRepository;
-    @Autowired
-    ClientController clientController;
-    @Autowired
-    DogDayCareController dogDaycareController;
-    @Autowired
-    DogWalkerController dogWalkerController;
-    @Autowired
-    TokenController tokenController;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    DogRepository dogRepository;
 
-    @GetMapping("/all")
-    public List<InfoUser> getAllUsers() {
-        return infoUserRepository.findAll();
+    @GetMapping(value = "/all")
+    public List<DogWalker> getAllClients() {
+        return dogWalkerRepository.findAll();
     }
 
-    @RequestMapping("/login")
-    @ResponseBody
-    public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){
+    @PostMapping(value = "/load")
+    public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
 
-        String sqlA = "SELECT * FROM info_user where user = ?";
-        String user_user = user.getUser();
-        String user_password = user.getPassword();
+        if(!infoUserRepository.existsById(dogWalker.getUser())){
+            DogWalker realDogWalker= new DogWalker(dogWalker.getDog_walker_score(), null);
+            realDogWalker.setUser(dogWalker.getUser());
+            realDogWalker.setPassword(dogWalker.getPassword());
+            realDogWalker.setRole("ROLE_DOGWALKER");
+            realDogWalker.setName(dogWalker.getDog_walker_name());
+            realDogWalker.setDog_walker_score((float)3.0);
+            realDogWalker.setPhone(dogWalker.getDog_walker_phone());
+            realDogWalker.setE_mail(dogWalker.getDog_walker_e_mail());
+            dogWalkerRepository.save(realDogWalker);
 
-        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user_user}, (rs, rowNum) -> new InfoUser(
-                rs.getString("user"),
-                rs.getString("e_mail"),
-                rs.getString("phone"),
-                rs.getString("password"),
-                rs.getString("name"),
-                rs.getString("role")
-        ));
-        InfoUser u;
-        if (!ul.isEmpty()){
-            u = ul.get(0);
-            if (u.getPassword().equals(user_password)){
-                if("ROLE_CLIENT".equals(u.getRole())){
-                    String sqlC = "SELECT * FROM info_user natural join client where user = ?";
-                    List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
-                            rs.getString("name"),
-                            rs.getString("phone"),
-                            rs.getString("e_mail"),
-                            rs.getString("client_address")
-                    ));
-
-                    if(ul2.get(0)!=null)
-                    {
-                        user.setRole(u.getRole());
-                        String token= tokenController.generate(user);
-                        ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setToken(token);
-                        ul2.get(0).setRole(u.getRole());
-
-                        return ul2.get(0);
-                    }
-                }
-                if("ROLE_DOGWALKER".equals(u.getRole())){
-                    String sqlP = "SELECT * FROM info_user natural join dog_walker where user = ?";
-                    List<DogWalker_Dto> ul2= jdbcTemplate.query(sqlP, new Object[]{user.getUser()}, (rs, rowNum) -> new DogWalker_Dto(
-                            rs.getString("name"),
-                            rs.getString("phone"),
-                            rs.getString("e_mail"),
-                            rs.getFloat("dog_walker_score")
-                    ));
-                    if(ul2.get(0)!=null)
-                    {
-                        user.setRole(u.getRole());
-                        String token = tokenController.generate(user);
-                        ul2.get(0).setToken(token);
-                        ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setRole(u.getRole());
-
-                        return ul2.get(0);
-                    }
-                }
-                if("ROLE_DOGDAYCARE".equals(u.getRole())){
-
-                    String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
-                    List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
-                            rs.getString("e_mail"),
-                            rs.getString("dog_daycare_address"),
-                            rs.getBoolean("dog_daycare_type"),
-                            rs.getString("phone"),
-
-                            rs.getFloat("dog_daycare_score"),
-
-                            rs.getString("name"),
-                            rs.getFloat("dog_daycare_base_price"),
-                            rs.getFloat("dog_daycare_tax")
-                    ));
-
-                    if(ul2.get(0)!=null)
-                    {
-                        user.setRole(u.getRole());
-                        String token = tokenController.generate(user);
-                        ul2.get(0).setToken(token);
-                        ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setRole(u.getRole());
-                        return ul2.get(0);
-                    }
-                }
-            }
+            return dogWalker;
         }
-        return null;
+    return null;
+    }
+
+    @PostMapping(value = "/PendingDogList")
+    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody Cadena dogWalker){
+
+        List<Optional<Dog>> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_true(dogWalker.getCadena());
+        for(int i = 0; i < dogs_ids.size(); i++)
+            dogs.add(dogRepository.findById(dogs_ids.get(i)));
+        return dogs;
+    }
+
+    @PostMapping(value = "/CompletedDogList")
+    public List<Optional<Dog>> CompletedDogList(@Valid @RequestBody String dogWalker){
+
+        List<Optional<Dog>> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_false(dogWalker);
+        for(int i = 0; i < dogs_ids.size() - 1; i++)
+            dogs.add(dogRepository.findById(dogs_ids.get(i)));
+        return dogs;
+    }
+    
+    @PostMapping(value = "/getCalification")
+    public Flotante getQualifications(@Valid @RequestBody Cadena cadena){
+        System.out.println("Me esta llengando el usuario para flotante: "+ cadena.getCadena());
+        Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena());
+        
+        return new Flotante(dogWalker.get().getDog_walker_score());
+    }
+
+    @PostMapping(value = "/dogList")
+    public List<Dog> dogList(@Valid @RequestBody Cadena dogWalker){
+
+        List<Dog> dogs = new ArrayList<>();
+        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id(dogWalker.getCadena());
+        System.out.println("Tamanio lista es: "+ dogs_ids.size());
+        
+       System.out.println("probando el repo: "+ dogRepository.findByDogId(1).getDog_name());
+       for(int i = 0; i < dogs_ids.size() ; i++){
+          dogs.add(dogRepository.findByDogId(dogs_ids.get(i)));
+       }
+        return dogs;
     }
 
     private String getJWTToken(String username) {
         String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
+                .commaSeparatedStringToAuthorityList("DOGWALKER");
 
         String token = Jwts
                 .builder()
@@ -150,11 +123,7 @@ public class InfoUserController {
                 .signWith(SignatureAlgorithm.HS512,
                         secretKey.getBytes()).compact();
 
-        return "Bearer " + token;
+        return "Token " + token;
     }
+
 }
-
-
-
-
-

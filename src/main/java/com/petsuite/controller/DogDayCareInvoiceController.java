@@ -2,6 +2,7 @@ package com.petsuite.controller;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import io.jsonwebtoken.Jwts;
@@ -18,15 +19,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/dog_day_cares")
+@RequestMapping("/api/dog_day_care_invoices")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
-public class DogDayCareController {
+public class DogDayCareInvoiceController {
 
     @Autowired
     DogDaycareRepository dogDaycareRepository;
 
     @Autowired
-    InfoUserRepository infoUserRepository;
+    DogDaycareInvoiceRepository dogDaycareInvoiceRepository;
     
     @Autowired
     private JdbcTemplate jdbcTemplate;

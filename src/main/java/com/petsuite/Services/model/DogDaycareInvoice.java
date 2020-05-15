@@ -45,10 +45,16 @@ public class DogDaycareInvoice {
     private boolean dog_daycare_invoice_status;
 
     @NotBlank
-    private String dog_daycare_user;
+    private String dog_daycare_id;
 
     @NotBlank
-    private String client_user;
+    private String client_id;
+    
+    
+       @NotNull
+    private Integer dog_id; 
+       
+   
 
     @Getter(AccessLevel.NONE)
     @ManyToOne
