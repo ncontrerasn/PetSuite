@@ -7,6 +7,7 @@ import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.basics.EnteroDoble;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
@@ -35,7 +36,11 @@ public class DogDayCareInvoiceController {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
+    
+    Service_invoiceController service_invoiceController= new Service_invoiceController();
+    
+    
+  
      @GetMapping("/all")
     public List<DogDaycareInvoice> getAllClients() {
       return dogDaycareInvoiceRepository.findAll();
@@ -53,7 +58,14 @@ public class DogDayCareInvoiceController {
         
         if(daycareInvoice!=null){
             dogDaycareInovice.setDog_daycare_invoice_price(price);
+            System.out.println(dogDaycareInovice.getDog_daycare_invoice_services());
             dogDaycareInvoiceRepository.save(daycareInvoice);
+            service_invoiceController.setJdbcTemplate(jdbcTemplate);
+            for (int i = 0; i < dogDaycareInovice.getDog_daycare_invoice_services().size() ; i++) {
+                service_invoiceController.createDogDaycareServiceInvoice(new EnteroDoble(daycareInvoice.getDog_daycare_invoice_id(), dogDaycareInovice.getDog_daycare_invoice_services().get(i)),daycareInvoice);
+            }
+            
+            
             return dogDaycareInovice;
         }
         return null;

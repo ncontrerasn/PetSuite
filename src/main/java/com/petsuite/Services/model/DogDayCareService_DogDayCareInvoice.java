@@ -9,6 +9,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Entity
 @Table(name = "service_invoice")
@@ -24,9 +26,13 @@ public class DogDayCareService_DogDayCareInvoice {
     private DogDaycareInvoice dogDaycareInvoice;
     private Integer dog_daycare_service_id;
     private Integer dog_daycare_invoice_id;
+    
     public DogDayCareService_DogDayCareInvoice() {
     }
 
+
+    
+    
     @EmbeddedId
     @JsonIgnore
     public Service_Invoice_Id getId(){
