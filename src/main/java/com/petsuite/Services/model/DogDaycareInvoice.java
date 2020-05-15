@@ -1,5 +1,6 @@
 package com.petsuite.Services.model;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -34,10 +35,10 @@ public class DogDaycareInvoice {
     private Integer dog_daycare_invoice_id;
 
     @NotBlank
-    private String dog_daycare_invoice_time;
+    private LocalDateTime dog_daycare_invoice_date;
 
     @NotBlank
-    private String dog_daycare_invoice_date;
+    private Float dog_daycare_invoice_duration;
 
     @NotNull
     private float dog_daycare_invoice_price;

@@ -1,12 +1,16 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,35 +37,22 @@ public class DogDayCareInvoiceController {
     private JdbcTemplate jdbcTemplate;
 
      @GetMapping("/all")
-    public List<DogDayCare_Dto> getAllClients() {
-         System.out.println("Diego esta solicitando todas las guarderias");
-        List<DogDaycare> lista=dogDaycareRepository.findAll();
-        List<DogDayCare_Dto> listaEnviar= new ArrayList<>();
-         for (int i = 0; i < lista.size(); i++) {
-             DogDayCare_Dto  guarderia = new DogDayCare_Dto(lista.get(i).getE_mail(), lista.get(i).getDog_daycare_address(), lista.get(i).getDog_daycare_type(), lista.get(i).getPhone(), lista.get(i).getDog_daycare_score(), lista.get(i).getName(), lista.get(i).getDog_daycare_base_price(), lista.get(i).getDog_daycare_tax());
-             listaEnviar.add(guarderia);
-             
-         }
-         return listaEnviar;
+    public List<DogDaycareInvoice> getAllClients() {
+      return dogDaycareInvoiceRepository.findAll();
     }
 
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
-    public DogDayCare_Dto createDogDaycare(@Valid @RequestBody DogDayCare_Dto dogDaycare) {
-        System.out.println("Diego entro");
-        if(!infoUserRepository.existsById(dogDaycare.getUser())){
-            DogDaycare realDogDayCare= new DogDaycare(dogDaycare.getDog_daycare_address(), dogDaycare.getDog_daycare_type() , dogDaycare.getDog_daycare_score(),dogDaycare.getDog_daycare_price_base(),dogDaycare.getDog_daycare_tax(), null, null);
-            realDogDayCare.setUser(dogDaycare.getUser());
-            realDogDayCare.setPassword(dogDaycare.getPassword());
-            realDogDayCare.setRole("ROLE_DOGDAYCARE");
-            realDogDayCare.setName(dogDaycare.getDog_daycare_name());
-            realDogDayCare.setDog_daycare_score((float)3.0);
-            realDogDayCare.setE_mail(dogDaycare.getDog_daycare_e_mail());
-            realDogDayCare.setPhone(dogDaycare.getDog_daycare_phone());
-            dogDaycareRepository.save(realDogDayCare);
-
-            return dogDaycare;
+    public DogDayCareInvoice_Dto createDogDaycareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) {
+        //para formatear la fecha
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(dogDaycareInovice.getDog_daycare_invoice_date(), formatter);
+       DogDaycareInvoice daycareInvoice= new DogDaycareInvoice(null, dateTime, dogDaycareInovice.getDog_daycare_invoice_duration(), dogDaycareInovice.getDog_daycare_invoice_price(), dogDaycareInovice.getDog_daycare_invoice_status(), dogDaycareInovice.getDog_daycare_invoice_dogdaycare_id(), dogDaycareInovice.getDog_daycare_invoice_client_id(), dogDaycareInovice.getDog_daycare_invoice_dog_id(), null, null, null, null);
+        
+        if(daycareInvoice!=null){
+            return dogDaycareInovice;
         }
-   return null;
+        return null;
+      
     }
 
     private String getJWTToken(String username) {
