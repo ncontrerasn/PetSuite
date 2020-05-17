@@ -12,4 +12,5 @@ public interface DogWalkerRepository extends JpaRepository<DogWalker, String>{
     @Modifying
     @Query(value = "UPDATE dog_walker SET dog_walker_score = ?1 WHERE user = ?2", nativeQuery = true)
     Integer updateScore(float score, String user);
+
 }

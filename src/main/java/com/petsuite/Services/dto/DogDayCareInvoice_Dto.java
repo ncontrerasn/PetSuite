@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DogDayCareInvoice_Dto {
 
-   
     private String dog_daycare_invoice_date;
     private Float dog_daycare_invoice_duration;
     private Float dog_daycare_invoice_price;
@@ -19,9 +18,7 @@ public class DogDayCareInvoice_Dto {
     private String dog_daycare_invoice_client_id;
     private Integer dog_daycare_invoice_dog_id;
     private List<Integer> dog_daycare_invoice_services;
-   
-
-
+    private Float dog_daycare_invoice_score;
 
 }
 

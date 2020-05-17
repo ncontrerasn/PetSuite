@@ -34,7 +34,7 @@ public class DogDaycareInvoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dog_daycare_invoice_id;
 
-     @NotNull
+    @NotNull
     private LocalDateTime dog_daycare_invoice_date;
 
     @NotNull
@@ -50,12 +50,11 @@ public class DogDaycareInvoice {
 
     @NotBlank
     private String client_id ;
-    
-    
-       @NotNull 
-    private Integer dog_id; 
-       
-   
+
+    @NotNull
+    private Integer dog_id;
+
+    private Float dog_daycare_score;
 
     //@Getter(AccessLevel.NONE)
     @ManyToOne

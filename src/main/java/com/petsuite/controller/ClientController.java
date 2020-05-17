@@ -82,9 +82,8 @@ public class ClientController {
     public List<Dog> myDogList(@Valid @RequestBody String user){
         return dogRepository.findByUser(user);
     }
-    
-    
-     @GetMapping("/allDogDayCares")
+
+    @GetMapping("/allDogDayCares")
     public List<DogDayCare_Dto> getAllDogDayCares() {
          System.out.println("Diego esta solicitando todas las guarderias");
         List<DogDaycare> lista=dogdaycareRepository.findAll();
@@ -93,19 +92,15 @@ public class ClientController {
              DogDayCare_Dto  guarderia = new DogDayCare_Dto(lista.get(i).getE_mail(), lista.get(i).getDog_daycare_address(), lista.get(i).getDog_daycare_type(), lista.get(i).getPhone(), lista.get(i).getDog_daycare_score(), lista.get(i).getName(), lista.get(i).getDog_daycare_base_price(), lista.get(i).getDog_daycare_tax());
              guarderia.setUser(lista.get(i).getUser());
              listaEnviar.add(guarderia);
-             
          }
          return listaEnviar;
     }
     
     @GetMapping("/myServicesAvailables")
     public List<DogDaycareService> getMyServices(@RequestParam(value = "user") String user) {
-        
         System.out.println("Diego esta verficiando los servicios como cliente");
         return dogDaycareServiceRepository.findMyServicesByUser(user);
     }
-    
-    
 
     @PostMapping("/mypetition")
     public List<WalkPetition> myPetition(@Valid @RequestBody String user){

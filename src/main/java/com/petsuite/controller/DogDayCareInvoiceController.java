@@ -5,6 +5,7 @@ import com.petsuite.Services.model.DogDayCareService_DogDayCareInvoice;
 import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.*;
+import com.petsuite.basics.Cadena;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
@@ -62,7 +63,8 @@ public class DogDayCareInvoiceController {
         DogDaycareInvoice daycareInvoice= new DogDaycareInvoice(null, dateTime,
                 dogDaycareInovice.getDog_daycare_invoice_duration(), price, dogDaycareInovice.getDog_daycare_invoice_status(),
                 dogDaycareInovice.getDog_daycare_invoice_dogdaycare_id(), dogDaycareInovice.getDog_daycare_invoice_client_id(),
-                dogDaycareInovice.getDog_daycare_invoice_dog_id(), null, null, null, null);
+                dogDaycareInovice.getDog_daycare_invoice_dog_id(), null, null, null,
+                null, null);
         //guardar el recibo
         if(daycareInvoice!=null){
             dogDaycareInovice.setDog_daycare_invoice_price(price);
@@ -78,6 +80,20 @@ public class DogDayCareInvoiceController {
             return dogDaycareInovice;
         }
         return null;
+    }
+
+    @PostMapping("/score")
+    public Cadena scoreDogDayCare(@Valid @RequestBody DogDayCareInvoice_Dto dogDayCareInvoice_dto){
+        int updatedInvoice = dogDaycareInvoiceRepository.scoreDogDaycare(dogDayCareInvoice_dto.getDog_daycare_invoice_score(),
+                dogDayCareInvoice_dto.getDog_daycare_invoice_dog_id());
+        if(updatedInvoice == 1){
+            float score = dogDaycareInvoiceRepository.scoreAvg(dogDayCareInvoice_dto.getDog_daycare_invoice_dogdaycare_id());
+            int updatedDogDaycareScore = dogDaycareRepository.updateScore(score,
+                    dogDayCareInvoice_dto.getDog_daycare_invoice_dogdaycare_id());
+            if(updatedDogDaycareScore == 1)
+                return new Cadena("Guardería calificada correctamente");
+        }
+        return new Cadena("Error calificando la guardería");
     }
 
     private String getJWTToken(String username) {
