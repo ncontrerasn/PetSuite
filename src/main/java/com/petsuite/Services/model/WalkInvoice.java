@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,17 +28,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 public class WalkInvoice {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer walk_invoice_id;
 
     @NotNull
     private LocalDateTime walk_invoice_date;
-    
+
     @NotNull
     private float walk_invoice_price;
-    
+
     private String walk_invoice_status;
 
     @NotBlank
@@ -51,29 +50,28 @@ public class WalkInvoice {
     private String walk_invoice_notes;
 
     private Float walker_score;
-    
+
     @NotBlank
     private String client_id;
-    
+
     @NotBlank
     private String dog_walker_id;
 
     @NotNull
     private Integer dog_id;
-    
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_wi;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="dog_walker_id", nullable=false,updatable = false, insertable = false)
     private DogWalker dogWalker;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
@@ -94,5 +92,7 @@ public class WalkInvoice {
         this.walk_invoice_price = walk_invoice_price;
         this.walk_invoice_status = walk_invoice_status;
     }
-    
+
 }
+
+

@@ -1,7 +1,7 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
-import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.repository.DogRepository;
@@ -9,6 +9,7 @@ import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.basics.Cadena;
+import com.petsuite.basics.CadenaDoble;
 import com.petsuite.basics.Flotante;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,10 +43,9 @@ public class DogWalkerController {
 
     @GetMapping(value = "/all")
     public List<DogWalker> getAllClients() {
-       
-        
         return dogWalkerRepository.findAll();
     }
+
     @PostMapping(value = "/load")
     public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
 
@@ -84,7 +83,6 @@ public class DogWalkerController {
         for(int i = 0; i < dogs_ids.size() - 1; i++)
             dogs.add(dogRepository.findById(dogs_ids.get(i)));
         return dogs;
-
     }
     
     @PostMapping(value = "/getCalification")
@@ -93,7 +91,6 @@ public class DogWalkerController {
         Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena());
         
         return new Flotante(dogWalker.get().getDog_walker_score());
-
     }
 
     @PostMapping(value = "/dogList")
@@ -107,11 +104,124 @@ public class DogWalkerController {
        for(int i = 0; i < dogs_ids.size() ; i++){
           dogs.add(dogRepository.findByDogId(dogs_ids.get(i)));
        }
-       
-      /*    
-        System.out.println(dogs);*/
-      
         return dogs;
+    }
+
+    @PostMapping(value = "/updatescore")
+    public Float updateScore(@Valid @RequestBody CadenaDoble cadena){
+
+        Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena1());
+
+        Float score =  dogWalker.get().getDog_walker_score();
+
+        score = (score + Float.parseFloat(cadena.getCadena2()))/2;
+
+        int Worked = 0;
+
+        Worked = dogWalkerRepository.updateScore(score,cadena.getCadena1());
+
+        if (Worked!=1)
+        {
+            return null;
+        }
+
+        return score;
+
+    }
+
+    public Integer updateUserPassword(String user, String password){
+
+        if (password!=null)
+        {
+            int Worked = 0;
+
+            Worked = infoUserRepository.updateUserPassword(password,user);
+
+            return Worked;
+        }
+
+        return 0;
+
+    }
+
+    public Integer updateName(String user, String name){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateClientName(name,user);
+
+        return Worked;
+
+    }
+
+    public Integer updatePhone(String user, String Phone){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateClientPhone(Phone,user);
+
+        return Worked;
+
+    }
+
+    public Integer updateMail(String user, String Mail){
+
+        int Worked = 0;
+
+        Worked = infoUserRepository.updateClientEmail(Mail,user);
+
+        return Worked;
+
+    }
+
+    @PostMapping("/update")
+    public DogWalker_Dto updateAll(@Valid @RequestBody DogWalker_Dto user_dto){
+
+        System.out.println(user_dto);
+
+        DogWalker_Dto DogWalk_DTO = user_dto;
+
+        int uppdateReturns = 0;
+
+        String checkUser = infoUserRepository.findUser(user_dto.getUser());
+
+        if (checkUser!=null)
+        {
+
+            uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());
+
+            if (uppdateReturns!=1)
+            {
+                DogWalk_DTO.setPassword(null);
+            }
+
+            uppdateReturns = updateName(user_dto.getUser(),user_dto.getDog_walker_name());
+
+            if (uppdateReturns!=1)
+            {
+                DogWalk_DTO.setDog_walker_name(null);
+            }
+
+            uppdateReturns = updatePhone(user_dto.getUser(),user_dto.getDog_walker_phone());
+
+            if (uppdateReturns!=1)
+            {
+                DogWalk_DTO.setDog_walker_phone(null);
+            }
+
+            uppdateReturns = updateMail(user_dto.getUser(),user_dto.getDog_walker_e_mail());
+
+            if (uppdateReturns!=1)
+            {
+                DogWalk_DTO.setDog_walker_e_mail(null);
+            }
+
+        }else{
+            DogWalk_DTO = new DogWalker_Dto();
+        }
+
+        return DogWalk_DTO;
+
     }
 
     private String getJWTToken(String username) {

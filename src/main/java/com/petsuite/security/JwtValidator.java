@@ -1,14 +1,12 @@
 package com.petsuite.security;
 
 import com.petsuite.Services.dto.InfoUser_Dto;
-import com.petsuite.Services.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtValidator {
-
 
     private String secret = "youtube";
 
@@ -22,8 +20,6 @@ public class JwtValidator {
                     .getBody();
 
             jwtUser = new InfoUser_Dto(body.getSubject(),(String) body.get("userPassword"), (String) body.get("role"));
-
-          
         }
         catch (Exception e) {
             System.out.println(e);
@@ -32,3 +28,4 @@ public class JwtValidator {
         return jwtUser;
     }
 }
+

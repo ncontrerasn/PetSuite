@@ -13,7 +13,7 @@ public interface WalkInvoiceRepository extends JpaRepository<WalkInvoice, Intege
     @Query(value = "SELECT dog_id FROM walk_invoice WHERE dog_walker_id = ?1", nativeQuery = true)
     List<Integer> findByDog_walker_id(String dog_walker_id);
 
-    @Query(value = "SELECT dog_id FROM walk_invoice WHERE walk_invoice_status = 'En progreso' AND dog_walker_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT dog_id FROM walk_invoice WHERE walk_invoice_status = 'Aceptar' AND dog_walker_id = ?1", nativeQuery = true)
     List<Integer> findByDog_walker_id_and_status_true(String dog_walker_id);
 
     @Query(value = "SELECT dog_id FROM walk_invoice WHERE walk_invoice_status = false AND dog_walker_id = ?1", nativeQuery = true)
@@ -28,15 +28,11 @@ public interface WalkInvoiceRepository extends JpaRepository<WalkInvoice, Intege
     @Query(value = "SELECT * FROM walk_invoice WHERE dog_walker_id = ?1 AND walk_invoice_status = ?2", nativeQuery = true)//paseos filtrados por estado
     List<WalkInvoice> findByWalkerAndStatus(String walker, String status);
 
-
     @Query(value = "SELECT * FROM walk_invoice WHERE client_id = ?1 AND walk_invoice_status = ?2", nativeQuery = true)//paseos filtrados por estado
     List<WalkInvoice> findByUserAndStatus(String walker, String status);
 
-    
     @Query(value = "SELECT * FROM walk_invoice WHERE dog_walker_id = ?1 AND walk_invoice_status = 'Aceptar' OR walk_invoice_status='En progreso'", nativeQuery = true)//paseos filtrados por estado
     List<WalkInvoice> findByWalkerAcceptedProgress(String walker);
-    
-
 
     @Query(value = "SELECT dog_id FROM walk_invoice WHERE dog_walker_id = ?1 AND walk_invoice_status = ?2", nativeQuery = true)//paseos filtrados por estado
     List<Integer> findByWalkerAndStatusAccepted(String walker, String status);

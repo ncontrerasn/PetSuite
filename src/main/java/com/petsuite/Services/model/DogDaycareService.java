@@ -1,5 +1,6 @@
 package com.petsuite.Services.model;
 
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -7,11 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -22,31 +26,31 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class DogDaycareService {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dog_daycare_service_id;
-    
+
     @NotBlank
-    private String dog_daycare_invoice_name;
-    
-    private String dog_daycare_invoice_description;
+    private String dogdaycare_Service_Name;
+
+    @NotBlank
+    private String dogdaycare_Service_Description;
 
     @NotNull
-    private float dog_daycare_invoice_price;
-    
+    private float dogdaycare_Service_Price;
+
     @NotBlank
-    private String dog_daycare_user;
-    
-    @NotNull
-    private Integer dog_daycare_invoice_id;
-    
+    private String user;
+
+    @Getter(AccessLevel.NONE)
     @ManyToOne
-    @JoinColumn(name="dog_daycare_id", nullable=false,updatable = false, insertable = false)
-    private DogDaycare dogDaycare;
-    
-    @ManyToOne
-    @JoinColumn(name="dog_daycare_invoice_id", nullable=false,updatable = false, insertable = false)
-    private DogDaycareInvoice dogDaycareInvoice;
+    @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
+    private DogDaycare dogDaycareServices;
+
+    @Getter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "dogDaycareService")
+    private Set<DogDayCareService_DogDayCareInvoice> dogDayCareService_dogDayCareInvoices2;
 
 }
+

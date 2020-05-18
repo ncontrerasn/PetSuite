@@ -2,7 +2,6 @@ package com.petsuite.Services.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -12,7 +11,6 @@ public class JwtUserDetails implements UserDetails {
     private String token;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-
 
     public JwtUserDetails(String user, String password, String token, List<GrantedAuthority> grantedAuthorities) {
 
@@ -57,7 +55,6 @@ public class JwtUserDetails implements UserDetails {
         return true;
     }
 
-
     public String getUserName() {
         return user;
     }
@@ -66,7 +63,5 @@ public class JwtUserDetails implements UserDetails {
         return token;
     }
 
-
-    
-
 }
+

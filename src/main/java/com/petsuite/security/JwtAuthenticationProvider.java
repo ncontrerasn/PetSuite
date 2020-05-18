@@ -2,7 +2,6 @@ package com.petsuite.security;
 
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.JwtUserDetails;
-import com.petsuite.Services.model.JwtUser;
 import com.petsuite.Services.model.JwtAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -23,7 +21,6 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
-
     }
 
     @Override
@@ -32,7 +29,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
         String token = jwtAuthenticationToken.getToken();
         InfoUser_Dto jwtUser=validator.validate(token);
-     
+
 
         if (jwtUser == null) {
             throw new RuntimeException("JWT Token is incorrect");
@@ -50,3 +47,4 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         return (JwtAuthenticationToken.class.isAssignableFrom(aClass));
     }
 }
+
