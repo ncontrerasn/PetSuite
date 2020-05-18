@@ -2,6 +2,7 @@ package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
+import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
@@ -37,6 +38,9 @@ public class ClientController {
 
     @Autowired
     DogDaycareRepository dogDaycareRepository;
+
+    @Autowired
+    DogWalkerRepository dogWalkerRepository;
 
     @Autowired
     DogRepository dogRepository;
@@ -245,6 +249,22 @@ public class ClientController {
         }
 
         return returns;
+    }
+
+    @PostMapping("/mywalker")
+    public DogWalker_Dto walkerInPetition(@Valid @RequestBody Cadena user){
+
+        Optional<DogWalker> DWopt = dogWalkerRepository.findById(user.getCadena());
+
+        DogWalker_Dto DW_DTO = new DogWalker_Dto();
+
+        DW_DTO.setDog_walker_e_mail(DWopt.get().getE_mail());
+        DW_DTO.setDog_walker_name(DWopt.get().getName());
+        DW_DTO.setDog_walker_phone(DWopt.get().getPhone());
+        DW_DTO.setDog_walker_score(DWopt.get().getDog_walker_score());
+        DW_DTO.setUser(DWopt.get().getUser());
+
+        return DW_DTO;
     }
 
     public String getClientJWTToken(String username) {
