@@ -1,6 +1,5 @@
 package com.petsuite.Services.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -27,42 +26,42 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Data
 public class Dog {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dog_id;
-    
+
     @NotBlank
     private String dog_name;
-    
+
     @NotBlank
     private String dog_race;
-    
+
     @NotNull
     private Float dog_height;
-    
+
     @NotNull
     private Float dog_weight;
-    
+
     @NotNull
     private Integer dog_age;
-    
+
     private String dog_notes;
 
     @NotBlank
     private String user;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name="user", nullable=false,updatable = false, insertable = false)
     private Client client_d;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog_wp")
     private WalkPetition walkPetition;
-    
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToOne(mappedBy = "dog")
@@ -79,3 +78,4 @@ public class Dog {
     }
 
 }
+

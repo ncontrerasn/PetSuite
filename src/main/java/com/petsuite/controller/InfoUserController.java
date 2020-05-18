@@ -123,8 +123,10 @@ public class InfoUserController {
                         rs.getString("phone"),
 
                         rs.getFloat("dog_daycare_score"),
-
-                        rs.getString("name")
+                            
+                        rs.getString("name"),
+                        rs.getFloat("dog_daycare_base_price"),
+                        rs.getFloat("dog_daycare_tax")
                     ));
                     
                       if(ul2.get(0)!=null)

@@ -29,13 +29,12 @@ public class WalkPetitionController {
 
     @Autowired
     DogRepository dogRepository;
-    
+
     @Autowired
     WalkInvoiceController walkInvoiceController;
 
     @Autowired
     WalkInvoiceRepository walkInvoiceRepository;
-
 
     @GetMapping("/all")
     public List<WalkPetition_Dto> getAllPetitions() {
@@ -56,44 +55,29 @@ public class WalkPetitionController {
 
     @PostMapping("/create")
     public WalkPetition_Dto createPeititon(@Valid @RequestBody WalkPetition_Dto walkPetition){
-        
+
         System.out.println("El perro es: "+walkPetition.getDog_id());
 
-//       List<WalkPetition> allWalkPetitionsOfClient = walkPetitionRepository.findPetitionsByUser(walkPetition.getUser());
-
-         List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
-
-         List<WalkInvoice> WalkInvoicesAcepted = walkInvoiceRepository.findByStatusAndUserAndDog("Aceptar",walkPetition.getUser(),walkPetition.getDog_id().toString());
-
+        List<WalkPetition> allWalkPetitionsOfDog = walkPetitionRepository.findPetitionsByDog(walkPetition.getDog_id().toString());
+        List<WalkInvoice> WalkInvoicesAcepted = walkInvoiceRepository.findByStatusAndUserAndDog("Aceptar",walkPetition.getUser(),walkPetition.getDog_id().toString());
         List<WalkInvoice> WalkInvoicesInProgress = walkInvoiceRepository.findByStatusAndUserAndDog("En progreso",walkPetition.getUser(),walkPetition.getDog_id().toString());
 
+        if (allWalkPetitionsOfDog.isEmpty() && WalkInvoicesAcepted.isEmpty() && WalkInvoicesInProgress.isEmpty()) {
 
-         if (allWalkPetitionsOfDog.isEmpty() && WalkInvoicesAcepted.isEmpty() && WalkInvoicesInProgress.isEmpty()) {
-    
-        System.out.println("La fecha que me llegó es: "+ walkPetition.getWalk_petition_date_time());
-            
+            System.out.println("La fecha que me llegó es: "+ walkPetition.getWalk_petition_date_time());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime dateTime = LocalDateTime.parse(walkPetition.getWalk_petition_date_time(), formatter);
-            
             dateTime.plusHours(-5);
-
             System.out.println("La fecha que voy a meter es: "+ dateTime);
-             
-            
             WalkPetition walkPetitionReal = new WalkPetition(dateTime, walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(), walkPetition.getUser(), walkPetition.getDog_id(), null, null);
             System.out.println("Lo final final es: "+ walkPetitionReal.getWalk_petition_date_time());
-            
-
-
-
             walkPetitionReal = walkPetitionRepository.save(walkPetitionReal);
 
-           if (walkPetitionReal != null)
+            if (walkPetitionReal != null)
                 return walkPetition;
             else
                 return null;
         }
-        
         return null;
     }
 
@@ -103,75 +87,56 @@ public class WalkPetitionController {
         walkPetitionRepository.deletePetition(Petition_id);
     }
 
-    
     @PostMapping("/findbydog")
     public List<WalkPetition> finPetitionByDog(@Valid @RequestBody String dog){
-       return walkPetitionRepository.findPetitionsByDog(dog);
+        return walkPetitionRepository.findPetitionsByDog(dog);
     }
-    
-    
-    
 
     @PostMapping("/findbyuser")
     public List<WalkPetition_Dto> finPetitionByUserWithProposalPrice(@Valid @RequestBody Cadena user){
         System.out.println("El nombre que entra es: , nos vamos con "+user.getCadena() );
         List<WalkPetition> lista= walkPetitionRepository.findPetitionsByUser(user.getCadena());
-       
-        
-        
-         List<WalkPetition_Dto> listaDtos = new ArrayList<>();
+        List<WalkPetition_Dto> listaDtos = new ArrayList<>();
         for(int j = 0; j < lista.size(); j++){
             if(lista.get(j).getPrice()!=null){
                 System.out.println("No es nulo");
-            WalkPetition walkPetition = lista.get(j);
-            Optional<Dog> dog = dogRepository.findById(walkPetition.getDog_id());
-
+                WalkPetition walkPetition = lista.get(j);
+                Optional<Dog> dog = dogRepository.findById(walkPetition.getDog_id());
                 listaDtos.add(new WalkPetition_Dto(walkPetition.getWalk_petition_id(), walkPetition.getWalk_petition_date_time().toString(),
                         walkPetition.getWalk_petition_address(), walkPetition.getWalk_petition_duration(), walkPetition.getWalk_petition_notes(),
                         walkPetition.getUser(), walkPetition.getDog_id(), walkPetition.getPrice(), walkPetition.getWalk_petition_walker_user(),
                         dog.get().getDog_name(), dog.get().getDog_race(), dog.get().getDog_height(), dog.get().getDog_weight(), dog.get().getDog_age(),
                         dog.get().getDog_notes()));
-        }
+            }
         }
         return listaDtos;
-        
-        
     }
-     @PostMapping("/propose")
+
+    @PostMapping("/propose")
     public  Dog_Dto proposePrice(@Valid @RequestBody WalkPetition_Dto walkPetition_Dto){
-         
-         WalkPetition petition= walkPetitionRepository.findPetitionsById(walkPetition_Dto.getWalk_petition_id());
-         System.out.println("El precio que se propone: "+ walkPetition_Dto.getPrecio_proposal());
-         petition.setPrice(walkPetition_Dto.getPrecio_proposal());
-         petition.setWalk_petition_walker_user(walkPetition_Dto.getWalk_petition_walker_user());
-         
-         walkPetitionRepository.save(petition); 
+
+        WalkPetition petition= walkPetitionRepository.findPetitionsById(walkPetition_Dto.getWalk_petition_id());
+        System.out.println("El precio que se propone: "+ walkPetition_Dto.getPrecio_proposal());
+        petition.setPrice(walkPetition_Dto.getPrecio_proposal());
+        petition.setWalk_petition_walker_user(walkPetition_Dto.getWalk_petition_walker_user());
+        walkPetitionRepository.save(petition);
         return null;
     }
-    
-     @PostMapping("/denyoraccept")
+
+    @PostMapping("/denyoraccept")
     public  Dog_Dto denyPetition(@Valid @RequestBody WalkInvoice_Dto walkInvoice_Dto){
-        
+
         String status=walkInvoice_Dto.getWalk_invoice_status();
-        if(status.equals("Aceptar")){
+        if(status.equals("Aceptar"))
             walkInvoiceController.createInvoice(walkInvoice_Dto);
-            
-            
-            
-        }else{
+        else{
             WalkPetition petition= walkPetitionRepository.findPetitionsByDogAndByUser(walkInvoice_Dto.getDog_id().toString(),walkInvoice_Dto.getClient_id());
             petition.setWalk_petition_walker_user(null);
             petition.setPrice(null);
             walkPetitionRepository.save(petition);
-            
-            
-            
         }
-        
-         
-        
         return null;
     }
-    
 
 }
+

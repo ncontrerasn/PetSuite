@@ -2,12 +2,26 @@ package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
+
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
 import com.petsuite.basics.Cadena;
 import com.petsuite.basics.CadenaDoble;
+
+import com.petsuite.Services.model.Client;
+import com.petsuite.Services.model.Dog;
+import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.model.DogDaycareService;
+import com.petsuite.Services.model.WalkPetition;
+import com.petsuite.Services.repository.ClientRepository;
+import com.petsuite.Services.repository.DogDaycareRepository;
+import com.petsuite.Services.repository.DogDaycareServiceRepository;
+import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.Services.repository.WalkPetitionRepository;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -35,6 +49,13 @@ public class ClientController {
 
     @Autowired
     ClientRepository clientRepository;
+    
+    
+    @Autowired
+    DogDaycareServiceRepository dogDaycareServiceRepository;
+    
+    @Autowired
+    DogDaycareRepository dogdaycareRepository;
 
     @Autowired
     DogDaycareRepository dogDaycareRepository;
@@ -47,16 +68,15 @@ public class ClientController {
 
     @Autowired
     InfoUserRepository infoUserRepository;
-    
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/all")
     public List<Client> getAllClients() {
-       
         return clientRepository.findAll();
     }
-    
+
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {
 
@@ -80,6 +100,25 @@ public class ClientController {
     @PostMapping("/dogList")
     public List<Dog> myDogList(@Valid @RequestBody Cadena user){
         return dogRepository.findByUser(user.getCadena());
+    }
+
+    @GetMapping("/allDogDayCares")
+    public List<DogDayCare_Dto> getAllDogDayCares() {
+         System.out.println("Diego esta solicitando todas las guarderias");
+        List<DogDaycare> lista=dogdaycareRepository.findAll();
+        List<DogDayCare_Dto> listaEnviar= new ArrayList<>();
+         for (int i = 0; i < lista.size(); i++) {
+             DogDayCare_Dto  guarderia = new DogDayCare_Dto(lista.get(i).getE_mail(), lista.get(i).getDog_daycare_address(), lista.get(i).getDog_daycare_type(), lista.get(i).getPhone(), lista.get(i).getDog_daycare_score(), lista.get(i).getName(), lista.get(i).getDog_daycare_base_price(), lista.get(i).getDog_daycare_tax());
+             guarderia.setUser(lista.get(i).getUser());
+             listaEnviar.add(guarderia);
+         }
+         return listaEnviar;
+    }
+    
+    @GetMapping("/myServicesAvailables")
+    public List<DogDaycareService> getMyServices(@RequestParam(value = "user") String user) {
+        System.out.println("Diego esta verficiando los servicios como cliente");
+        return dogDaycareServiceRepository.findMyServicesByUser(user);
     }
 
     @PostMapping("/mypetition")
@@ -289,4 +328,6 @@ public class ClientController {
     }
 
 }
+
+
 

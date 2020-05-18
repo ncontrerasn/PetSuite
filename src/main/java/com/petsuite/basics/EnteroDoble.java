@@ -3,12 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.petsuite.Services.dto;
+package com.petsuite.basics;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  *
  * @author sergi
  */
-public class Comunication {
+@Data
+@AllArgsConstructor
+public class EnteroDoble {
+    private Integer entero1;
+    private Integer entero2;
     
 }

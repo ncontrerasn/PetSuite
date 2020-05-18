@@ -2,7 +2,6 @@ package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
-import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.repository.DogRepository;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,10 +43,9 @@ public class DogWalkerController {
 
     @GetMapping(value = "/all")
     public List<DogWalker> getAllClients() {
-       
-        
         return dogWalkerRepository.findAll();
     }
+
     @PostMapping(value = "/load")
     public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
 
@@ -86,7 +83,6 @@ public class DogWalkerController {
         for(int i = 0; i < dogs_ids.size() - 1; i++)
             dogs.add(dogRepository.findById(dogs_ids.get(i)));
         return dogs;
-
     }
     
     @PostMapping(value = "/getCalification")
@@ -95,7 +91,6 @@ public class DogWalkerController {
         Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena());
         
         return new Flotante(dogWalker.get().getDog_walker_score());
-
     }
 
     @PostMapping(value = "/dogList")
@@ -109,10 +104,6 @@ public class DogWalkerController {
        for(int i = 0; i < dogs_ids.size() ; i++){
           dogs.add(dogRepository.findByDogId(dogs_ids.get(i)));
        }
-       
-      /*    
-        System.out.println(dogs);*/
-      
         return dogs;
     }
 
