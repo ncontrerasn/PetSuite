@@ -1,9 +1,14 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
+import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.model.DogDaycareInvoice;
+import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.basics.Cadena;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,6 +31,9 @@ public class DogDayCareController {
     @Autowired
     DogDaycareRepository dogDaycareRepository;
 
+    @Autowired
+    DogDaycareInvoiceRepository dogDaycareInvoiceRepository;
+    
     @Autowired
     InfoUserRepository infoUserRepository;
     
@@ -61,6 +70,22 @@ public class DogDayCareController {
             return dogDaycare;
         }
    return null;
+    }
+    
+    
+     @PostMapping(value = "/pendingCaresList")
+    public List<DogDayCareInvoice_Dto> PendingDogList(@Valid @RequestBody Cadena dogDayCare){
+        List<DogDayCareInvoice_Dto> dtoInvoices= new ArrayList<>();
+       List<DogDaycareInvoice> invoices= dogDaycareInvoiceRepository.findInvoicesByDogDayCare(dogDayCare.getCadena());
+         for (int i = 0; i <invoices.size(); i++) {
+             DogDayCareInvoice_Dto newInvoices=new DogDayCareInvoice_Dto(invoices.get(i).getDog_daycare_invoice_date().toString(),invoices.get(i).getDog_daycare_invoice_duration(), invoices.get(i).getDog_daycare_invoice_price(), invoices.get(i).getDog_daycare_invoice_status(), invoices.get(i).getDog_daycare_id(), invoices.get(i).getClient_id(), invoices.get(i).getDog_id(), null, invoices.get(i).getDog_daycare_score(),null,null);
+             List<String> services= dogDaycareInvoiceRepository.findNameServicesByInvoiceId(invoices.get(i).getDog_daycare_invoice_id());
+             newInvoices.setDog_daycare_invoice_dog_name(dogDaycareInvoiceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
+             newInvoices.setDog_daycare_invoice_services_names(services);
+             dtoInvoices.add(newInvoices);
+         }
+         
+         return dtoInvoices;
     }
 
     private String getJWTToken(String username) {

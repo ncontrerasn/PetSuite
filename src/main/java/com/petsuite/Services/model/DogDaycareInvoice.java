@@ -43,7 +43,7 @@ public class DogDaycareInvoice {
     @NotNull
     private Float dog_daycare_invoice_price;
 
-    private Boolean dog_daycare_invoice_status;
+    private String dog_daycare_invoice_status;
 
     @NotBlank
     private String dog_daycare_id;

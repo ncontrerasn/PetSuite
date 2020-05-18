@@ -46,6 +46,8 @@ public class DogDayCareInvoiceController {
 
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCareInvoice_Dto createDogDaycareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) {
+        System.out.println(dogDaycareInovice);
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(dogDaycareInovice.getDog_daycare_invoice_date(), formatter);
         float dogWeight = dogRepository.findByDogId(dogDaycareInovice.getDog_daycare_invoice_dog_id()).getDog_weight();
@@ -68,7 +70,9 @@ public class DogDayCareInvoiceController {
         //guardar el recibo
         if(daycareInvoice!=null){
             dogDaycareInovice.setDog_daycare_invoice_price(price);
+            if(daycareInvoice.getDog_daycare_invoice_status().equals("Aceptado")){
             DogDaycareInvoice dogDaycareInvoice = dogDaycareInvoiceRepository.saveAndFlush(daycareInvoice);
+            
             //registro en la tabla intermedia
             for (int i = 0; i < dogDaycareInovice.getDog_daycare_invoice_services().size(); i++) {
                 DogDayCareService_DogDayCareInvoice dogDayCareService_dogDayCareInvoice = new DogDayCareService_DogDayCareInvoice();
@@ -76,6 +80,7 @@ public class DogDayCareInvoiceController {
                 dogDayCareService_dogDayCareInvoice.setDogDaycareService(dogDaycareServiceRepository.findById(
                         dogDaycareInovice.getDog_daycare_invoice_services().get(i)).get());
                 service_InvoiceRepository.save(dogDayCareService_dogDayCareInvoice);
+            }
             }
             return dogDaycareInovice;
         }
