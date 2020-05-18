@@ -27,7 +27,7 @@ public interface DogDaycareRepository extends JpaRepository<DogDaycare, String>{
     @Transactional
     @Modifying
     @Query(value = "UPDATE dog_daycare SET dog_daycare_type = ?1 WHERE user = ?2", nativeQuery = true)
-    Integer updateType(String type, String user);
+    Integer updateType(Boolean type, String user);
 
     @Query(value = "SELECT user FROM info_user where name like ?1 AND role = 'ROLE_DOGDAYCARE'", nativeQuery = true)
     List<String> searchByName(String name);

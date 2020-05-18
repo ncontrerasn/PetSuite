@@ -87,7 +87,7 @@ class ClientControllerTest {
         daycare.setDog_daycare_score((float)5.0);
         daycare.setName("pepito");
         daycare.setDog_daycare_address("zona x");
-        daycare.setDog_daycare_type("tipo 1");
+        daycare.setDog_daycare_type(true);
         daycare.setUser("htovars");
         daycare.setRole("ROLE_DOGDAYCARE");
         daycare.setPassword("1234");
@@ -102,7 +102,7 @@ class ClientControllerTest {
         daycare.setDog_daycare_score((float)4.0);
         daycare.setName("pepito loco");
         daycare.setDog_daycare_address("zona y");
-        daycare.setDog_daycare_type("tipo 2");
+        daycare.setDog_daycare_type(true);
         daycare.setUser("ncontrerasn");
         daycare.setRole("ROLE_DOGDAYCARE");
         daycare.setPassword("1234");

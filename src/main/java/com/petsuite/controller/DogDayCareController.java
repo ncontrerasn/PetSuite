@@ -102,7 +102,7 @@ public class DogDayCareController {
          return dtoInvoices;
     }
 
-    public Integer updateType(String user, String type){
+    public Integer updateType(String user, Boolean type){
 
         int Worked = 0;
 
