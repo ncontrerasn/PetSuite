@@ -73,7 +73,7 @@ public class DogDayCareController {
    return null;
     }
 
-    public Integer updateType(String user, boolean type){
+    public Integer updateType(String user, String type){
 
         int Worked = 0;
 

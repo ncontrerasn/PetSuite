@@ -196,7 +196,7 @@ public class ClientController {
     }
 
     @PostMapping("/searchdaycarebyname")
-    public List<DogDayCare_Dto> updateAll(@Valid @RequestBody Cadena name){
+    public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){
 
         System.out.println(name);
 

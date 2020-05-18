@@ -119,7 +119,7 @@ public class InfoUserController {
                     List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
                         rs.getString("e_mail"),
                         rs.getString("dog_daycare_address"),
-                        rs.getBoolean("dog_daycare_type"),
+                        rs.getString("dog_daycare_type"),
                         rs.getString("phone"),
 
                         rs.getFloat("dog_daycare_score"),

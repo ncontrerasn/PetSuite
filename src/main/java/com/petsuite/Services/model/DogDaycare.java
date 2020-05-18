@@ -31,7 +31,7 @@ public class DogDaycare extends InfoUser{
     private String dog_daycare_address;
    
     @NotNull
-    private Boolean dog_daycare_type;
+    private String dog_daycare_type;
 
     @NotNull
     private Float dog_daycare_score;
