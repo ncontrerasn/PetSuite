@@ -18,6 +18,15 @@ public interface DogDaycareRepository extends JpaRepository<DogDaycare, String>{
     @Query(value = "UPDATE dog_daycare SET dog_daycare_score = ?1 WHERE user = ?2", nativeQuery = true)
     Integer updateScore(float score, String user);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE dog_daycare SET dog_daycare_base_price = ?1 WHERE user = ?2", nativeQuery = true)
+    Integer updatePrice(float price, String user);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE dog_daycare SET dog_daycare_tax = ?1 WHERE user = ?2", nativeQuery = true)
+    Integer updateTax(float tax, String user);
 
     @Transactional
     @Modifying

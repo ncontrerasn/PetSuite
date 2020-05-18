@@ -282,6 +282,8 @@ public class ClientController {
             DTO.setDog_daycare_address(DC.get().getDog_daycare_address());
             DTO.setUser(DC.get().getUser());
             DTO.setDog_daycare_e_mail(DC.get().getE_mail());
+            DTO.setDog_daycare_price_base(DC.get().getDog_daycare_base_price());
+            DTO.setDog_daycare_tax(DC.get().getDog_daycare_tax());
 
             returns.add(DTO);
 

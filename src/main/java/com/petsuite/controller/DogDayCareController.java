@@ -189,6 +189,26 @@ public class DogDayCareController {
 
     }
 
+    public Integer updatePrice(String user, Float price){
+
+        int Worked = 0;
+
+        Worked = dogDaycareRepository.updatePrice(price,user);
+
+        return Worked;
+
+    }
+
+    public Integer updateTax(String user, Float tax){
+
+        int Worked = 0;
+
+        Worked = dogDaycareRepository.updateTax(tax,user);
+
+        return Worked;
+
+    }
+
     @PostMapping("/update")
     public DogDayCare_Dto updateAll(@Valid @RequestBody DogDayCare_Dto user_dto){
 
@@ -243,6 +263,20 @@ public class DogDayCareController {
             if (uppdateReturns!=1)
             {
                 DayCare_DTO.setDog_daycare_type(null);
+            }
+
+            uppdateReturns = updatePrice(user_dto.getUser(),user_dto.getDog_daycare_price_base());
+
+            if (uppdateReturns!=1)
+            {
+                DayCare_DTO.setDog_daycare_price_base(null);
+            }
+
+            uppdateReturns = updateTax(user_dto.getUser(),user_dto.getDog_daycare_tax());
+
+            if (uppdateReturns!=1)
+            {
+                DayCare_DTO.setDog_daycare_tax(null);
             }
 
         }else{
