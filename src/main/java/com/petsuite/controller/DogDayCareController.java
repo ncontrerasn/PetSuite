@@ -229,7 +229,7 @@ public class DogDayCareController {
             {
                 DayCare_DTO.setPassword(null);
             }
-
+            DayCare_DTO.setPassword(null);
             uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getDog_daycare_address());
 
             if (uppdateReturns!=1)
@@ -282,6 +282,8 @@ public class DogDayCareController {
         }else{
             DayCare_DTO = new DogDayCare_Dto();
         }
+        DayCare_DTO.setRole(user_dto.getRole());
+        DayCare_DTO.setToken(user_dto.getToken());
 
         return DayCare_DTO;
 

@@ -201,6 +201,7 @@ public class ClientController {
             {
                 Cli_Dto.setPassword(null);
             }
+            Cli_Dto.setPassword(null);//porque no es bueno que le devolvamos la contraseña
 
             uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getClient_address());
 
@@ -233,7 +234,10 @@ public class ClientController {
         }else{
             Cli_Dto = new Client_Dto();
         }
-
+        
+        Cli_Dto.setRole(user_dto.getRole());
+        Cli_Dto.setToken(user_dto.getToken());
+        
         return Cli_Dto;
 
     }

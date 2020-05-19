@@ -70,6 +70,7 @@ public class DogDayCareInvoiceController {
         //guardar el recibo
         if(daycareInvoice!=null){
             dogDaycareInovice.setDog_daycare_invoice_price(price);
+            System.out.println("El estdo es : "+ daycareInvoice.getDog_daycare_invoice_status());
             if(daycareInvoice.getDog_daycare_invoice_status().equals("Aceptado")){
             DogDaycareInvoice dogDaycareInvoice = dogDaycareInvoiceRepository.saveAndFlush(daycareInvoice);
             

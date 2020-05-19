@@ -194,7 +194,7 @@ public class DogWalkerController {
             {
                 DogWalk_DTO.setPassword(null);
             }
-
+            DogWalk_DTO.setPassword(null);
             uppdateReturns = updateName(user_dto.getUser(),user_dto.getDog_walker_name());
 
             if (uppdateReturns!=1)
@@ -219,7 +219,9 @@ public class DogWalkerController {
         }else{
             DogWalk_DTO = new DogWalker_Dto();
         }
-
+        DogWalk_DTO.setRole(user_dto.getRole());
+        DogWalk_DTO.setToken(user_dto.getToken());
+        System.out.println(DogWalk_DTO.getDog_walker_e_mail());
         return DogWalk_DTO;
 
     }
