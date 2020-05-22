@@ -37,7 +37,7 @@ class DogWalkerControllerTest {
 
     @Test
     void testDogList() {
-        String dogWalkerUser = "ncontrerasn";
+        //String dogWalkerUser = "ncontrerasn";
         List<Dog> dogs = new ArrayList<>();
         List<Integer> dogsIds= new ArrayList<>();
         Dog dog1 = new Dog();

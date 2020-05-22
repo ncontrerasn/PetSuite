@@ -8,6 +8,8 @@ import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
+import com.petsuite.Services.services.EndCareService;
+import com.petsuite.Services.services.SearchDogDayCare;
 import com.petsuite.basics.Cadena;
 import com.petsuite.basics.CadenaDoble;
 
@@ -70,6 +72,9 @@ public class ClientController {
 
     @Autowired
     InfoUserRepository infoUserRepository;
+
+    @Autowired
+    SearchDogDayCare searchDogDayCare;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -260,55 +265,8 @@ public class ClientController {
     @PostMapping("/searchdaycarebyname")
     public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){
 
-        System.out.println(name);
+        return searchDogDayCare.searchDayCareByName(name);
 
-        List<String> usersToReturns = new ArrayList<>();
-
-        List<String> findings = new ArrayList<>();
-
-        String[] Words = name.getCadena().split(" ");
-
-        for (int i=0; i<Words.length; i++){
-            System.out.println(Words);
-            findings = dogDaycareRepository.searchByName("%"+Words[i]+"%");
-
-            while(!findings.isEmpty()){
-                if (!usersToReturns.contains(findings.get(0))) {
-                    usersToReturns.add(findings.get(0));
-                }
-                findings.remove(0);
-            }
-        }
-
-        List<DogDayCare_Dto> returns = new ArrayList<>();
-
-        DogDayCare_Dto DTO;
-
-        Optional<DogDaycare> DC;
-
-        while(!usersToReturns.isEmpty()){
-
-            DC = dogDaycareRepository.findById(usersToReturns.remove(0));
-
-            System.out.println(DC.get().getUser());
-
-            DTO = new DogDayCare_Dto();
-
-            DTO.setDog_daycare_name(DC.get().getName());
-            DTO.setDog_daycare_type(DC.get().getDog_daycare_type());
-            DTO.setDog_daycare_score(DC.get().getDog_daycare_score());
-            DTO.setDog_daycare_phone(DC.get().getPhone());
-            DTO.setDog_daycare_address(DC.get().getDog_daycare_address());
-            DTO.setUser(DC.get().getUser());
-            DTO.setDog_daycare_e_mail(DC.get().getE_mail());
-            DTO.setDog_daycare_price_base(DC.get().getDog_daycare_base_price());
-            DTO.setDog_daycare_tax(DC.get().getDog_daycare_tax());
-
-            returns.add(DTO);
-
-        }
-
-        return returns;
     }
 
     @PostMapping("/mywalker")
