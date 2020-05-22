@@ -5,7 +5,7 @@
  */
 package com.petsuite.Services.services;
 
-import com.petsuite.basics.Entero;
+import com.petsuite.Services.basics.Entero;
 
 /**
  *

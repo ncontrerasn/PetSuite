@@ -3,7 +3,7 @@ package com.petsuite.Services.services;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

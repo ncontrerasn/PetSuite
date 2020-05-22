@@ -1,7 +1,7 @@
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;

@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.petsuite.Services.basics"})
+//@ComponentScan({"com.petsuite.Services.basics"})
 public class ServicesApplication {
 
 	public static void main(String[] args) {

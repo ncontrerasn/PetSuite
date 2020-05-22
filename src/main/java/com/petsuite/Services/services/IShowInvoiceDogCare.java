@@ -6,7 +6,7 @@
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
-import com.petsuite.basics.CadenaDoble;
+import com.petsuite.Services.basics.CadenaDoble;
 import java.util.List;
 
 /**
@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface IShowInvoiceDogCare {
     
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(/*CadenaDoble cadenaDoble*/);
     
 }

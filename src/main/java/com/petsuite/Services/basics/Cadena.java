@@ -1,4 +1,4 @@
-package com.petsuite.basics;
+package com.petsuite.Services.basics;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

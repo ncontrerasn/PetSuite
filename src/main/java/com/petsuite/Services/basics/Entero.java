@@ -1,4 +1,4 @@
-package com.petsuite.basics;
+package com.petsuite.Services.basics;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Flotante {
-    Float flotante;
+public class Entero {
+    int entero;
 }

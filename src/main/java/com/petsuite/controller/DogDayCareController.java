@@ -13,15 +13,15 @@ import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.CadenaDoble;
-import com.petsuite.basics.Entero;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
+import com.petsuite.Services.basics.Entero;
 
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

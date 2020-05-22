@@ -10,8 +10,8 @@ import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
 import com.petsuite.Services.services.EndCareService;
 import com.petsuite.Services.services.SearchDogDayCare;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.CadenaDoble;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
 
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
@@ -91,7 +91,7 @@ public class ClientController {
     @PostMapping("/seeEndedCares")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public List<DogDayCareInvoice_Dto> showInovicesByStatus(@Valid @RequestBody CadenaDoble cadena) {
         System.out.println(cadena.getCadena1() + cadena.getCadena2());
-    return showInvoiceDogCare.showInovicesByStatus(cadena);
+    return showInvoiceDogCare.showInovicesByStatus();
         
         
     }

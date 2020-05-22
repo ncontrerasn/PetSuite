@@ -5,8 +5,8 @@ import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.Entero;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.Entero;
 
 import java.util.ArrayList;
 import java.util.List;

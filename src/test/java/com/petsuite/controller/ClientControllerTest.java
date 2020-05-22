@@ -5,7 +5,7 @@ import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.DogRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -9,7 +9,7 @@ import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.CadenaDoble;
+import com.petsuite.Services.basics.CadenaDoble;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,8 @@ public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
     
     
     @Override
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble) {
-        String user = cadenaDoble.getCadena1();
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(/*CadenaDoble cadenaDoble*/) {
+       /* String user = cadenaDoble.getCadena1();
         String status= cadenaDoble.getCadena2();
         //Queremos saber si es cliente o guardería
         String roleUser =infoUserRepository.findRoleBySuer(user);
@@ -56,8 +56,8 @@ public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
              newInvoices.setDog_daycare_invoice_dog_name(daycareInoviceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);
              dtoInvoices.add(newInvoices);
-         }
-        return dtoInvoices;
+         }*/
+        return null;
         
     }
     

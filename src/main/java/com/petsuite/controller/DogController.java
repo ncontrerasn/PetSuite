@@ -5,7 +5,7 @@ import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
