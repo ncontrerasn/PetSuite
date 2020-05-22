@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface IShowInvoiceDogCare {
     
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(/*CadenaDoble cadenaDoble*/);
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
     
 }

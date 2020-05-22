@@ -1,10 +1,12 @@
 package com.petsuite;
 
+import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.gof.Contractor;
 import com.petsuite.Services.gof.Employee;
 import com.petsuite.Services.gof.IEmployed;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -64,6 +66,8 @@ public class ServicesApplication {
             }
             
               */  
+             
+        
         }
 
 }

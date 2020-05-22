@@ -27,12 +27,12 @@ public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
     InfoUserRepository infoUserRepository;
     @Autowired
     DogDaycareInvoiceRepository daycareInoviceRepository;
-    @Autowired
+  
     
     
     @Override
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(/*CadenaDoble cadenaDoble*/) {
-       /* String user = cadenaDoble.getCadena1();
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble) {
+        String user = cadenaDoble.getCadena1();
         String status= cadenaDoble.getCadena2();
         //Queremos saber si es cliente o guardería
         String roleUser =infoUserRepository.findRoleBySuer(user);
@@ -56,8 +56,8 @@ public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
              newInvoices.setDog_daycare_invoice_dog_name(daycareInoviceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);
              dtoInvoices.add(newInvoices);
-         }*/
-        return null;
+         }
+        return dtoInvoices;
         
     }
     

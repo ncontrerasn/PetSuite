@@ -91,8 +91,7 @@ public class ClientController {
     @PostMapping("/seeEndedCares")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public List<DogDayCareInvoice_Dto> showInovicesByStatus(@Valid @RequestBody CadenaDoble cadena) {
         System.out.println(cadena.getCadena1() + cadena.getCadena2());
-    return showInvoiceDogCare.showInovicesByStatus();
-        
+    return showInvoiceDogCare.showInovicesByStatus(cadena);        
         
     }
     
