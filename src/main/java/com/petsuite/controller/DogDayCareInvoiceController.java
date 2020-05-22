@@ -55,8 +55,7 @@ public class DogDayCareInvoiceController {
         
         //Llamamos al servicio
         return endCareService.endCare(idDogDayCareInovice);
-        
-        
+
     }
     
 

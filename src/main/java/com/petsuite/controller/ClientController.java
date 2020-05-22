@@ -250,9 +250,9 @@ public class ClientController {
     }
 
     @PostMapping("/searchdaycarebyname")
-    public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){
+    public List<DogDayCare_Dto> searchDayCareByNameAndService(@Valid @RequestBody Cadena name){
 
-        return searchDogDayCare.searchDayCareByName(name);
+        return searchDogDayCare.searchDayCareByNameAndService(name);
 
     }
 
