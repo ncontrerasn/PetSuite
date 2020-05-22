@@ -92,7 +92,7 @@ public class DogDayCareController {
         List<DogDayCareInvoice_Dto> dtoInvoices= new ArrayList<>();
        List<DogDaycareInvoice> invoices= dogDaycareInvoiceRepository.findInvoicesByDogDayCare(dogDayCare.getCadena());
          for (int i = 0; i <invoices.size(); i++) {
-             DogDayCareInvoice_Dto newInvoices=new DogDayCareInvoice_Dto(invoices.get(i).getDog_daycare_invoice_date().toString(),invoices.get(i).getDog_daycare_invoice_duration(), invoices.get(i).getDog_daycare_invoice_price(), invoices.get(i).getDog_daycare_invoice_status(), invoices.get(i).getDog_daycare_id(), invoices.get(i).getClient_id(), invoices.get(i).getDog_id(), null, invoices.get(i).getDog_daycare_score(),null,null);
+             DogDayCareInvoice_Dto newInvoices=new DogDayCareInvoice_Dto(invoices.get(i).getDog_daycare_invoice_id(),invoices.get(i).getDog_daycare_invoice_date().toString(),invoices.get(i).getDog_daycare_invoice_duration(), invoices.get(i).getDog_daycare_invoice_price(), invoices.get(i).getDog_daycare_invoice_status(), invoices.get(i).getDog_daycare_id(), invoices.get(i).getClient_id(), invoices.get(i).getDog_id(), null, invoices.get(i).getDog_daycare_score(),null,null);
              List<String> services= dogDaycareInvoiceRepository.findNameServicesByInvoiceId(invoices.get(i).getDog_daycare_invoice_id());
              newInvoices.setDog_daycare_invoice_dog_name(dogDaycareInvoiceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);

@@ -5,7 +5,9 @@ import com.petsuite.Services.model.DogDayCareService_DogDayCareInvoice;
 import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.*;
+import com.petsuite.Services.services.EndCareService;
 import com.petsuite.basics.Cadena;
+import com.petsuite.basics.Entero;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
@@ -38,11 +40,24 @@ public class DogDayCareInvoiceController {
 
     @Autowired
     DogRepository dogRepository;
+    
+    //Importamos el servicio a ustilizar de erminar el servicio de cuidado
+    @Autowired
+    EndCareService endCareService;
   
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllClients() {
       return dogDaycareInvoiceRepository.findAll();
     }
+    @PostMapping("/endService")//Vamos a terminar el servicio del cuidado
+    public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice) {
+        
+        //Llamamos al servicio
+        return endCareService.endCare(idDogDayCareInovice);
+        
+        
+    }
+    
 
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCareInvoice_Dto createDogDaycareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) {
