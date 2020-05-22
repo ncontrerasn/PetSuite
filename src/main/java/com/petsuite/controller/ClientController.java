@@ -1,6 +1,7 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
+import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 
 import com.petsuite.Services.dto.DogWalker_Dto;
@@ -23,6 +24,7 @@ import com.petsuite.Services.repository.DogDaycareServiceRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
+import com.petsuite.Services.services.ShowInvoiceDogCare;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -76,12 +78,23 @@ public class ClientController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    ShowInvoiceDogCare showInvoiceDogCare;
 
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
     
+    
+    @PostMapping("/seeEndedCares")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(@Valid @RequestBody CadenaDoble cadena) {
+        System.out.println(cadena.getCadena1() + cadena.getCadena2());
+    return showInvoiceDogCare.showInovicesByStatus(cadena);
+        
+        
+    }
     
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {

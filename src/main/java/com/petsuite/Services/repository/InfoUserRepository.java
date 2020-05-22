@@ -35,5 +35,10 @@ public interface InfoUserRepository extends JpaRepository<InfoUser, String>{
 
     @Query(value = "SELECT user FROM info_user WHERE user = ?1", nativeQuery = true)
     String findUser(String user);
+    
+    @Query(value = "SELECT role FROM info_user WHERE user = ?1", nativeQuery = true)
+    String findRoleBySuer(String user);
+    
+    
 
 }

@@ -62,7 +62,7 @@ public class DogDayCareController {
          for (int i = 0; i < lista.size(); i++) {
              DogDayCare_Dto  guarderia = new DogDayCare_Dto(lista.get(i).getE_mail(), lista.get(i).getDog_daycare_address(), lista.get(i).getDog_daycare_type(), lista.get(i).getPhone(), lista.get(i).getDog_daycare_score(), lista.get(i).getName(), lista.get(i).getDog_daycare_base_price(), lista.get(i).getDog_daycare_tax());
              listaEnviar.add(guarderia);
-             
+               
          }
          return listaEnviar;
     }
