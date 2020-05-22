@@ -118,7 +118,7 @@ class ClientControllerTest {
 
         when(dogDaycareRepository.findById(anyString())).thenReturn(DC,DC2);
 
-        assertEquals(2, clientController.searchDayCareByName(name).size());
+        assertEquals(2, clientController.searchDayCareByNameAndService(name).size());
 
     }
 }
