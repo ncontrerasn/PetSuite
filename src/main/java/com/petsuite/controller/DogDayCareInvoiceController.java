@@ -52,8 +52,10 @@ public class DogDayCareInvoiceController {
     @PostMapping("/endService")//Vamos a terminar el servicio del cuidado
     public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice) {
         
+        System.out.println("El id que me llega es: "+ idDogDayCareInovice);
+        
         //Llamamos al servicio
-        return endCareService.endCare(idDogDayCareInovice);
+        return endCareService.endCare(idDogDayCareInovice);   
         
         
     }

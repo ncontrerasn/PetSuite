@@ -5,8 +5,10 @@ import com.petsuite.Services.gof.Employee;
 import com.petsuite.Services.gof.IEmployed;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan({"com.petsuite.Services.basics"})
 public class ServicesApplication {
 
 	public static void main(String[] args) {
