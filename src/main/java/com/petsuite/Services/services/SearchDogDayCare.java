@@ -21,7 +21,7 @@ public class SearchDogDayCare implements ISearchDogDayCare{
     DogDaycareRepository dogDaycareRepository;
 
     @Override
-    public List<DogDayCare_Dto> searchDayCareByName(Cadena name){
+    public List<DogDayCare_Dto> searchDayCareByNameAndService(Cadena name){
 
         System.out.println(name);
 
@@ -29,17 +29,27 @@ public class SearchDogDayCare implements ISearchDogDayCare{
 
         List<String> findings = new ArrayList<>();
 
+        List<String> findings2 = new ArrayList<>();
+
         String[] Words = name.getCadena().split(" ");
 
         for (int i=0; i<Words.length; i++){
             System.out.println(Words);
             findings = dogDaycareRepository.searchByName("%"+Words[i]+"%");
+            findings2 = dogDaycareRepository.searchByService("%"+Words[i]+"%");
 
             while(!findings.isEmpty()){
                 if (!usersToReturns.contains(findings.get(0))) {
                     usersToReturns.add(findings.get(0));
                 }
                 findings.remove(0);
+            }
+
+            while(!findings2.isEmpty()){
+                if (!usersToReturns.contains(findings2.get(0))) {
+                    usersToReturns.add(findings2.get(0));
+                }
+                findings2.remove(0);
             }
         }
 

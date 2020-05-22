@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ISearchDogDayCare {
 
-    public List<DogDayCare_Dto> searchDayCareByName(Cadena name);
+    public List<DogDayCare_Dto> searchDayCareByNameAndService(Cadena name);
 
 }
