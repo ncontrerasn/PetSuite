@@ -21,8 +21,6 @@ public class EndCareService implements IEndCare{
     
     @Autowired
     DogDaycareInvoiceRepository dogDaycareInvoiceRepository;
-    
-    
 
     @Override
     public Boolean endCare(Entero DogDayCareInoviceId) {

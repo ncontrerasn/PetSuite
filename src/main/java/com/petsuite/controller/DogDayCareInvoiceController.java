@@ -49,6 +49,7 @@ public class DogDayCareInvoiceController {
     public List<DogDaycareInvoice> getAllClients() {
       return dogDaycareInvoiceRepository.findAll();
     }
+
     @PostMapping("/endService")//Vamos a terminar el servicio del cuidado
     public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice) {
         
