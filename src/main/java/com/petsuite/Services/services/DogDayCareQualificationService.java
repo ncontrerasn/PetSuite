@@ -19,7 +19,7 @@ public class DogDayCareQualificationService implements DogDayCareQualification {
     @Override
     public Cadena qualifyDogDayCare(DogDayCareInvoice_Dto dogDayCareInvoice_dto) {
         int updatedInvoice = dogDaycareInvoiceRepository.scoreDogDaycare(dogDayCareInvoice_dto.getDog_daycare_invoice_score(),
-                dogDayCareInvoice_dto.getDog_daycare_invoice_dog_id());
+                dogDayCareInvoice_dto.getDog_daycare_invoice_id());
         if(updatedInvoice == 1){
             float score = dogDaycareInvoiceRepository.scoreAvg(dogDayCareInvoice_dto.getDog_daycare_invoice_dogdaycare_id());
             int updatedDogDaycareScore = dogDaycareRepository.updateScore(score,
