@@ -1,11 +1,13 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.services.FindDog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ public class DogController {
 
     @Autowired
     InfoUserRepository infoUserRepository;
+
+    @Autowired
+    FindDog findDog;
 
     @GetMapping("/all")
     public List<Dog> getAllDogs() {
@@ -171,6 +176,11 @@ public class DogController {
 
     }
 
+    @PostMapping("/findespecificdog")
+    public Dog_Dto findEspecificDog(@Valid @RequestBody Entero Dog_id){
+        System.out.println(Dog_id);
+        return findDog.find(Dog_id);
+    }
 
 }
 
