@@ -156,14 +156,17 @@ public class ClientController {
     }
 
     public Integer updateUserPassword(String user, String password){
-
+        
         if (password!=null)
         {
+            if(!password.isEmpty()){
+            System.out.println("La password es: "+ password);
             int Worked = 0;
 
             Worked = infoUserRepository.updateUserPassword(password,user);
 
             return Worked;
+            }
         }
 
         return 0;
@@ -203,7 +206,7 @@ public class ClientController {
     @PostMapping("/update")
     public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){
 
-        System.out.println(user_dto);
+        System.out.println("vamos a imprimir al cliente "+user_dto);
 
         Client_Dto Cli_Dto = user_dto;
 
