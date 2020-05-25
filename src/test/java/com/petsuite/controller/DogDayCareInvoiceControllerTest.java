@@ -37,7 +37,7 @@ class DogDayCareInvoiceControllerTest {
     @BeforeEach
     void setUp() { MockitoAnnotations.initMocks(this); }
 
-    @Test
+    /*@Test
     void createDogDaycareInvoice() {
         List<Integer> servicios = new ArrayList();
         servicios.add(1);
@@ -52,5 +52,5 @@ class DogDayCareInvoiceControllerTest {
 
         Float price = dogDaycareInovice.getDog_daycare_invoice_duration() * dogDaycare.getDog_daycare_base_price();
 
-    }
+    }*/
 }

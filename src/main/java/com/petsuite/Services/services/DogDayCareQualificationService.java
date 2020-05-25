@@ -18,6 +18,7 @@ public class DogDayCareQualificationService implements DogDayCareQualification {
 
     @Override
     public Cadena qualifyDogDayCare(DogDayCareInvoice_Dto dogDayCareInvoice_dto) {
+        System.out.println("Diego está intentando califiar guarderias");
         int updatedInvoice = dogDaycareInvoiceRepository.scoreDogDaycare(dogDayCareInvoice_dto.getDog_daycare_invoice_score(),
                 dogDayCareInvoice_dto.getDog_daycare_invoice_id());
         if(updatedInvoice == 1){

@@ -97,11 +97,15 @@ public class WalkInvoiceController {
 
     @PostMapping("/invoicesAccepted")
     public List<WalkInvoice_Dto> findByStatusAccepted(@Valid @RequestBody Cadena cadena){
-        System.out.println("Diego necesita saber si entraste a lo acpetado");
+        System.out.println(cadena.getCadena());
+        System.out.println("Diego necesita saber si entraste a lo aceptado");
         List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
+        System.out.println("Ya tenemos la lista de invoices");
         List<WalkInvoice_Dto> listaReal= new ArrayList<>();
         for (int i = 0; i < walkInvoices.size(); i++) {
+            System.out.println("Vamos a buscar el perro");
             Dog dog = dogRepository.findByDogId(walkInvoices.get(i).getDog_id());
+            System.out.println("Encontramos al animal");
             WalkInvoice_Dto invoice_Dto=new WalkInvoice_Dto(walkInvoices.get(i).getWalk_invoice_id(), walkInvoices.get(i).getWalk_invoice_price(),walkInvoices.get(i).getWalk_invoice_status(),walkInvoices.get(i).getClient_id(), walkInvoices.get(i).getDog_walker_id(),walkInvoices.get(i).getWalk_invoice_notes(), walkInvoices.get(i).getDog_id(), walkInvoices.get(i).getWalker_score(),walkInvoices.get(i).getWalk_invoice_date(),walkInvoices.get(i).getWalk_invoice_address(),walkInvoices.get(i).getWalk_invoice_duration(),null,null,0,0);
             invoice_Dto.setDog_name(dog.getDog_name());
             invoice_Dto.setDog_height(dog.getDog_height());
@@ -150,8 +154,12 @@ public class WalkInvoiceController {
             invoice_Dto.setDog_height(dog.getDog_height());
             invoice_Dto.setDog_race(dog.getDog_race());
             invoice_Dto.setDog_weight(dog.getDog_weight());
+            //para que solo le muestre al cliente solo las que no tienen calificación, pues las que ya tienen, ya nos las puede volver a calificar
+            if(walkInvoices.get(i).getWalker_score()==null)
             listaReal.add(invoice_Dto);
+            
         }
+        
         return listaReal;
     }
 
