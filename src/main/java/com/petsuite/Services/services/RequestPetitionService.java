@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.petsuite.Services.services.interfaces;
+package com.petsuite.Services.services;
 
-import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.services.interfaces.IRequestPetition;
 
 /**
  *
  * @author sergi
  */
-public interface IEndCare {
-    
-    public Boolean endCare (Entero DogDayCareInoviceId);
+public class RequestPetitionService implements IRequestPetition{
     
 }

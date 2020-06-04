@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.petsuite.Services.services.interfaces;
+package com.petsuite.Services.services;
 
-import com.petsuite.Services.dto.InfoUser_Dto;
+import com.petsuite.Services.services.interfaces.IAcceptPrice;
 
 /**
  *
  * @author sergi
  */
-public interface ILogin {
-    Object clientLogin(InfoUser_Dto user); //login de InFoUser
+public class AcceptPriceService implements IAcceptPrice{
     
 }

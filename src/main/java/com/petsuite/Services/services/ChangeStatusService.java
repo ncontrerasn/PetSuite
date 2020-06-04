@@ -5,20 +5,20 @@
  */
 package com.petsuite.Services.services;
 
-import com.petsuite.Services.services.interfaces.IEndCare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.basics.Entero;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.petsuite.Services.services.interfaces.IChangeStatus;
 
 /**
  *
  * @author sergi
  */
 @Service
-public class EndCareService implements IEndCare{
+public class ChangeStatusService implements IChangeStatus{
     
     @Autowired
     DogDaycareInvoiceRepository dogDaycareInvoiceRepository;

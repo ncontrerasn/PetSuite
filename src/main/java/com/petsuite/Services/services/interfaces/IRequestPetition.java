@@ -6,15 +6,15 @@
 package com.petsuite.Services.services.interfaces;
 
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
-import com.petsuite.Services.basics.CadenaDoble;
-import java.util.List;
+import com.petsuite.Services.dto.WalkPetition_Dto;
 
 /**
  *
  * @author sergi
  */
-public interface IShowInvoiceDogCare {
+public interface IRequestPetition {
+    WalkPetition_Dto createPeititon( WalkPetition_Dto walkPetition); //create de WalkpetitionController
+    DogDayCareInvoice_Dto createDogDaycareInvoice(DogDayCareInvoice_Dto dogDaycareInovice); //load de DogDayCareInvoiceController
     
-    List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
     
 }

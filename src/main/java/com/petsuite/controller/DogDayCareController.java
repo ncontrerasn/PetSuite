@@ -112,28 +112,28 @@ public class DogDayCareController {
         return Worked;
 
     }
-
-    @PostMapping(value = "/updatescore")
-    public Float updateScore(@Valid @RequestBody CadenaDoble cadena){
-
-        Optional<DogDaycare> dogDaycare= dogDaycareRepository.findById(cadena.getCadena1());
-
-        Float score =  dogDaycare.get().getDog_daycare_score();
-
-        score = (score + Float.parseFloat(cadena.getCadena2()))/2;
-
-        int Worked = 0;
-
-        Worked = dogDaycareRepository.updateScore(score,cadena.getCadena1());
-
-        if (Worked!=1)
-        {
-            return null;
-        }
-
-        return score;
-
-    }
+//Esto ya esta en otro lado
+//    @PostMapping(value = "/updatescore")
+//    public Float updateScore(@Valid @RequestBody CadenaDoble cadena){
+//
+//        Optional<DogDaycare> dogDaycare= dogDaycareRepository.findById(cadena.getCadena1());
+//
+//        Float score =  dogDaycare.get().getDog_daycare_score();
+//
+//        score = (score + Float.parseFloat(cadena.getCadena2()))/2;
+//
+//        int Worked = 0;
+//
+//        Worked = dogDaycareRepository.updateScore(score,cadena.getCadena1());
+//
+//        if (Worked!=1)
+//        {
+//            return null;
+//        }
+//
+//        return score;
+//
+//    }
 
     public Integer updateAddress(String user, String address){
 

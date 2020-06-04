@@ -124,7 +124,7 @@ public class WalkPetitionController {
     }
 
     @PostMapping("/denyoraccept")
-    public  Dog_Dto denyPetition(@Valid @RequestBody WalkInvoice_Dto walkInvoice_Dto){
+    public  Dog_Dto denyOrAcceptPetition(@Valid @RequestBody WalkInvoice_Dto walkInvoice_Dto){
 
         String status=walkInvoice_Dto.getWalk_invoice_status();
         if(status.equals("Aceptar"))

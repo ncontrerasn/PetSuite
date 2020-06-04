@@ -8,7 +8,7 @@ import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
-import com.petsuite.Services.services.EndCareService;
+import com.petsuite.Services.services.ChangeStatusService;
 import com.petsuite.Services.services.SearchDogDayCareService;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
