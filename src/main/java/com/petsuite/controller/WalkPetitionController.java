@@ -9,7 +9,7 @@ import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

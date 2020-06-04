@@ -28,6 +28,13 @@ public interface DogDaycareInvoiceRepository extends JpaRepository<DogDaycareInv
     @Query(value = "SELECT dog_name FROM dog NATURAL JOIN dog_daycare_invoice  WHERE dog_daycare_invoice_id = ?1", nativeQuery = true)
     String findDogNameByInvoiceId(Integer invoice_id);
     
+     @Query(value = "SELECT * FROM dog_daycare_invoice WHERE dog_daycare_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+    List<DogDaycareInvoice> findInvoicesByDogDayCareAndStatus(String dog_daycare_id, String status);
+    
+    
+     @Query(value = "SELECT * FROM dog_daycare_invoice WHERE client_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+    List<DogDaycareInvoice> findInvoicesByClientAndStatus(String client_id, String status);
+    
     
 
 }

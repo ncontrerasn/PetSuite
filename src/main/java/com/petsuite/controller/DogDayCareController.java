@@ -13,15 +13,15 @@ import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.CadenaDoble;
-import com.petsuite.basics.Entero;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
+import com.petsuite.Services.basics.Entero;
 
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -62,7 +62,7 @@ public class DogDayCareController {
          for (int i = 0; i < lista.size(); i++) {
              DogDayCare_Dto  guarderia = new DogDayCare_Dto(lista.get(i).getE_mail(), lista.get(i).getDog_daycare_address(), lista.get(i).getDog_daycare_type(), lista.get(i).getPhone(), lista.get(i).getDog_daycare_score(), lista.get(i).getName(), lista.get(i).getDog_daycare_base_price(), lista.get(i).getDog_daycare_tax());
              listaEnviar.add(guarderia);
-             
+               
          }
          return listaEnviar;
     }
@@ -92,17 +92,18 @@ public class DogDayCareController {
         List<DogDayCareInvoice_Dto> dtoInvoices= new ArrayList<>();
        List<DogDaycareInvoice> invoices= dogDaycareInvoiceRepository.findInvoicesByDogDayCare(dogDayCare.getCadena());
          for (int i = 0; i <invoices.size(); i++) {
-             DogDayCareInvoice_Dto newInvoices=new DogDayCareInvoice_Dto(invoices.get(i).getDog_daycare_invoice_date().toString(),invoices.get(i).getDog_daycare_invoice_duration(), invoices.get(i).getDog_daycare_invoice_price(), invoices.get(i).getDog_daycare_invoice_status(), invoices.get(i).getDog_daycare_id(), invoices.get(i).getClient_id(), invoices.get(i).getDog_id(), null, invoices.get(i).getDog_daycare_score(),null,null);
+             DogDayCareInvoice_Dto newInvoices=new DogDayCareInvoice_Dto(invoices.get(i).getDog_daycare_invoice_id(),invoices.get(i).getDog_daycare_invoice_date().toString(),invoices.get(i).getDog_daycare_invoice_duration(), invoices.get(i).getDog_daycare_invoice_price(), invoices.get(i).getDog_daycare_invoice_status(), invoices.get(i).getDog_daycare_id(), invoices.get(i).getClient_id(), invoices.get(i).getDog_id(), null, invoices.get(i).getDog_daycare_score(),null,null);
              List<String> services= dogDaycareInvoiceRepository.findNameServicesByInvoiceId(invoices.get(i).getDog_daycare_invoice_id());
              newInvoices.setDog_daycare_invoice_dog_name(dogDaycareInvoiceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);
+             if(!invoices.get(i).getDog_daycare_invoice_status().equals("Terminado"))
              dtoInvoices.add(newInvoices);
          }
          
          return dtoInvoices;
     }
 
-    public Integer updateType(String user, String type){
+    public Integer updateType(String user, Boolean type){
 
         int Worked = 0;
 
@@ -189,6 +190,26 @@ public class DogDayCareController {
 
     }
 
+    public Integer updatePrice(String user, Float price){
+
+        int Worked = 0;
+
+        Worked = dogDaycareRepository.updatePrice(price,user);
+
+        return Worked;
+
+    }
+
+    public Integer updateTax(String user, Float tax){
+
+        int Worked = 0;
+
+        Worked = dogDaycareRepository.updateTax(tax,user);
+
+        return Worked;
+
+    }
+
     @PostMapping("/update")
     public DogDayCare_Dto updateAll(@Valid @RequestBody DogDayCare_Dto user_dto){
 
@@ -209,7 +230,7 @@ public class DogDayCareController {
             {
                 DayCare_DTO.setPassword(null);
             }
-
+            DayCare_DTO.setPassword(null);
             uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getDog_daycare_address());
 
             if (uppdateReturns!=1)
@@ -245,9 +266,25 @@ public class DogDayCareController {
                 DayCare_DTO.setDog_daycare_type(null);
             }
 
+            uppdateReturns = updatePrice(user_dto.getUser(),user_dto.getDog_daycare_price_base());
+
+            if (uppdateReturns!=1)
+            {
+                DayCare_DTO.setDog_daycare_price_base(null);
+            }
+
+            uppdateReturns = updateTax(user_dto.getUser(),user_dto.getDog_daycare_tax());
+
+            if (uppdateReturns!=1)
+            {
+                DayCare_DTO.setDog_daycare_tax(null);
+            }
+
         }else{
             DayCare_DTO = new DogDayCare_Dto();
         }
+        DayCare_DTO.setRole(user_dto.getRole());
+        DayCare_DTO.setToken(user_dto.getToken());
 
         return DayCare_DTO;
 

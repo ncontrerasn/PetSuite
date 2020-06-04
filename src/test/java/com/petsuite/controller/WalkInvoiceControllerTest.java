@@ -8,7 +8,7 @@ import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.basics.Cadena;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

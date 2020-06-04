@@ -5,7 +5,10 @@ import com.petsuite.Services.model.DogDayCareService_DogDayCareInvoice;
 import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.*;
-import com.petsuite.basics.Cadena;
+import com.petsuite.Services.services.DogDayCareQualificationService;
+import com.petsuite.Services.services.EndCareService;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.Entero;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
@@ -38,11 +41,26 @@ public class DogDayCareInvoiceController {
 
     @Autowired
     DogRepository dogRepository;
+
+    @Autowired
+    DogDayCareQualificationService dogDayCareQualificationService;
+    
+    //Importamos el servicio a ustilizar de erminar el servicio de cuidado
+    @Autowired
+    EndCareService endCareService;
   
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllClients() {
       return dogDaycareInvoiceRepository.findAll();
     }
+
+    @PostMapping("/endService")//Vamos a terminar el servicio del cuidado
+    public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice) {
+        System.out.println("El id que me llega es: "+ idDogDayCareInovice);
+        //Llamamos al servicio
+        return endCareService.endCare(idDogDayCareInovice);
+    }
+    
 
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCareInvoice_Dto createDogDaycareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) {
@@ -70,6 +88,7 @@ public class DogDayCareInvoiceController {
         //guardar el recibo
         if(daycareInvoice!=null){
             dogDaycareInovice.setDog_daycare_invoice_price(price);
+            System.out.println("El estdo es : "+ daycareInvoice.getDog_daycare_invoice_status());
             if(daycareInvoice.getDog_daycare_invoice_status().equals("Aceptado")){
             DogDaycareInvoice dogDaycareInvoice = dogDaycareInvoiceRepository.saveAndFlush(daycareInvoice);
             
@@ -89,16 +108,7 @@ public class DogDayCareInvoiceController {
 
     @PostMapping("/score")
     public Cadena scoreDogDayCare(@Valid @RequestBody DogDayCareInvoice_Dto dogDayCareInvoice_dto){
-        int updatedInvoice = dogDaycareInvoiceRepository.scoreDogDaycare(dogDayCareInvoice_dto.getDog_daycare_invoice_score(),
-                dogDayCareInvoice_dto.getDog_daycare_invoice_dog_id());
-        if(updatedInvoice == 1){
-            float score = dogDaycareInvoiceRepository.scoreAvg(dogDayCareInvoice_dto.getDog_daycare_invoice_dogdaycare_id());
-            int updatedDogDaycareScore = dogDaycareRepository.updateScore(score,
-                    dogDayCareInvoice_dto.getDog_daycare_invoice_dogdaycare_id());
-            if(updatedDogDaycareScore == 1)
-                return new Cadena("Guardería calificada correctamente");
-        }
-        return new Cadena("Error calificando la guardería");
+        return dogDayCareQualificationService.qualifyDogDayCare(dogDayCareInvoice_dto);
     }
 
     private String getJWTToken(String username) {

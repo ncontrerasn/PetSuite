@@ -1,14 +1,17 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.Client_Dto;
+import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.CadenaDoble;
+import com.petsuite.Services.services.EndCareService;
+import com.petsuite.Services.services.SearchDogDayCare;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
 
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
@@ -21,6 +24,7 @@ import com.petsuite.Services.repository.DogDaycareServiceRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
+import com.petsuite.Services.services.ShowInvoiceDogCare;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -70,18 +74,31 @@ public class ClientController {
     InfoUserRepository infoUserRepository;
 
     @Autowired
+    SearchDogDayCare searchDogDayCare;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    ShowInvoiceDogCare showInvoiceDogCare;
 
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
-
+    
+    
+    @PostMapping("/seeEndedCares")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
+    public List<DogDayCareInvoice_Dto> showInovicesByStatus(@Valid @RequestBody CadenaDoble cadena) {
+        System.out.println(cadena.getCadena1() + cadena.getCadena2());
+    return showInvoiceDogCare.showInovicesByStatus(cadena);        
+        
+    }
+    
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {
 
-        System.out.println("Entramos al load client");
-        if(!infoUserRepository.existsById(client.getUser())){
+               if(!infoUserRepository.existsById(client.getUser())){
             Client realClient=new Client(client.getClient_address(),
                     null,null,null,null);
             realClient.setUser(client.getUser());
@@ -96,6 +113,8 @@ public class ClientController {
         }
         return null;
     }
+    
+    
 
     @PostMapping("/dogList")
     public List<Dog> myDogList(@Valid @RequestBody Cadena user){
@@ -137,14 +156,17 @@ public class ClientController {
     }
 
     public Integer updateUserPassword(String user, String password){
-
+        
         if (password!=null)
         {
+            if(!password.isEmpty()){
+            System.out.println("La password es: "+ password);
             int Worked = 0;
 
             Worked = infoUserRepository.updateUserPassword(password,user);
 
             return Worked;
+            }
         }
 
         return 0;
@@ -184,7 +206,7 @@ public class ClientController {
     @PostMapping("/update")
     public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){
 
-        System.out.println(user_dto);
+        System.out.println("vamos a imprimir al cliente "+user_dto);
 
         Client_Dto Cli_Dto = user_dto;
 
@@ -201,6 +223,7 @@ public class ClientController {
             {
                 Cli_Dto.setPassword(null);
             }
+            Cli_Dto.setPassword(null);//porque no es bueno que le devolvamos la contraseña
 
             uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getClient_address());
 
@@ -233,61 +256,19 @@ public class ClientController {
         }else{
             Cli_Dto = new Client_Dto();
         }
-
+        
+        Cli_Dto.setRole(user_dto.getRole());
+        Cli_Dto.setToken(user_dto.getToken());
+        
         return Cli_Dto;
 
     }
 
     @PostMapping("/searchdaycarebyname")
-    public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){
+    public List<DogDayCare_Dto> searchDayCareByNameAndService(@Valid @RequestBody Cadena name){
 
-        System.out.println(name);
+        return searchDogDayCare.searchDayCareByNameAndService(name);
 
-        List<String> usersToReturns = new ArrayList<>();
-
-        List<String> findings = new ArrayList<>();
-
-        String[] Words = name.getCadena().split(" ");
-
-        for (int i=0; i<Words.length; i++){
-            System.out.println(Words);
-            findings = dogDaycareRepository.searchByName("%"+Words[i]+"%");
-
-            while(!findings.isEmpty()){
-                if (!usersToReturns.contains(findings.get(0))) {
-                    usersToReturns.add(findings.get(0));
-                }
-                findings.remove(0);
-            }
-        }
-
-        List<DogDayCare_Dto> returns = new ArrayList<>();
-
-        DogDayCare_Dto DTO;
-
-        Optional<DogDaycare> DC;
-
-        while(!usersToReturns.isEmpty()){
-
-            DC = dogDaycareRepository.findById(usersToReturns.remove(0));
-
-            System.out.println(DC.get().getUser());
-
-            DTO = new DogDayCare_Dto();
-
-            DTO.setDog_daycare_name(DC.get().getName());
-            DTO.setDog_daycare_type(DC.get().getDog_daycare_type());
-            DTO.setDog_daycare_score(DC.get().getDog_daycare_score());
-            DTO.setDog_daycare_phone(DC.get().getPhone());
-            DTO.setDog_daycare_address(DC.get().getDog_daycare_address());
-            DTO.setUser(DC.get().getUser());
-            DTO.setDog_daycare_e_mail(DC.get().getE_mail());
-
-            returns.add(DTO);
-
-        }
-
-        return returns;
     }
 
     @PostMapping("/mywalker")

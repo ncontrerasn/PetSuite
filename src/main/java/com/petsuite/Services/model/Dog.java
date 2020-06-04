@@ -1,14 +1,6 @@
 package com.petsuite.Services.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -18,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "dog")
@@ -62,10 +56,10 @@ public class Dog {
     @OneToOne(mappedBy = "dog_wp")
     private WalkPetition walkPetition;
 
-    @Getter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)//antes 1 m
     @Setter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "dog")
-    private WalkInvoice walkInvoice;
+    @OneToMany(mappedBy = "dog")
+    private Set<WalkInvoice> walkInvoices;
 
     public Dog(String dog_name, String dog_race, Float dog_height, Float dog_weight, Integer dog_age, String dog_notes, String client_id) {
         this.dog_name = dog_name;

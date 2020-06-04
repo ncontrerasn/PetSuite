@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +45,7 @@ class DogDayCareControllerTest {
         DTO.setDog_daycare_score((float)5.0);
         DTO.setDog_daycare_name("pepito");
         DTO.setDog_daycare_address("zona x");
-        DTO.setDog_daycare_type("tipo 1");
+        DTO.setDog_daycare_type(true);
         DTO.setUser("htovars");
         DTO.setRole("ROLE_DOGDAYCARE");
         DTO.setPassword("1234");
@@ -61,7 +62,7 @@ class DogDayCareControllerTest {
 
         when(infoUserRepository.updateClientEmail(anyString(),anyString())).thenReturn(1);
 
-        when(dogDaycareRepository.updateType(anyString(),anyString())).thenReturn(1);
+        when(dogDaycareRepository.updateType(anyBoolean(),anyString())).thenReturn(1);
 
         assertEquals(DTO, dogDayCareController.updateAll(DTO));
 

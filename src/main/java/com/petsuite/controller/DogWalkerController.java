@@ -8,9 +8,9 @@ import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.DogWalkerRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
-import com.petsuite.basics.Cadena;
-import com.petsuite.basics.CadenaDoble;
-import com.petsuite.basics.Flotante;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
+import com.petsuite.Services.basics.Flotante;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -194,7 +194,7 @@ public class DogWalkerController {
             {
                 DogWalk_DTO.setPassword(null);
             }
-
+            DogWalk_DTO.setPassword(null);
             uppdateReturns = updateName(user_dto.getUser(),user_dto.getDog_walker_name());
 
             if (uppdateReturns!=1)
@@ -219,7 +219,9 @@ public class DogWalkerController {
         }else{
             DogWalk_DTO = new DogWalker_Dto();
         }
-
+        DogWalk_DTO.setRole(user_dto.getRole());
+        DogWalk_DTO.setToken(user_dto.getToken());
+        System.out.println(DogWalk_DTO.getDog_walker_e_mail());
         return DogWalk_DTO;
 
     }
