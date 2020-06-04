@@ -55,6 +55,7 @@ public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
              List<String> services= daycareInoviceRepository.findNameServicesByInvoiceId(invoices.get(i).getDog_daycare_invoice_id());
              newInvoices.setDog_daycare_invoice_dog_name(daycareInoviceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);
+             if(invoices.get(i).getDog_daycare_score()==null)
              dtoInvoices.add(newInvoices);
          }
         return dtoInvoices;

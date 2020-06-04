@@ -96,6 +96,7 @@ public class DogDayCareController {
              List<String> services= dogDaycareInvoiceRepository.findNameServicesByInvoiceId(invoices.get(i).getDog_daycare_invoice_id());
              newInvoices.setDog_daycare_invoice_dog_name(dogDaycareInvoiceRepository.findDogNameByInvoiceId(invoices.get(i).getDog_daycare_invoice_id()));
              newInvoices.setDog_daycare_invoice_services_names(services);
+             if(!invoices.get(i).getDog_daycare_invoice_status().equals("Terminado"))
              dtoInvoices.add(newInvoices);
          }
          
