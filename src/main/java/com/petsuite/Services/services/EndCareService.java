@@ -5,6 +5,7 @@
  */
 package com.petsuite.Services.services;
 
+import com.petsuite.Services.services.interfaces.IEndCare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.basics.Entero;

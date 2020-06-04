@@ -18,5 +18,9 @@ public interface ClientRepository extends JpaRepository<Client, String>{
 
     @Query(value = "SELECT client_address FROM client WHERE user = ?1", nativeQuery = true)
     String selectAddressFromUser(String user);
+    
+    @Query(value = "SELECT * FROM info_user natural join client where user = ?1", nativeQuery = true)
+    List<Client> findClientbyUser(String user);
+    
 
 }

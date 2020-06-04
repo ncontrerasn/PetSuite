@@ -43,6 +43,11 @@ public interface DogDaycareRepository extends JpaRepository<DogDaycare, String>{
 
     @Query(value = "SELECT user FROM dog_daycare_service where dogdaycare_service_name like ?1", nativeQuery = true)
     List<String> searchByService(String name);
+    
+    @Query(value = "SELECT * FROM info_user natural join dog_daycare where user = ?1", nativeQuery = true)
+    List<DogDaycare> findDogDayCareByUser(String name);
+    
+   
 
 
 }

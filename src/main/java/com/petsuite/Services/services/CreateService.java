@@ -5,16 +5,12 @@
  */
 package com.petsuite.Services.services;
 
-import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
-import com.petsuite.Services.basics.CadenaDoble;
-import java.util.List;
+import com.petsuite.Services.services.interfaces.ICreateServiceService;
 
 /**
  *
  * @author sergi
  */
-public interface IShowInvoiceDogCare {
-    
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
+public class CreateService implements ICreateServiceService{
     
 }

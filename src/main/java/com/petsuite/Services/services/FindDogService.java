@@ -1,5 +1,6 @@
 package com.petsuite.Services.services;
 
+import com.petsuite.Services.services.interfaces.IFindDog;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycareInvoice;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindDog implements IFindDog{
+public class FindDogService implements IFindDog{
 
     @Autowired
     DogRepository dogRepository;

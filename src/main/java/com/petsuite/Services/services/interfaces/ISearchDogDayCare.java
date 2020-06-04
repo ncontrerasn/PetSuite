@@ -1,4 +1,4 @@
-package com.petsuite.Services.services;
+package com.petsuite.Services.services.interfaces;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.basics.Cadena;

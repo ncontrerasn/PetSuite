@@ -7,7 +7,7 @@ import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.basics.Cadena;
-import com.petsuite.Services.services.FindDog;
+import com.petsuite.Services.services.FindDogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class DogController {
     InfoUserRepository infoUserRepository;
 
     @Autowired
-    FindDog findDog;
+    FindDogService findDog;
 
     @GetMapping("/all")
     public List<Dog> getAllDogs() {

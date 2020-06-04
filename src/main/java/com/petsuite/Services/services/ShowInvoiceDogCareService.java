@@ -5,6 +5,7 @@
  */
 package com.petsuite.Services.services;
 
+import com.petsuite.Services.services.interfaces.IShowInvoiceDogCare;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
  * @author sergi
  */
 @Service
-public class ShowInvoiceDogCare implements IShowInvoiceDogCare{
+public class ShowInvoiceDogCareService implements IShowInvoiceDogCare{
 
     
     @Autowired

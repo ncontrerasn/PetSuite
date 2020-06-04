@@ -5,14 +5,12 @@
  */
 package com.petsuite.Services.services;
 
-import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.services.interfaces.IRegister;
 
 /**
  *
  * @author sergi
  */
-public interface IEndCare {
-    
-    public Boolean endCare (Entero DogDayCareInoviceId);
+public class RegisterService implements IRegister {
     
 }

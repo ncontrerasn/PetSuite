@@ -9,7 +9,7 @@ import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
 import com.petsuite.Services.services.EndCareService;
-import com.petsuite.Services.services.SearchDogDayCare;
+import com.petsuite.Services.services.SearchDogDayCareService;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
 
@@ -24,7 +24,7 @@ import com.petsuite.Services.repository.DogDaycareServiceRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
-import com.petsuite.Services.services.ShowInvoiceDogCare;
+import com.petsuite.Services.services.ShowInvoiceDogCareService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -74,13 +74,13 @@ public class ClientController {
     InfoUserRepository infoUserRepository;
 
     @Autowired
-    SearchDogDayCare searchDogDayCare;
+    SearchDogDayCareService searchDogDayCare;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
     @Autowired
-    ShowInvoiceDogCare showInvoiceDogCare;
+    ShowInvoiceDogCareService showInvoiceDogCare;
 
     @GetMapping("/all")
     public List<Client> getAllClients() {
@@ -99,8 +99,7 @@ public class ClientController {
     public Client_Dto createClient(@Valid @RequestBody Client_Dto client) {
 
                if(!infoUserRepository.existsById(client.getUser())){
-            Client realClient=new Client(client.getClient_address(),
-                    null,null,null,null);
+            Client realClient=new Client();
             realClient.setUser(client.getUser());
             realClient.setPassword(client.getPassword());
             realClient.setRole("ROLE_CLIENT");
