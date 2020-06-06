@@ -26,6 +26,7 @@ import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.Services.services.ShowInvoiceDogCareService;
 
+import com.petsuite.Services.services.UpdateService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -82,6 +83,9 @@ public class ClientController {
     @Autowired
     ShowInvoiceDogCareService showInvoiceDogCare;
 
+    @Autowired
+    UpdateService updateService;
+
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientRepository.findAll();
@@ -112,8 +116,6 @@ public class ClientController {
         }
         return null;
     }
-    
-    
 
     @PostMapping("/dogList")
     public List<Dog> myDogList(@Valid @RequestBody Cadena user){
@@ -144,122 +146,10 @@ public class ClientController {
         return walkPetitionRepository.findPetitionsByUser(user);
     }
 
-    public Integer updateAddress(String user, String address){
-
-        int Worked = 0;
-
-        Worked = clientRepository.updateAddressByUser(address,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateUserPassword(String user, String password){
-        
-        if (password!=null)
-        {
-            if(!password.isEmpty()){
-            System.out.println("La password es: "+ password);
-            int Worked = 0;
-
-            Worked = infoUserRepository.updateUserPassword(password,user);
-
-            return Worked;
-            }
-        }
-
-        return 0;
-
-    }
-
-    public Integer updateName(String user, String name){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientName(name,user);
-
-        return Worked;
-
-    }
-
-    public Integer updatePhone(String user, String Phone){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientPhone(Phone,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateMail(String user, String Mail){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientEmail(Mail,user);
-
-        return Worked;
-
-    }
-
     @PostMapping("/update")
     public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){
 
-        System.out.println("vamos a imprimir al cliente "+user_dto);
-
-        Client_Dto Cli_Dto = user_dto;
-
-        int uppdateReturns = 0;
-
-        String checkUser = infoUserRepository.findUser(user_dto.getUser());
-
-        if (checkUser!=null)
-        {
-
-            uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());
-
-            if (uppdateReturns!=1)
-            {
-                Cli_Dto.setPassword(null);
-            }
-            Cli_Dto.setPassword(null);//porque no es bueno que le devolvamos la contraseña
-
-            uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getClient_address());
-
-            if (uppdateReturns!=1)
-            {
-                Cli_Dto.setClient_address(null);
-            }
-
-            uppdateReturns = updateName(user_dto.getUser(),user_dto.getClient_name());
-
-            if (uppdateReturns!=1)
-            {
-                Cli_Dto.setClient_name(null);
-            }
-
-            uppdateReturns = updatePhone(user_dto.getUser(),user_dto.getClient_phone());
-
-            if (uppdateReturns!=1)
-            {
-                Cli_Dto.setClient_phone(null);
-            }
-
-            uppdateReturns = updateMail(user_dto.getUser(),user_dto.getClient_e_mail());
-
-            if (uppdateReturns!=1)
-            {
-                Cli_Dto.setClient_e_mail(null);
-            }
-
-        }else{
-            Cli_Dto = new Client_Dto();
-        }
-        
-        Cli_Dto.setRole(user_dto.getRole());
-        Cli_Dto.setToken(user_dto.getToken());
-        
-        return Cli_Dto;
+        return  updateService.UpdateClient(user_dto);
 
     }
 

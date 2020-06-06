@@ -11,6 +11,7 @@ import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.basics.Flotante;
+import com.petsuite.Services.services.UpdateService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class DogWalkerController {
 
     @Autowired
     DogRepository dogRepository;
+
+    @Autowired
+    UpdateService updateService;
 
     @GetMapping(value = "/all")
     public List<DogWalker> getAllClients() {
@@ -107,123 +111,10 @@ public class DogWalkerController {
         return dogs;
     }
 
-    //esto ya esta en otro lado
-//    @PostMapping(value = "/updatescore")
-//    public Float updateScore(@Valid @RequestBody CadenaDoble cadena){
-//
-//        Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena1());
-//
-//        Float score =  dogWalker.get().getDog_walker_score();
-//
-//        score = (score + Float.parseFloat(cadena.getCadena2()))/2;
-//
-//        int Worked = 0;
-//
-//        Worked = dogWalkerRepository.updateScore(score,cadena.getCadena1());
-//
-//        if (Worked!=1)
-//        {
-//            return null;
-//        }
-//
-//        return score;
-//
-//    }
-
-    public Integer updateUserPassword(String user, String password){
-
-        if (password!=null)
-        {
-            int Worked = 0;
-
-            Worked = infoUserRepository.updateUserPassword(password,user);
-
-            return Worked;
-        }
-
-        return 0;
-
-    }
-
-    public Integer updateName(String user, String name){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientName(name,user);
-
-        return Worked;
-
-    }
-
-    public Integer updatePhone(String user, String Phone){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientPhone(Phone,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateMail(String user, String Mail){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientEmail(Mail,user);
-
-        return Worked;
-
-    }
-
     @PostMapping("/update")
     public DogWalker_Dto updateAll(@Valid @RequestBody DogWalker_Dto user_dto){
 
-        System.out.println(user_dto);
-
-        DogWalker_Dto DogWalk_DTO = user_dto;
-
-        int uppdateReturns = 0;
-
-        String checkUser = infoUserRepository.findUser(user_dto.getUser());
-
-        if (checkUser!=null)
-        {
-
-            uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());
-
-            if (uppdateReturns!=1)
-            {
-                DogWalk_DTO.setPassword(null);
-            }
-            DogWalk_DTO.setPassword(null);
-            uppdateReturns = updateName(user_dto.getUser(),user_dto.getDog_walker_name());
-
-            if (uppdateReturns!=1)
-            {
-                DogWalk_DTO.setDog_walker_name(null);
-            }
-
-            uppdateReturns = updatePhone(user_dto.getUser(),user_dto.getDog_walker_phone());
-
-            if (uppdateReturns!=1)
-            {
-                DogWalk_DTO.setDog_walker_phone(null);
-            }
-
-            uppdateReturns = updateMail(user_dto.getUser(),user_dto.getDog_walker_e_mail());
-
-            if (uppdateReturns!=1)
-            {
-                DogWalk_DTO.setDog_walker_e_mail(null);
-            }
-
-        }else{
-            DogWalk_DTO = new DogWalker_Dto();
-        }
-        DogWalk_DTO.setRole(user_dto.getRole());
-        DogWalk_DTO.setToken(user_dto.getToken());
-        System.out.println(DogWalk_DTO.getDog_walker_e_mail());
-        return DogWalk_DTO;
+        return updateService.UpdateDogWalker(user_dto);
 
     }
 

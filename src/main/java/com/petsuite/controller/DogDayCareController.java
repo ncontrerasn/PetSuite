@@ -23,6 +23,7 @@ import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.basics.Cadena;
 
+import com.petsuite.Services.services.UpdateService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -53,6 +54,9 @@ public class DogDayCareController {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    UpdateService updateService;
 
      @GetMapping("/all")
     public List<DogDayCare_Dto> getAllClients() {
@@ -103,190 +107,10 @@ public class DogDayCareController {
          return dtoInvoices;
     }
 
-    public Integer updateType(String user, Boolean type){
-
-        int Worked = 0;
-
-        Worked = dogDaycareRepository.updateType(type,user);
-
-        return Worked;
-
-    }
-//Esto ya esta en otro lado
-//    @PostMapping(value = "/updatescore")
-//    public Float updateScore(@Valid @RequestBody CadenaDoble cadena){
-//
-//        Optional<DogDaycare> dogDaycare= dogDaycareRepository.findById(cadena.getCadena1());
-//
-//        Float score =  dogDaycare.get().getDog_daycare_score();
-//
-//        score = (score + Float.parseFloat(cadena.getCadena2()))/2;
-//
-//        int Worked = 0;
-//
-//        Worked = dogDaycareRepository.updateScore(score,cadena.getCadena1());
-//
-//        if (Worked!=1)
-//        {
-//            return null;
-//        }
-//
-//        return score;
-//
-//    }
-
-    public Integer updateAddress(String user, String address){
-
-        int Worked = 0;
-
-        Worked = dogDaycareRepository.updateAddress(address,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateUserPassword(String user, String password){
-
-        if (password!=null)
-        {
-            int Worked = 0;
-
-            Worked = infoUserRepository.updateUserPassword(password,user);
-
-            return Worked;
-        }
-
-        return 0;
-
-    }
-
-    public Integer updateName(String user, String name){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientName(name,user);
-
-        return Worked;
-
-    }
-
-    public Integer updatePhone(String user, String Phone){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientPhone(Phone,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateMail(String user, String Mail){
-
-        int Worked = 0;
-
-        Worked = infoUserRepository.updateClientEmail(Mail,user);
-
-        return Worked;
-
-    }
-
-    public Integer updatePrice(String user, Float price){
-
-        int Worked = 0;
-
-        Worked = dogDaycareRepository.updatePrice(price,user);
-
-        return Worked;
-
-    }
-
-    public Integer updateTax(String user, Float tax){
-
-        int Worked = 0;
-
-        Worked = dogDaycareRepository.updateTax(tax,user);
-
-        return Worked;
-
-    }
-
     @PostMapping("/update")
     public DogDayCare_Dto updateAll(@Valid @RequestBody DogDayCare_Dto user_dto){
 
-        System.out.println(user_dto);
-
-        DogDayCare_Dto DayCare_DTO = user_dto;
-
-        int uppdateReturns = 0;
-
-        String checkUser = infoUserRepository.findUser(user_dto.getUser());
-
-        if (checkUser!=null)
-        {
-
-            uppdateReturns = updateUserPassword(user_dto.getUser(),user_dto.getPassword());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setPassword(null);
-            }
-            DayCare_DTO.setPassword(null);
-            uppdateReturns = updateAddress(user_dto.getUser(),user_dto.getDog_daycare_address());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_address(null);
-            }
-
-            uppdateReturns = updateName(user_dto.getUser(),user_dto.getDog_daycare_name());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_name(null);
-            }
-
-            uppdateReturns = updatePhone(user_dto.getUser(),user_dto.getDog_daycare_phone());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_phone(null);
-            }
-
-            uppdateReturns = updateMail(user_dto.getUser(),user_dto.getDog_daycare_e_mail());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_e_mail(null);
-            }
-
-            uppdateReturns = updateType(user_dto.getUser(),user_dto.getDog_daycare_type());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_type(null);
-            }
-
-            uppdateReturns = updatePrice(user_dto.getUser(),user_dto.getDog_daycare_price_base());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_price_base(null);
-            }
-
-            uppdateReturns = updateTax(user_dto.getUser(),user_dto.getDog_daycare_tax());
-
-            if (uppdateReturns!=1)
-            {
-                DayCare_DTO.setDog_daycare_tax(null);
-            }
-
-        }else{
-            DayCare_DTO = new DogDayCare_Dto();
-        }
-        DayCare_DTO.setRole(user_dto.getRole());
-        DayCare_DTO.setToken(user_dto.getToken());
-
-        return DayCare_DTO;
+        return updateService.UpdateDayCare(user_dto);
 
     }
 
