@@ -1,5 +1,6 @@
 package com.petsuite.Services.repository;
 
+import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
 import com.petsuite.Services.model.WalkInvoice;
@@ -39,7 +40,7 @@ public interface InfoUserRepository extends JpaRepository<InfoUser, String>{
     @Query(value = "SELECT role FROM info_user WHERE user = ?1", nativeQuery = true)
     String findRoleBySuer(String user);
     
-    @Query(value = "SELECT user,e_mail,phone,password,name,role FROM info_user where user = ?1", nativeQuery = true)
+    @Query(value = "SELECT name FROM info_user where name = ?1", nativeQuery = true)
     List<InfoUser> findUserbyUser(String user);
     
    

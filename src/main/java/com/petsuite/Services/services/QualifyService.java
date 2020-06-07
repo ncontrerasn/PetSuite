@@ -4,6 +4,7 @@ import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.dto.WalkInvoice_Dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.petsuite.Services.services.interfaces.IQualify;
@@ -30,5 +31,10 @@ public class QualifyService implements IQualify {
                 return new Cadena("Guardería calificada correctamente");
         }
         return new Cadena("Error calificando la guardería");
+    }
+
+    @Override
+    public Cadena scoreDogWalker(WalkInvoice_Dto walkInvoice_dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

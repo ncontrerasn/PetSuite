@@ -1,5 +1,6 @@
 package com.petsuite.Services.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -26,7 +27,7 @@ public class InfoUser {
 
     @NotBlank
     private String password;
-
+    @Column
     @NotBlank
     private String name;
 

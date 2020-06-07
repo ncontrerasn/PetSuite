@@ -71,22 +71,31 @@ public class InfoUserController {
     @ResponseBody
     public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){
    
-       String user_user = user.getUser();
+      String sqlA = "SELECT * FROM info_user where user = ?";
+        String user_user = user.getUser();
         String user_password = user.getPassword();
 
-        List<InfoUser> ul= infoUserRepository.findUserbyUser(user_user);
+        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user_user}, (rs, rowNum) -> new InfoUser(
+                        rs.getString("user"),
+                        rs.getString("e_mail"),
+                        rs.getString("phone"),
+                        rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("role")
+                ));
         InfoUser u;
         if (!ul.isEmpty()){
             u = ul.get(0);
             if (u.getPassword().equals(user_password)){
                 if("ROLE_CLIENT".equals(u.getRole())){
-                    List<Client> clients=clientRepository.findClientbyUser(user_user);
-                    List<Client_Dto> ul2= new ArrayList<>();
-                    for(int i=0; i<clients.size();i++){
-                      Client_Dto myClient_Dto= new Client_Dto(clients.get(i).getName(), clients.get(i).getPhone(), clients.get(i).getE_mail(), clients.get(i).getClient_address());
-                      ul2.add(myClient_Dto);
-                    }               
-                  
+                    String sqlC = "SELECT * FROM info_user natural join client where user = ?";
+                    List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
+                        rs.getString("client_address")
+                    ));
+                    
                     if(ul2.get(0)!=null)
                     {
                         user.setRole(u.getRole());
@@ -94,17 +103,19 @@ public class InfoUserController {
                         ul2.get(0).setUser(u.getUser());
                         ul2.get(0).setToken(token);
                         ul2.get(0).setRole(u.getRole());
+                        
+                        
                         return ul2.get(0);
                     }
                 }
                 if("ROLE_DOGWALKER".equals(u.getRole())){
-                   List<DogWalker> dogWalkers=dogWalkerRepository.findWalkerByUser(user_user);
-                   List<DogWalker_Dto> ul2= new ArrayList<>();
-                   for(int i=0; i<dogWalkers.size();i++){
-                      DogWalker_Dto dogWalker_Dto = new DogWalker_Dto(dogWalkers.get(i).getName(), dogWalkers.get(i).getPhone(), dogWalkers.get(i).getE_mail(), dogWalkers.get(i).getDog_walker_score());
-                      ul2.add(dogWalker_Dto);                        
-                    }      
-                   
+                    String sqlP = "SELECT * FROM info_user natural join dog_walker where user = ?";
+                    List<DogWalker_Dto> ul2= jdbcTemplate.query(sqlP, new Object[]{user.getUser()}, (rs, rowNum) -> new DogWalker_Dto(
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("e_mail"),
+                        rs.getFloat("dog_walker_score")
+                    ));
                     if(ul2.get(0)!=null)
                     {
                          user.setRole(u.getRole());
@@ -118,12 +129,20 @@ public class InfoUserController {
                 }
                 if("ROLE_DOGDAYCARE".equals(u.getRole())){
 
-                    List<DogDaycare> daycares=dogDaycareRepository.findDogDayCareByUser(user_user);
-                    List<DogDayCare_Dto> ul2=new ArrayList<>();
-                     for(int i=0; i<daycares.size();i++){
-                         DogDayCare_Dto dayCare_Dto= new DogDayCare_Dto(daycares.get(i).getE_mail(),daycares.get(i).getDog_daycare_address() , daycares.get(i).getDog_daycare_type(), daycares.get(i).getPhone(), daycares.get(i).getDog_daycare_score(), daycares.get(i).getName(), daycares.get(i).getDog_daycare_base_price(), daycares.get(i).getDog_daycare_tax());
-                         ul2.add(dayCare_Dto);
-                    }                   
+                    String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
+                    List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
+                        rs.getString("e_mail"),
+                        rs.getString("dog_daycare_address"),
+                        rs.getBoolean("dog_daycare_type"),
+                        rs.getString("phone"),
+
+                        rs.getFloat("dog_daycare_score"),
+                            
+                        rs.getString("name"),
+                        rs.getFloat("dog_daycare_base_price"),
+                        rs.getFloat("dog_daycare_tax")
+                    ));
+                    
                       if(ul2.get(0)!=null)
                       {
                            user.setRole(u.getRole());

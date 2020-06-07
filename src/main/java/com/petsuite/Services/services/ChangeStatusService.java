@@ -8,10 +8,12 @@ package com.petsuite.Services.services;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.model.WalkInvoice;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.petsuite.Services.services.interfaces.IChangeStatus;
+import java.util.List;
 
 /**
  *
@@ -33,6 +35,11 @@ public class ChangeStatusService implements IChangeStatus{
         if(daycareInvoice!=null) return true;
         return false;
         
+    }
+
+    @Override
+    public List<WalkInvoice> updateInvoiceStatus(Entero entero) throws InterruptedException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

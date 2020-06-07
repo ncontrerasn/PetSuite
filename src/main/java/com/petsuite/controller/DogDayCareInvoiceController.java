@@ -5,7 +5,7 @@ import com.petsuite.Services.model.DogDayCareService_DogDayCareInvoice;
 import com.petsuite.Services.model.DogDaycare;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.*;
-import com.petsuite.Services.services.QualificateService;
+import com.petsuite.Services.services.QualifyService;
 import com.petsuite.Services.services.ChangeStatusService;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.Entero;
@@ -43,7 +43,7 @@ public class DogDayCareInvoiceController {
     DogRepository dogRepository;
 
     @Autowired
-    QualificateService dogDayCareQualificationService;
+    QualifyService dogDayCareQualificationService;
     
     //Importamos el servicio a ustilizar de erminar el servicio de cuidado
     @Autowired
