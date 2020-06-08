@@ -14,6 +14,7 @@ import com.petsuite.Services.dto.WalkPetition_Dto;
  * @author sergi
  */
 public interface IProposePrice {
+
     Dog_Dto proposePrice(WalkPetition_Dto walkPetition_Dto);//propose de walkpetitionController
     DogDayCareInvoice_Dto requestPriceDogDayCareInvoice(DogDayCareInvoice_Dto dogDaycareInovice);// conlsutPrice de DogDayCareInvoiceController
     

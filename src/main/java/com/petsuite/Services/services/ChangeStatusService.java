@@ -8,12 +8,10 @@ package com.petsuite.Services.services;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.basics.Entero;
-import com.petsuite.Services.model.WalkInvoice;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.petsuite.Services.services.interfaces.IChangeStatus;
-import java.util.List;
 
 /**
  *
@@ -26,20 +24,14 @@ public class ChangeStatusService implements IChangeStatus{
     DogDaycareInvoiceRepository dogDaycareInvoiceRepository;
 
     @Override
-    public Boolean endCare(Entero DogDayCareInoviceId) {
-        System.out.println("El id de la petición es: "+ DogDayCareInoviceId.getEntero());    
+    public Boolean endCare(Entero DogDayCareInoviceId)
+    {
         Optional<DogDaycareInvoice> daycareInvoice=dogDaycareInvoiceRepository.findById(DogDayCareInoviceId.getEntero());
         //Vamos a cambiar el estado a terminado
         daycareInvoice.get().setDog_daycare_invoice_status("Terminado");
         dogDaycareInvoiceRepository.save(daycareInvoice.get());
         if(daycareInvoice!=null) return true;
         return false;
-        
-    }
-
-    @Override
-    public List<WalkInvoice> updateInvoiceStatus(Entero entero) throws InterruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

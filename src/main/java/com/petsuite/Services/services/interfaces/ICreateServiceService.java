@@ -12,6 +12,7 @@ import com.petsuite.Services.dto.DogDayCare_Service_Dto;
  * @author sergi
  */
 public interface ICreateServiceService {
+
     DogDayCare_Service_Dto createService(DogDayCare_Service_Dto care_Service_Dto);//load de DogDayCareService
     
 }

@@ -1,17 +1,11 @@
 package com.petsuite.controller;
 
-import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogWalker;
-import com.petsuite.Services.repository.DogRepository;
-import com.petsuite.Services.repository.DogWalkerRepository;
-import com.petsuite.Services.repository.InfoUserRepository;
-import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.basics.Cadena;
-import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.basics.Flotante;
-import com.petsuite.Services.services.UpdateService;
+import com.petsuite.Services.services.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +13,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,92 +24,43 @@ import java.util.stream.Collectors;
 public class DogWalkerController {
 
     @Autowired
-    DogWalkerRepository dogWalkerRepository;
-
-    @Autowired
-    WalkInvoiceRepository walkInvoiceRepository;
-
-    @Autowired
-    InfoUserRepository infoUserRepository;
-
-    @Autowired
-    DogRepository dogRepository;
-
-    @Autowired
     UpdateService updateService;
 
+    @Autowired
+    RegisterService registerService;
+
+    @Autowired
+    GetAllData getAllData;
+
+    @Autowired
+    QualifyService qualifyService;
+
+    @Autowired
+    ShowWalkInvoiceService showWalkInvoiceService;
+
+    @Autowired
+    FindDogService findDogService;
+
     @GetMapping(value = "/all")
-    public List<DogWalker> getAllClients() {
-        return dogWalkerRepository.findAll();
-    }
+    public List<DogWalker> getAllWalkers() { return getAllData.getAllWalkers(); }
 
     @PostMapping(value = "/load")
-    public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){
-
-        if(!infoUserRepository.existsById(dogWalker.getUser())){
-            DogWalker realDogWalker= new DogWalker(dogWalker.getDog_walker_score(), null);
-            realDogWalker.setUser(dogWalker.getUser());
-            realDogWalker.setPassword(dogWalker.getPassword());
-            realDogWalker.setRole("ROLE_DOGWALKER");
-            realDogWalker.setName(dogWalker.getDog_walker_name());
-            realDogWalker.setDog_walker_score((float)3.0);
-            realDogWalker.setPhone(dogWalker.getDog_walker_phone());
-            realDogWalker.setE_mail(dogWalker.getDog_walker_e_mail());
-            dogWalkerRepository.save(realDogWalker);
-
-            return dogWalker;
-        }
-    return null;
-    }
+    public DogWalker_Dto createWalker(@Valid @RequestBody DogWalker_Dto dogWalker){ return registerService.createWalker(dogWalker); }
 
     @PostMapping(value = "/PendingDogList")
-    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody Cadena dogWalker){
-
-        List<Optional<Dog>> dogs = new ArrayList<>();
-        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_true(dogWalker.getCadena());
-        for(int i = 0; i < dogs_ids.size(); i++)
-            dogs.add(dogRepository.findById(dogs_ids.get(i)));
-        return dogs;
-    }
+    public List<Optional<Dog>> PendingDogList(@Valid @RequestBody Cadena dogWalker){ return showWalkInvoiceService.PendingDogList(dogWalker); }
 
     @PostMapping(value = "/CompletedDogList")
-    public List<Optional<Dog>> CompletedDogList(@Valid @RequestBody String dogWalker){
-
-        List<Optional<Dog>> dogs = new ArrayList<>();
-        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id_and_status_false(dogWalker);
-        for(int i = 0; i < dogs_ids.size() - 1; i++)
-            dogs.add(dogRepository.findById(dogs_ids.get(i)));
-        return dogs;
-    }
+    public List<Optional<Dog>> CompletedDogList(@Valid @RequestBody Cadena dogWalker){ return showWalkInvoiceService.CompletedDogList(dogWalker); }
     
     @PostMapping(value = "/getCalification")
-    public Flotante getQualifications(@Valid @RequestBody Cadena cadena){
-        System.out.println("Me esta llengando el usuario para flotante: "+ cadena.getCadena());
-        Optional<DogWalker> dogWalker= dogWalkerRepository.findById(cadena.getCadena());
-        
-        return new Flotante(dogWalker.get().getDog_walker_score());
-    }
+    public Flotante getQualifications(@Valid @RequestBody Cadena cadena){ return qualifyService.getQualifications(cadena); }
 
     @PostMapping(value = "/dogList")
-    public List<Dog> dogList(@Valid @RequestBody Cadena dogWalker){
-
-        List<Dog> dogs = new ArrayList<>();
-        List<Integer> dogs_ids = walkInvoiceRepository.findByDog_walker_id(dogWalker.getCadena());
-        System.out.println("Tamanio lista es: "+ dogs_ids.size());
-        
-       System.out.println("probando el repo: "+ dogRepository.findByDogId(1).getDog_name());
-       for(int i = 0; i < dogs_ids.size() ; i++){
-          dogs.add(dogRepository.findByDogId(dogs_ids.get(i)));
-       }
-        return dogs;
-    }
+    public List<Dog> walkerDogList(@Valid @RequestBody Cadena dogWalker){ return findDogService.walkerDogList(dogWalker); }
 
     @PostMapping("/update")
-    public DogWalker_Dto updateAll(@Valid @RequestBody DogWalker_Dto user_dto){
-
-        return updateService.UpdateDogWalker(user_dto);
-
-    }
+    public DogWalker_Dto updateAll(@Valid @RequestBody DogWalker_Dto user_dto){ return updateService.UpdateDogWalker(user_dto); }
 
     private String getJWTToken(String username) {
         String secretKey = "mySecretKey";

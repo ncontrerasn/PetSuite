@@ -6,10 +6,6 @@
 package com.petsuite.Services.services.interfaces;
 
 import com.petsuite.Services.basics.Entero;
-import com.petsuite.Services.model.WalkInvoice;
-import java.util.List;
-import javax.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  *
@@ -18,6 +14,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface IChangeStatus {
     
     Boolean endCare (Entero DogDayCareInoviceId);
-    List<WalkInvoice> updateInvoiceStatus( Entero entero )throws InterruptedException;// updateInvoiceStatus de WalkInvoiceController
     
 }

@@ -5,25 +5,15 @@
  */
 package com.petsuite.controller;
 
-import com.petsuite.Services.dto.Client_Dto;
-import com.petsuite.Services.dto.DogDayCare_Dto;
-import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.InfoUser_Dto;
-import com.petsuite.Services.model.Client;
-import com.petsuite.Services.model.DogDaycare;
-import com.petsuite.Services.model.DogWalker;
 import com.petsuite.Services.model.InfoUser;
-import com.petsuite.Services.repository.ClientRepository;
-import com.petsuite.Services.repository.DogDaycareRepository;
-import com.petsuite.Services.repository.DogWalkerRepository;
-import com.petsuite.Services.repository.InfoUserRepository;
 
+import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.LoginService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,121 +32,17 @@ import org.springframework.security.core.authority.AuthorityUtils;
 public class InfoUserController {
 
     @Autowired
-    InfoUserRepository infoUserRepository;
+    GetAllData getAllData;
+
     @Autowired
-    DogWalkerRepository dogWalkerRepository ;
-    
-     @Autowired
-    DogDaycareRepository dogDaycareRepository ;
-     @Autowired
-    ClientRepository clientRepository;
-    @Autowired 
-    ClientController clientController;
-    @Autowired 
-    DogDayCareController dogDaycareController;
-    @Autowired 
-    DogWalkerController dogWalkerController;
-    @Autowired 
-    TokenController tokenController;
-    
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    LoginService loginService;
 
     @GetMapping("/all")
-    public List<InfoUser> getAllUsers() {
-        return infoUserRepository.findAll();
-    }
+    public List<InfoUser> getAllUsers() { return getAllData.getAllUsers(); }
 
     @RequestMapping("/login")
     @ResponseBody
-    public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){
-   
-      String sqlA = "SELECT * FROM info_user where user = ?";
-        String user_user = user.getUser();
-        String user_password = user.getPassword();
-
-        List<InfoUser> ul= jdbcTemplate.query(sqlA, new Object[]{user_user}, (rs, rowNum) -> new InfoUser(
-                        rs.getString("user"),
-                        rs.getString("e_mail"),
-                        rs.getString("phone"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getString("role")
-                ));
-        InfoUser u;
-        if (!ul.isEmpty()){
-            u = ul.get(0);
-            if (u.getPassword().equals(user_password)){
-                if("ROLE_CLIENT".equals(u.getRole())){
-                    String sqlC = "SELECT * FROM info_user natural join client where user = ?";
-                    List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getString("e_mail"),
-                        rs.getString("client_address")
-                    ));
-                    
-                    if(ul2.get(0)!=null)
-                    {
-                        user.setRole(u.getRole());
-                        String token= tokenController.generate(user);
-                        ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setToken(token);
-                        ul2.get(0).setRole(u.getRole());
-                        
-                        
-                        return ul2.get(0);
-                    }
-                }
-                if("ROLE_DOGWALKER".equals(u.getRole())){
-                    String sqlP = "SELECT * FROM info_user natural join dog_walker where user = ?";
-                    List<DogWalker_Dto> ul2= jdbcTemplate.query(sqlP, new Object[]{user.getUser()}, (rs, rowNum) -> new DogWalker_Dto(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getString("e_mail"),
-                        rs.getFloat("dog_walker_score")
-                    ));
-                    if(ul2.get(0)!=null)
-                    {
-                         user.setRole(u.getRole());
-                        String token = tokenController.generate(user);
-                        ul2.get(0).setToken(token);
-                        ul2.get(0).setUser(u.getUser());
-                        ul2.get(0).setRole(u.getRole());
-                        
-                        return ul2.get(0);
-                    }
-                }
-                if("ROLE_DOGDAYCARE".equals(u.getRole())){
-
-                    String sqlG = "SELECT * FROM info_user natural join dog_daycare where user = ?";
-                    List<DogDayCare_Dto> ul2= jdbcTemplate.query(sqlG, new Object[]{user.getUser()}, (rs, rowNum) -> new DogDayCare_Dto(
-                        rs.getString("e_mail"),
-                        rs.getString("dog_daycare_address"),
-                        rs.getBoolean("dog_daycare_type"),
-                        rs.getString("phone"),
-
-                        rs.getFloat("dog_daycare_score"),
-                            
-                        rs.getString("name"),
-                        rs.getFloat("dog_daycare_base_price"),
-                        rs.getFloat("dog_daycare_tax")
-                    ));
-                    
-                      if(ul2.get(0)!=null)
-                      {
-                           user.setRole(u.getRole());
-                          String token = tokenController.generate(user);
-                          ul2.get(0).setToken(token);
-                          ul2.get(0).setUser(u.getUser());
-                          ul2.get(0).setRole(u.getRole());
-                          return ul2.get(0);
-                      }
-                }
-            }
-        }
-        return null;
-    }
+    public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){ return loginService.clientLogin(user); }
 
     private String getJWTToken(String username) {
 		String secretKey = "mySecretKey";
