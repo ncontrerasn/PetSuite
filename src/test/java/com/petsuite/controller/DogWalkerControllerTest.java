@@ -74,7 +74,7 @@ class DogWalkerControllerTest {
         for(int i = 0; i < dogsIds.size(); i++)
             when(dogRepository.findById(anyInt())).thenReturn(java.util.Optional.of(dogs.get(i)));
         //Cadena nombre= new Cadena()
-        assertEquals(1, dogWalkerController.dogList(new Cadena("dogWalkerUser")).size());
+        assertEquals(1, dogWalkerController.walkerDogList(new Cadena("dogWalkerUser")).size());
     }
 
     @Test
@@ -121,6 +121,9 @@ class DogWalkerControllerTest {
     @Test
     void CompletedDogList() {
         String dogWalkerUser = "ncontrerasn";
+        Cadena C_dogWalkerUser = new Cadena();
+        C_dogWalkerUser.setCadena(dogWalkerUser);
+
         List<Dog> dogs = new ArrayList<>();
         List<Integer> dogsIds= new ArrayList<>();
         Dog dog1 = new Dog();
@@ -156,7 +159,7 @@ class DogWalkerControllerTest {
         when(walkInvoiceRepository.findByDog_walker_id_and_status_false(anyString())).thenReturn(dogsIds);
         for(int i = 0; i < dogsIds.size(); i++)
             when(dogRepository.findById(anyInt())).thenReturn(java.util.Optional.of(dogs.get(i)));
-        assertEquals(1, dogWalkerController.CompletedDogList(dogWalkerUser).size());
+        assertEquals(1, dogWalkerController.CompletedDogList(C_dogWalkerUser).size());
     }
 
 }

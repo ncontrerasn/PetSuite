@@ -1,16 +1,18 @@
 package com.petsuite.Services.services;
 
+import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.Dog_Dto;
-import com.petsuite.Services.repository.ClientRepository;
-import com.petsuite.Services.repository.DogDaycareRepository;
-import com.petsuite.Services.repository.DogRepository;
-import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.Services.model.WalkInvoice;
+import com.petsuite.Services.repository.*;
 import com.petsuite.Services.services.interfaces.iUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UpdateService implements iUpdate {
@@ -27,6 +29,9 @@ public class UpdateService implements iUpdate {
     @Autowired
     DogDaycareRepository dogDaycareRepository;
 
+    @Autowired
+    WalkInvoiceRepository walkInvoiceRepository;
+
     public Integer updateClientAddress(String user, String address){
 
         int Worked = 0;
@@ -41,8 +46,8 @@ public class UpdateService implements iUpdate {
 
         if (password!=null)
         {
-            if(!password.isEmpty()){
-                System.out.println("La password es: "+ password);
+            if(!password.isEmpty())
+            {
                 int Worked = 0;
 
                 Worked = infoUserRepository.updateUserPassword(password,user);
@@ -188,8 +193,6 @@ public class UpdateService implements iUpdate {
     @Override
     public Client_Dto UpdateClient(Client_Dto user_dto) {
 
-        System.out.println("vamos a imprimir al cliente "+user_dto);
-
         Client_Dto Cli_Dto = user_dto;
 
         int uppdateReturns = 0;
@@ -245,11 +248,8 @@ public class UpdateService implements iUpdate {
         return Cli_Dto;
     }
 
-
-
     @Override
     public Dog_Dto UpdateDog(Dog_Dto dog) {
-        System.out.println(dog);
 
         Dog_Dto dogDTO = dog;
 
@@ -311,7 +311,6 @@ public class UpdateService implements iUpdate {
 
     @Override
     public DogDayCare_Dto UpdateDayCare(DogDayCare_Dto user_dto) {
-        System.out.println(user_dto);
 
         DogDayCare_Dto DayCare_DTO = user_dto;
 
@@ -387,12 +386,8 @@ public class UpdateService implements iUpdate {
         return DayCare_DTO;
     }
 
-
-
     @Override
     public DogWalker_Dto UpdateDogWalker(DogWalker_Dto user_dto) {
-
-        System.out.println(user_dto);
 
         DogWalker_Dto DogWalk_DTO = user_dto;
 
@@ -436,8 +431,32 @@ public class UpdateService implements iUpdate {
         }
         DogWalk_DTO.setRole(user_dto.getRole());
         DogWalk_DTO.setToken(user_dto.getToken());
-        System.out.println(DogWalk_DTO.getDog_walker_e_mail());
         return DogWalk_DTO;
+    }
+
+    @Override
+    public List<WalkInvoice> updateWalkInvoiceStatus(Entero entero)
+    {
+        Optional<WalkInvoice> walkInvoice = walkInvoiceRepository.findById(entero.getEntero());
+        String status = walkInvoice.get().getWalk_invoice_status();
+
+        switch(status){
+            case "Aceptar":
+
+                walkInvoice.get().setWalk_invoice_status("En progreso");
+                walkInvoiceRepository.save(walkInvoice.get());
+                if(walkInvoice.get().getWalk_invoice_status() == "En progreso")
+                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
+                break;
+
+            case "En progreso":
+                walkInvoice.get().setWalk_invoice_status("Terminado");
+                walkInvoiceRepository.save(walkInvoice.get());
+                if(walkInvoice.get().getWalk_invoice_status() == "Terminado")
+                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
+                break;
+        }
+        return null;
     }
 
 }

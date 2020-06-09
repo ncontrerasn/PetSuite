@@ -5,16 +5,22 @@
  */
 package com.petsuite.Services.services.interfaces;
 
-import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
-import com.petsuite.Services.dto.WalkPetition_Dto;
+import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.dto.*;
+import com.petsuite.Services.model.WalkPetition;
+
+import java.util.List;
 
 /**
  *
  * @author sergi
  */
 public interface IRequestPetition {
+
     WalkPetition_Dto createPeititon( WalkPetition_Dto walkPetition); //create de WalkpetitionController
-    DogDayCareInvoice_Dto createDogDaycareInvoice(DogDayCareInvoice_Dto dogDaycareInovice); //load de DogDayCareInvoiceController
-    
+    List<WalkPetition> myPetition(String user);
+    DogWalker_Dto walkerInPetition(Cadena user);
+    void deletePetition(Integer Petition_id);
+    Dog_Dto denyOrAcceptPetition(WalkInvoice_Dto walkInvoice_Dto);
     
 }

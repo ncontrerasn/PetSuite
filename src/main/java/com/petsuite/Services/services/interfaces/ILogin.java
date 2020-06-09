@@ -12,6 +12,7 @@ import com.petsuite.Services.dto.InfoUser_Dto;
  * @author sergi
  */
 public interface ILogin {
+
     Object clientLogin(InfoUser_Dto user); //login de InFoUser
-    
+
 }
