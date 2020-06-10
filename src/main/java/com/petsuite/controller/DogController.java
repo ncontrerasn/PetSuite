@@ -1,15 +1,14 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.basics.Entero;
-import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
-import com.petsuite.Services.repository.DogRepository;
-import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.basics.Cadena;
-import com.petsuite.Services.services.FindDog;
+import com.petsuite.Services.services.FindDogService;
+import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.RegisterService;
+import com.petsuite.Services.services.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -20,167 +19,31 @@ import java.util.List;
 public class DogController {
 
     @Autowired
-    DogRepository dogRepository;
+    FindDogService findDog;
 
     @Autowired
-    InfoUserRepository infoUserRepository;
+    UpdateService updateService;
 
     @Autowired
-    FindDog findDog;
+    RegisterService registerService;
+
+    @Autowired
+    GetAllData getAllData;
 
     @GetMapping("/all")
-    public List<Dog> getAllDogs() {
-        return dogRepository.findAll();
-    }
+    public List<Dog> getAllDogs() { return getAllData.getAllDogs(); }
 
     @PostMapping("/register")
-    public Dog_Dto createDog(@Valid @RequestBody Dog_Dto dog){
-        Dog dogReal=new Dog(dog.getDog_name(), dog.getDog_race(), dog.getDog_height(), dog.getDog_weight(), dog.getDog_age(), dog.getDog_notes(), dog.getClient_id());
-
-        dogReal = dogRepository.save(dogReal);
-
-        if(dogReal!=null)
-            return dog;
-        else
-            return null;
-    }
+    public Dog_Dto createDog(@Valid @RequestBody Dog_Dto dog){ return registerService.createDog(dog); }
 
     @PostMapping("/findmydog")
-    public List<Dog> finDogsById(@Valid @RequestBody Cadena user){
-        System.out.println("El usuario que me llego es: "+ user);
-        return dogRepository.findByUser(user.getCadena());
-    }
-
-
-    public Integer updateRace(Integer dog_id, String race){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateRace(race,dog_id);
-
-        return Worked;
-
-    }
-
-    public Integer updateNotes(Integer dog_id, String notes){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateNotes(notes,dog_id);
-
-        return Worked;
-
-    }
-
-    public Integer updateName(Integer dog_id, String name){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateName(name,dog_id);
-
-        return Worked;
-
-    }
-
-    public Integer updateWeight(Integer dog_id, float weight){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateWeight(weight,dog_id);
-
-        return Worked;
-
-    }
-
-    public Integer updateHeight(Integer dog_id, float height){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateHeight(height,dog_id);
-
-        return Worked;
-
-    }
-
-    public Integer updateAge(Integer dog_id, Integer age){
-
-        int Worked = 0;
-
-        Worked = dogRepository.updateAge(age,dog_id);
-
-        return Worked;
-
-    }
+    public List<Dog> finDogsById(@Valid @RequestBody Cadena user){ return findDog.myDogList(user); }
 
     @PostMapping("/update")
-    public Dog_Dto updateAll(@Valid @RequestBody Dog_Dto dog){
-
-        System.out.println(dog);
-
-        Dog_Dto dogDTO = dog;
-
-        int uppdateReturns = 0;
-
-        String checkUser = infoUserRepository.findUser(dogDTO.getClient_id());
-
-        if (checkUser!=null)
-        {
-
-            uppdateReturns = updateAge(dogDTO.getDog_id(),dogDTO.getDog_age());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_age(null);
-            }
-
-            uppdateReturns = updateName(dogDTO.getDog_id(),dogDTO.getDog_name());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_name(null);
-            }
-
-            uppdateReturns = updateHeight(dogDTO.getDog_id(),dogDTO.getDog_height());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_height(Float.parseFloat(null));
-            }
-
-            uppdateReturns = updateWeight(dogDTO.getDog_id(),dogDTO.getDog_weight());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_weight(Float.parseFloat(null));
-            }
-
-            uppdateReturns = updateNotes(dogDTO.getDog_id(),dogDTO.getDog_notes());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_notes(null);
-            }
-
-            uppdateReturns = updateRace(dogDTO.getDog_id(),dogDTO.getDog_race());
-
-            if (uppdateReturns!=1)
-            {
-                dogDTO.setDog_race(null);
-            }
-
-        }else{
-            dogDTO = new Dog_Dto();
-        }
-
-        return dogDTO;
-
-    }
+    public Dog_Dto updateAll(@Valid @RequestBody Dog_Dto dog){ return updateService.UpdateDog(dog); }
 
     @PostMapping("/findespecificdog")
-    public Dog_Dto findEspecificDog(@Valid @RequestBody Entero Dog_id){
-        System.out.println(Dog_id);
-        return findDog.find(Dog_id);
-    }
+    public Dog_Dto findEspecificDog(@Valid @RequestBody Entero Dog_id){ return findDog.find(Dog_id); }
 
 }
 

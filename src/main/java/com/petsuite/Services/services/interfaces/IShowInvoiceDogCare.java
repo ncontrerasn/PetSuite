@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.petsuite.Services.services;
+package com.petsuite.Services.services.interfaces;
 
+import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.basics.CadenaDoble;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
  */
 public interface IShowInvoiceDogCare {
     
-    public List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
+    List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
+   
+    
     
 }

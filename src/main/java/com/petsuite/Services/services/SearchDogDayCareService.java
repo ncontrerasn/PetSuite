@@ -1,12 +1,10 @@
 package com.petsuite.Services.services;
 
+import com.petsuite.Services.services.interfaces.ISearchDogDayCare;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.model.DogDaycare;
-import com.petsuite.Services.model.DogDaycareInvoice;
-import com.petsuite.Services.repository.DogDaycareInvoiceRepository;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.basics.Cadena;
-import com.petsuite.Services.basics.Entero;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SearchDogDayCare implements ISearchDogDayCare{
+public class SearchDogDayCareService implements ISearchDogDayCare{
 
     @Autowired
     DogDaycareRepository dogDaycareRepository;
 
     @Override
-    public List<DogDayCare_Dto> searchDayCareByNameAndService(Cadena name){
-
-        System.out.println(name);
-
+    public List<DogDayCare_Dto> searchDayCareByNameAndService(Cadena name)
+    {
         List<String> usersToReturns = new ArrayList<>();
 
         List<String> findings = new ArrayList<>();
@@ -33,8 +29,8 @@ public class SearchDogDayCare implements ISearchDogDayCare{
 
         String[] Words = name.getCadena().split(" ");
 
-        for (int i=0; i<Words.length; i++){
-            System.out.println(Words);
+        for (int i=0; i<Words.length; i++)
+        {
             findings = dogDaycareRepository.searchByName("%"+Words[i]+"%");
             findings2 = dogDaycareRepository.searchByService("%"+Words[i]+"%");
 
@@ -59,11 +55,10 @@ public class SearchDogDayCare implements ISearchDogDayCare{
 
         Optional<DogDaycare> DC;
 
-        while(!usersToReturns.isEmpty()){
+        while(!usersToReturns.isEmpty())
+        {
 
             DC = dogDaycareRepository.findById(usersToReturns.remove(0));
-
-            System.out.println(DC.get().getUser());
 
             DTO = new DogDayCare_Dto();
 
@@ -78,11 +73,8 @@ public class SearchDogDayCare implements ISearchDogDayCare{
             DTO.setDog_daycare_tax(DC.get().getDog_daycare_tax());
 
             returns.add(DTO);
-
         }
-
         return returns;
-
     }
 
 }

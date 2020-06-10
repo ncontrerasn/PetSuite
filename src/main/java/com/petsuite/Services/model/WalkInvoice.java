@@ -74,7 +74,7 @@ public class WalkInvoice {
 
     @Getter(AccessLevel.NONE)//
     @Setter(AccessLevel.NONE)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
     private Dog dog;
 

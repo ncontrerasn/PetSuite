@@ -1,17 +1,16 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.dto.DogDayCare_Service_Dto;
-import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycareService;
-import com.petsuite.Services.repository.ClientRepository;
-import com.petsuite.Services.repository.DogDaycareServiceRepository;
-import com.petsuite.Services.repository.DogRepository;
-import com.petsuite.Services.repository.InfoUserRepository;
+import com.petsuite.Services.services.CreateService;
+import com.petsuite.Services.services.FindDogService;
+import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.GetServicesService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
@@ -26,51 +25,28 @@ import java.util.stream.Collectors;
 public class DogDaycareServiceController {
 
     @Autowired
-    DogDaycareServiceRepository dogDaycareServiceRepository;
+    CreateService createService;
 
     @Autowired
-    ClientRepository clientRepository;
+    GetAllData getAllData;
 
     @Autowired
-    DogRepository dogRepository;
+    GetServicesService getServicesService;
 
     @Autowired
-    InfoUserRepository infoUserRepository;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    FindDogService findDogService;
 
     @GetMapping("/all")
-    public List<Client> getAllClients() {
-
-        return clientRepository.findAll();
-    }
+    public List<DogDaycareService> getAllServices() { return getAllData.getAllServices(); }
 
     @GetMapping("/myServices")
-    public List<DogDaycareService> getMyServices(@RequestParam(value = "user") String user) {
-        System.out.println("Quiero verificar mis servicios de "+ user);
-
-        return dogDaycareServiceRepository.findMyServicesByUser(user);
-    }
-
+    public List<DogDaycareService> getMyServices(@RequestParam(value = "user") String user) { return getServicesService.getMyServices(user); }
 
     @PostMapping("/load")//Retorna una estructura de tipo client vacia si ya esta utilizado el nombre de usuario
-    public DogDayCare_Service_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) {
-
-        System.out.println("Diego entro a crear un servicio");
-        DogDaycareService  daycareService= new DogDaycareService(null, care_Service_Dto.getDogdaycare_Service_Name(), care_Service_Dto.getDogdaycare_Service_Description(), care_Service_Dto.getDogdaycare_Service_Price(), care_Service_Dto.getDogdaycare_Service_ClientId(), null,null);
-
-        if(daycareService!=null){
-            dogDaycareServiceRepository.save(daycareService);
-            return care_Service_Dto;
-        }
-        return null;
-    }
+    public DogDayCare_Service_Dto createService(@Valid @RequestBody DogDayCare_Service_Dto care_Service_Dto) { return createService.createService(care_Service_Dto); }
 
     @PostMapping("/dogList")
-    public List<Dog> myDogList(@Valid @RequestBody String user){
-        return dogRepository.findByUser(user);
-    }
+    public List<Dog> myDogList(@Valid @RequestBody Cadena user){ return findDogService.myDogList(user); }
 
     public String getClientJWTToken(String username) {
         String secretKey = "mySecretKey";

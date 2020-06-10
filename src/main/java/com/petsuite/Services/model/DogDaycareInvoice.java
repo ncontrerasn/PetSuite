@@ -66,10 +66,11 @@ public class DogDaycareInvoice {
     @JoinColumn(name="client_id", nullable=false,updatable = false, insertable = false)
     private Client client_i;
 
-    @Getter(AccessLevel.NONE)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "dog_id", referencedColumnName = "dog_id",updatable = false, insertable = false)
-    private Dog dog;
+   
+    
+    @ManyToOne
+    @JoinColumn(name="dog_id", nullable=false,updatable = false, insertable = false)
+     private Dog dog_i;
 
     @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dogDaycareInvoice")
