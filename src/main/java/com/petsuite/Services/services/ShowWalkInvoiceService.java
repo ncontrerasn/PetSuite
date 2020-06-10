@@ -7,6 +7,7 @@ import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.repository.DogRepository;
+import com.petsuite.Services.repository.InfoUserRepository;
 import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.services.interfaces.IShowWalkInvoice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ShowWalkInvoiceService implements IShowWalkInvoice {
 
     @Autowired
     DogRepository dogRepository;
+    
+    @Autowired
+    InfoUserRepository infoUserRepository;
 
     @Override
     public List<Optional<Dog>> PendingDogList(Cadena dogWalker)
@@ -69,7 +73,23 @@ public class ShowWalkInvoiceService implements IShowWalkInvoice {
     @Override
     public List<WalkInvoice_Dto> findByStatusAccepted(Cadena cadena)
     {
-        List<WalkInvoice> walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
+        String roleUserWhoCancel =infoUserRepository.findRoleBySuer(cadena.getCadena());
+        List<WalkInvoice> walkInvoices= new ArrayList<>();
+        
+        if(roleUserWhoCancel.equals("ROLE_CLIENT"))
+        {
+        walkInvoices = walkInvoiceRepository.findByClientAndStatus(cadena.getCadena(), "Aceptar");
+            
+       
+        }else if(roleUserWhoCancel.equals("ROLE_DOGWALKER"))
+        {
+        walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
+                  
+       
+
+        }
+        
+        
         List<WalkInvoice_Dto> listaReal= new ArrayList<>();
         for (int i = 0; i < walkInvoices.size(); i++)
         {

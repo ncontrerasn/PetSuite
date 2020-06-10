@@ -4,6 +4,7 @@ import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
 
 import com.petsuite.Services.services.GetAllData;
 import com.petsuite.Services.services.RegisterService;
@@ -43,9 +44,11 @@ public class DogDayCareController {
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCare_Dto createDogDaycare(@Valid @RequestBody DogDayCare_Dto dogDaycare) { return registerService.createDogDaycare(dogDaycare); }
 
-    @PostMapping(value = "/pendingCaresList")
-    public List<DogDayCareInvoice_Dto> PendingDogList(@Valid @RequestBody Cadena dogDayCare){ return showInvoiceDogCareService.PendingDogList(dogDayCare); }
-
+    @PostMapping(value = "/CaresListStatus")
+    public List<DogDayCareInvoice_Dto> PendingDogList(@Valid @RequestBody CadenaDoble cadenaDoble){ return showInvoiceDogCareService.showInovicesByStatus(cadenaDoble); }
+    
+    
+    
     @PostMapping("/update")
     public DogDayCare_Dto updateAll(@Valid @RequestBody DogDayCare_Dto user_dto){ return updateService.UpdateDayCare(user_dto); }
 

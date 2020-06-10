@@ -60,6 +60,11 @@ public class Dog {
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dog")
     private Set<WalkInvoice> walkInvoices;
+    
+     @Getter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "client_i")
+    private Set<DogDaycareInvoice> dogDaycareInvoices;
+
 
     public Dog(String dog_name, String dog_race, Float dog_height, Float dog_weight, Integer dog_age, String dog_notes, String client_id) {
         this.dog_name = dog_name;

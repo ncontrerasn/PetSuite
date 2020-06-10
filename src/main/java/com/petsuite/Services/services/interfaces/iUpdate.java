@@ -15,6 +15,6 @@ public interface iUpdate {
     Dog_Dto UpdateDog(Dog_Dto dog);
     DogDayCare_Dto UpdateDayCare(DogDayCare_Dto user_dto);
     DogWalker_Dto UpdateDogWalker(DogWalker_Dto user_dto);
-    List<WalkInvoice> updateWalkInvoiceStatus(Entero entero);
+    
 
 }

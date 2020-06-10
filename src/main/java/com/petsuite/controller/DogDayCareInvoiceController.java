@@ -4,7 +4,11 @@ import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.services.*;
 import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.dto.Cancellation_Dto;
+import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.model.WalkInvoice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,7 @@ public class DogDayCareInvoiceController {
     QualifyService dogDayCareQualificationService;
 
     @Autowired
-    ChangeStatusService endCareService;
+    ChangeStatusRequestPetitionService endCareService;
 
     @Autowired
     GetAllData getAllData;
@@ -35,16 +39,22 @@ public class DogDayCareInvoiceController {
 
     @Autowired
     ProposePrice proposePrice;
+    
+    @Autowired
+    CancelRequestPetitionService  cancelRequestPetitionService;
+    
+    @Autowired
+    ChangeStatusRequestPetitionService changeStatusRequestPetitionService;
   
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllInvoices() { return getAllData.getAllInvoices(); }
 
-    @PostMapping("/endService")//Vamos a terminar el servicio del cuidado
+    /*@PostMapping("/endService")//Vamos a terminar el servicio del cuidado
     public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice)
     {
         //Llamamos al servicio
         return endCareService.endCare(idDogDayCareInovice);
-    }
+    }*/
     
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCareInvoice_Dto createDogDayCareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) { return createInvoiceService.createDogDayCareInvoice(dogDaycareInovice); }
@@ -54,7 +64,14 @@ public class DogDayCareInvoiceController {
 
     @PostMapping("/score")
     public Cadena scoreDogDayCare(@Valid @RequestBody DogDayCareInvoice_Dto dogDayCareInvoice_dto){ return dogDayCareQualificationService.qualifyDogDayCare(dogDayCareInvoice_dto); }
-
+    //Para cambiar los estados al recibo de la guardería. Se recibe el id del recibo
+    @PostMapping("/updateCareInvoiceStatus")
+    public DogDaycareInvoice updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return changeStatusRequestPetitionService.updateCareInvoiceStatus(entero); }
+    
+    @PostMapping(value = "/cancelPetition")
+    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){ return cancelRequestPetitionService.cancelCare(cancellation_Dto); }
+    
+    
     private String getJWTToken(String username) {
         String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils

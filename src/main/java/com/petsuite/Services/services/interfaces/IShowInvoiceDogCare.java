@@ -17,6 +17,7 @@ import java.util.List;
 public interface IShowInvoiceDogCare {
     
     List<DogDayCareInvoice_Dto> showInovicesByStatus(CadenaDoble cadenaDoble);
-    List<DogDayCareInvoice_Dto> PendingDogList(Cadena dogDayCare);
+   
+    
     
 }

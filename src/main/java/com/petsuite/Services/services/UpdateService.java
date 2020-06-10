@@ -434,29 +434,6 @@ public class UpdateService implements iUpdate {
         return DogWalk_DTO;
     }
 
-    @Override
-    public List<WalkInvoice> updateWalkInvoiceStatus(Entero entero)
-    {
-        Optional<WalkInvoice> walkInvoice = walkInvoiceRepository.findById(entero.getEntero());
-        String status = walkInvoice.get().getWalk_invoice_status();
-
-        switch(status){
-            case "Aceptar":
-
-                walkInvoice.get().setWalk_invoice_status("En progreso");
-                walkInvoiceRepository.save(walkInvoice.get());
-                if(walkInvoice.get().getWalk_invoice_status() == "En progreso")
-                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
-                break;
-
-            case "En progreso":
-                walkInvoice.get().setWalk_invoice_status("Terminado");
-                walkInvoiceRepository.save(walkInvoice.get());
-                if(walkInvoice.get().getWalk_invoice_status() == "Terminado")
-                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
-                break;
-        }
-        return null;
-    }
+    
 
 }

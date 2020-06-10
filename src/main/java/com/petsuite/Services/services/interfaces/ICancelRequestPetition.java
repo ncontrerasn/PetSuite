@@ -5,14 +5,15 @@
  */
 package com.petsuite.Services.services.interfaces;
 
-import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.dto.Cancellation_Dto;
 
 /**
  *
  * @author sergi
  */
-public interface IChangeStatus {
+public interface ICancelRequestPetition {
     
-    Boolean endCare (Entero DogDayCareInoviceId);
+    Boolean cancelCare(Cancellation_Dto cancellation_Dto);
+    Boolean cancelWalk(Cancellation_Dto cancellation_Dto);
     
 }

@@ -54,6 +54,10 @@ public class ClientController {
 
     @Autowired
     RequestPetitionService requestPetitionService;
+    
+    @Autowired
+    ShowInvoiceDogCareService showInvoiceDogCareService;
+
 
     @GetMapping("/all")
     public List<Client> getAllClients() { return getAllData.getAllClients(); }
@@ -86,6 +90,11 @@ public class ClientController {
 
     @PostMapping("/mywalker")
     public DogWalker_Dto walkerInPetition(@Valid @RequestBody Cadena user){ return  requestPetitionService.walkerInPetition(user); }
+    
+    //para ver las listas que están en Aceptado
+    @PostMapping(value = "/CaresListStatus")
+    public List<DogDayCareInvoice_Dto> PendingDogList(@Valid @RequestBody CadenaDoble cadenaDoble){ return showInvoiceDogCareService.showInovicesByStatus(cadenaDoble); }
+    
 
     public String getClientJWTToken(String username) {
         String secretKey = "mySecretKey";

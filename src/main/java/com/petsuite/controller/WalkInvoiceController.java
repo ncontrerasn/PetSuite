@@ -6,6 +6,7 @@ import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.basics.Entero;
+import com.petsuite.Services.dto.Cancellation_Dto;
 import com.petsuite.Services.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,12 @@ public class WalkInvoiceController {
 
     @Autowired
     UpdateService updateService;
+    @Autowired
+    ChangeStatusRequestPetitionService changeStatusRequestPetitionService;
+    
+    @Autowired
+    CancelRequestPetitionService cancelRequestPetitionService;
+
 
     @GetMapping("/all")
     public List<WalkInvoice> getAllInvoices() { return getAllData.getAllWalkInvoices(); }
@@ -69,7 +76,10 @@ public class WalkInvoiceController {
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){ return findDogService.findDogsByWalkerAndStatusAccepted(cadena); }
 
     @PostMapping("/updateInvoiceStatus")
-    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return updateService.updateWalkInvoiceStatus(entero); }
+    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero); }
+    @PostMapping(value = "/cancelPetition")
+    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){ return cancelRequestPetitionService.cancelWalk(cancellation_Dto); }
+    
 
 }
 
