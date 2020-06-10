@@ -1,7 +1,9 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.model.Dog;
+import com.petsuite.Services.model.Notification;
 import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
@@ -35,12 +37,15 @@ public class WalkInvoiceController {
 
     @Autowired
     UpdateService updateService;
+
     @Autowired
     ChangeStatusRequestPetitionService changeStatusRequestPetitionService;
     
     @Autowired
     CancelRequestPetitionService cancelRequestPetitionService;
 
+    @Autowired
+    CreateNotificationService createNotificationService;
 
     @GetMapping("/all")
     public List<WalkInvoice> getAllInvoices() { return getAllData.getAllWalkInvoices(); }
@@ -76,7 +81,16 @@ public class WalkInvoiceController {
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){ return findDogService.findDogsByWalkerAndStatusAccepted(cadena); }
 
     @PostMapping("/updateInvoiceStatus")
-    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero); }
+    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{
+        List<WalkInvoice> walkInvoices = changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero);
+        int dogId = walkInvoices.get(0).getDog_id();
+        Entero entero1 = new Entero(dogId);
+        Dog_Dto dog = findDogService.find(entero1);
+        createNotificationService.createNotification(new Notification(null, "Tienes una actulización en el estado de uno de tus paseos",
+                "El estado del paseo de tu perro " + dog.getDog_name() +" ha sido actualizado a " + walkInvoices.get(0).getWalk_invoice_status() +".", "No leido", walkInvoices.get(0).getClient_id(), null));
+        return walkInvoices;
+    }
+
     @PostMapping(value = "/cancelPetition")
     public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){ return cancelRequestPetitionService.cancelWalk(cancellation_Dto); }
     
