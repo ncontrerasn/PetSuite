@@ -2,6 +2,7 @@ package com.petsuite.controller;
 
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.model.DogDaycareInvoice;
+import com.petsuite.Services.model.Notification;
 import com.petsuite.Services.services.*;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
@@ -45,6 +46,9 @@ public class DogDayCareInvoiceController {
     
     @Autowired
     ChangeStatusRequestPetitionService changeStatusRequestPetitionService;
+
+    @Autowired
+    CreateNotificationService createNotificationService;
   
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllInvoices() { return getAllData.getAllInvoices(); }
@@ -69,9 +73,14 @@ public class DogDayCareInvoiceController {
     public DogDaycareInvoice updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return changeStatusRequestPetitionService.updateCareInvoiceStatus(entero); }
     
     @PostMapping(value = "/cancelPetition")
-    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){ return cancelRequestPetitionService.cancelCare(cancellation_Dto); }
-    
-    
+    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){
+        boolean res = cancelRequestPetitionService.cancelCare(cancellation_Dto);
+        if(res)
+            createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus servicios",
+                    cancellation_Dto.getUser_whoCancel() +" ha cancelado el servicio que tenía contigo.", "No leido", cancellation_Dto.getUser_Cancelled(), null));
+        return res;
+    }
+
     private String getJWTToken(String username) {
         String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils

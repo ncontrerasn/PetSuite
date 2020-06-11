@@ -47,8 +47,6 @@ public class DogDayCareController {
     @PostMapping(value = "/CaresListStatus")
     public List<DogDayCareInvoice_Dto> PendingDogList(@Valid @RequestBody CadenaDoble cadenaDoble){ return showInvoiceDogCareService.showInovicesByStatus(cadenaDoble); }
     
-    
-    
     @PostMapping("/update")
     public DogDayCare_Dto updateAll(@Valid @RequestBody DogDayCare_Dto user_dto){ return updateService.UpdateDayCare(user_dto); }
 
