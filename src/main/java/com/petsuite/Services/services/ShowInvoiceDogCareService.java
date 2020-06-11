@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.services;
 
-import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.services.interfaces.IShowInvoiceDogCare;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.model.DogDaycareInvoice;
@@ -17,10 +11,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author sergi
- */
 @Service
 public class ShowInvoiceDogCareService implements IShowInvoiceDogCare{
 
@@ -61,9 +51,5 @@ public class ShowInvoiceDogCareService implements IShowInvoiceDogCare{
          }
         return dtoInvoices;
     }
-
-   
-
-    
 
 }

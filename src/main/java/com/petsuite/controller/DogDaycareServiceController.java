@@ -6,7 +6,7 @@ import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycareService;
 import com.petsuite.Services.services.CreateService;
 import com.petsuite.Services.services.FindDogService;
-import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.GetAllDataService;
 import com.petsuite.Services.services.GetServicesService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,7 +28,7 @@ public class DogDaycareServiceController {
     CreateService createService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     GetServicesService getServicesService;

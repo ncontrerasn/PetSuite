@@ -10,7 +10,6 @@ import com.petsuite.Services.repository.*;
 import com.petsuite.Services.services.interfaces.ICreateInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class CreateInvoiceService implements ICreateInvoiceService {
 
     @Autowired
-    ProposePrice proposePrice;
+    ProposePriceService proposePrice;
 
     @Autowired
     DogDaycareInvoiceRepository dogDaycareInvoiceRepository;

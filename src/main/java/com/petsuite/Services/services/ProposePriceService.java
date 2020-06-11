@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
@@ -17,17 +12,11 @@ import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.Services.services.interfaces.IProposePrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author sergi
- */
-
 @Service
-public class ProposePrice implements IProposePrice{
+public class ProposePriceService implements IProposePrice{
 
     @Autowired
     DogRepository dogRepository;

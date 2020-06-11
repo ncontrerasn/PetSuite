@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.basics.Cadena;
@@ -16,16 +11,10 @@ import com.petsuite.Services.repository.WalkPetitionRepository;
 import com.petsuite.Services.services.interfaces.IRequestPetition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-
-/**
- *
- * @author sergi
- */
 
 @Service
 public class RequestPetitionService implements IRequestPetition{
@@ -103,6 +92,5 @@ public class RequestPetitionService implements IRequestPetition{
         }
         return null;
     }
-
 
 }

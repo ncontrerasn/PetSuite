@@ -21,7 +21,7 @@ import java.util.List;
 public class WalkInvoiceController {
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     CreateInvoiceService createInvoiceService;
@@ -95,11 +95,10 @@ public class WalkInvoiceController {
     public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){
         boolean res = cancelRequestPetitionService.cancelWalk(cancellation_Dto);
         if(res)
-        createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus paseos",
+            createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus paseos",
                 cancellation_Dto.getUser_whoCancel() +" ha cancelado el paseo que tenía pactado contigo.", "No leido", cancellation_Dto.getUser_Cancelled(), null));
         return res;
     }
-    
 
 }
 

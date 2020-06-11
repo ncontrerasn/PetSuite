@@ -3,7 +3,6 @@ package com.petsuite.Services.services.interfaces;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.*;
-
 import java.util.List;
 
 public interface IGetAllData {

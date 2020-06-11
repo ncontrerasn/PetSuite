@@ -8,10 +8,8 @@ import com.petsuite.Services.services.interfaces.IFindDog;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.basics.Entero;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.petsuite.Services.repository.DogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,6 @@ import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.Notification;
 import com.petsuite.Services.model.WalkPetition;
 import com.petsuite.Services.basics.Cadena;
-
 import com.petsuite.Services.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import java.util.List;
 public class WalkPetitionController {
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     RequestPetitionService requestPetitionService;
@@ -31,7 +30,7 @@ public class WalkPetitionController {
     ShowWalkPetitionService showWalkPetitionService;
 
     @Autowired
-    ProposePrice proposePrice;
+    ProposePriceService proposePrice;
 
     @Autowired
     CreateNotificationService createNotificationService;

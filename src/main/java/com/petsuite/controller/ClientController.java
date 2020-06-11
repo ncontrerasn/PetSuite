@@ -3,17 +3,14 @@ package com.petsuite.controller;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
-
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.services.*;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
-
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycareService;
 import com.petsuite.Services.model.WalkPetition;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +41,7 @@ public class ClientController {
     RegisterService registerService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     FindDogService findDogService;

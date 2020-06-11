@@ -1,12 +1,9 @@
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
-
 import com.petsuite.Services.dto.DogDayCare_Dto;
-import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
-
-import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.GetAllDataService;
 import com.petsuite.Services.services.RegisterService;
 import com.petsuite.Services.services.ShowInvoiceDogCareService;
 import com.petsuite.Services.services.UpdateService;
@@ -33,7 +30,7 @@ public class DogDayCareController {
     UpdateService updateService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     ShowInvoiceDogCareService showInvoiceDogCareService;

@@ -1,38 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.controller;
 
 import com.petsuite.Services.dto.InfoUser_Dto;
 import com.petsuite.Services.model.InfoUser;
-
-import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.GetAllDataService;
 import com.petsuite.Services.services.LoginService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-/**
- *
- * @author huber
- */
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class InfoUserController {
 
     @Autowired
-    GetAllData getAllData;
+	GetAllDataService getAllData;
 
     @Autowired
     LoginService loginService;

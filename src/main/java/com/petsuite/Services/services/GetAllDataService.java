@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GetAllData implements IGetAllData {
+public class GetAllDataService implements IGetAllData {
 
     @Autowired
     DogDaycareRepository dogDaycareRepository;

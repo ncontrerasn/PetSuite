@@ -5,11 +5,8 @@ import com.petsuite.Services.model.DogDaycareInvoice;
 import com.petsuite.Services.model.Notification;
 import com.petsuite.Services.services.*;
 import com.petsuite.Services.basics.Cadena;
-import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Cancellation_Dto;
-import com.petsuite.Services.model.DogDaycare;
-import com.petsuite.Services.model.WalkInvoice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +30,13 @@ public class DogDayCareInvoiceController {
     ChangeStatusRequestPetitionService endCareService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     CreateInvoiceService createInvoiceService;
 
     @Autowired
-    ProposePrice proposePrice;
+    ProposePriceService proposePrice;
     
     @Autowired
     CancelRequestPetitionService  cancelRequestPetitionService;
@@ -52,13 +49,6 @@ public class DogDayCareInvoiceController {
   
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllInvoices() { return getAllData.getAllInvoices(); }
-
-    /*@PostMapping("/endService")//Vamos a terminar el servicio del cuidado
-    public Boolean endCareSerice(@Valid @RequestBody Entero idDogDayCareInovice)
-    {
-        //Llamamos al servicio
-        return endCareService.endCare(idDogDayCareInovice);
-    }*/
     
     @PostMapping("/load")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
     public DogDayCareInvoice_Dto createDogDayCareInvoice(@Valid @RequestBody DogDayCareInvoice_Dto dogDaycareInovice) { return createInvoiceService.createDogDayCareInvoice(dogDaycareInovice); }
