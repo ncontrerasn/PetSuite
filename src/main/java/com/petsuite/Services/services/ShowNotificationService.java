@@ -16,6 +16,7 @@ public class ShowNotificationService implements IShowNotification {
 
     @Override
     public List<Notification> getNotificationList(String user, String status) {
+        System.out.println("Diego quiere ver todas sus notificaciones");
         return notificationRepository.findByUserAndStatus(user, status);
     }
 }

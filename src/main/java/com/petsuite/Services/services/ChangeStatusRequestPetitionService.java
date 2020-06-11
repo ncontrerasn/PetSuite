@@ -20,7 +20,7 @@ public class ChangeStatusRequestPetitionService implements IChangeStatusRequestP
     WalkInvoiceRepository walkInvoiceRepository;
 
     @Override
-    public List<WalkInvoice> updateWalkInvoiceStatus(Entero entero)
+    public  Optional<WalkInvoice> updateWalkInvoiceStatus(Entero entero)
     {
         Optional<WalkInvoice> walkInvoice = walkInvoiceRepository.findById(entero.getEntero());
         String status = walkInvoice.get().getWalk_invoice_status();
@@ -31,14 +31,14 @@ public class ChangeStatusRequestPetitionService implements IChangeStatusRequestP
                 walkInvoice.get().setWalk_invoice_status("En progreso");
                 walkInvoiceRepository.save(walkInvoice.get());
                 if(walkInvoice.get().getWalk_invoice_status() == "En progreso")
-                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
+                    return walkInvoice;
                 break;
 
             case "En progreso":
                 walkInvoice.get().setWalk_invoice_status("Terminado");
                 walkInvoiceRepository.save(walkInvoice.get());
                 if(walkInvoice.get().getWalk_invoice_status() == "Terminado")
-                    return walkInvoiceRepository.findByWalkerAcceptedProgress(walkInvoice.get().getDog_walker_id());
+                    return walkInvoice;
                 break;
         }
         return null;

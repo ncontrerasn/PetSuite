@@ -31,7 +31,9 @@ public class InfoUserController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){ return loginService.clientLogin(user); }
+    public Object clientLogin(@Valid @RequestBody InfoUser_Dto user){ 
+        
+        return loginService.clientLogin(user); }
 
     private String getJWTToken(String username) {
 		String secretKey = "mySecretKey";

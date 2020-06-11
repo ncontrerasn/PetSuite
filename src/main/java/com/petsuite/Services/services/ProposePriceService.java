@@ -31,13 +31,14 @@ public class ProposePriceService implements IProposePrice{
     WalkPetitionRepository walkPetitionRepository;
 
     @Override
-    public Dog_Dto proposePrice(WalkPetition_Dto walkPetition_Dto)
+    public WalkPetition proposePrice(WalkPetition_Dto walkPetition_Dto)
     {
         WalkPetition petition= walkPetitionRepository.findPetitionsById(walkPetition_Dto.getWalk_petition_id());
         petition.setPrice(walkPetition_Dto.getPrecio_proposal());
         petition.setWalk_petition_walker_user(walkPetition_Dto.getWalk_petition_walker_user());
         walkPetitionRepository.save(petition);
-        return null;
+        
+        return petition;
     }
 
     @Override

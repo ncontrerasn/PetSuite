@@ -24,6 +24,8 @@ public class LoginService implements ILogin {
 
     @Override
     public Object clientLogin(InfoUser_Dto user){
+        
+        
         String sqlA = "SELECT * FROM info_user where user = ?";
         String user_user = user.getUser();
         String user_password = user.getPassword();
@@ -34,13 +36,17 @@ public class LoginService implements ILogin {
                 rs.getString("phone"),
                 rs.getString("password"),
                 rs.getString("name"),
-                rs.getString("role")
+                rs.getString("role"),
+                null
         ));
         InfoUser u;
+        
         if (!ul.isEmpty()){
             u = ul.get(0);
             if (u.getPassword().equals(user_password)){
+                
                 if("ROLE_CLIENT".equals(u.getRole())){
+                    
                     String sqlC = "SELECT * FROM info_user natural join client where user = ?";
                     List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
                             rs.getString("name"),

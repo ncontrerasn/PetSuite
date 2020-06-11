@@ -27,7 +27,7 @@ public class Notification {
     @NotBlank
     private String notification_status;
 
-    @NotNull
+    @NotBlank
     private String user;
 
     @Getter(AccessLevel.NONE)

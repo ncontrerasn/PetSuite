@@ -12,7 +12,7 @@ public class ChangeNotificationStatusService implements IChangeNotificationStatu
     NotificationRepository notificationRepository;
 
     @Override
-    public boolean changeNotificationStatus(Integer notification_id, String status) {
+    public Integer changeNotificationStatus(Integer notification_id, String status) {
         return notificationRepository.changeNotificationStatus(status, notification_id);
     }
 }

@@ -99,4 +99,9 @@ public class GetAllDataService implements IGetAllData {
         return listaDtos;
     }
 
+    @Override
+    public Optional<DogDaycareInvoice> findInvoiceById(int id) {
+    return dogDaycareInvoiceRepository.findById(id);
+    }
+
 }

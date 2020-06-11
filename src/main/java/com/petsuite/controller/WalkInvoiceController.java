@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/walkinvoices")
@@ -81,14 +82,14 @@ public class WalkInvoiceController {
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){ return findDogService.findDogsByWalkerAndStatusAccepted(cadena); }
 
     @PostMapping("/updateInvoiceStatus")
-    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{
-        List<WalkInvoice> walkInvoices = changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero);
-        int dogId = walkInvoices.get(0).getDog_id();
+    public Optional<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{
+        Optional<WalkInvoice> walkInvoice = changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero);
+        int dogId = walkInvoice.get().getDog_id();
         Entero entero1 = new Entero(dogId);
         Dog_Dto dog = findDogService.find(entero1);
         createNotificationService.createNotification(new Notification(null, "Tienes una actulización en el estado de uno de tus paseos",
-                "El estado del paseo de tu perro " + dog.getDog_name() +" ha sido actualizado a " + walkInvoices.get(0).getWalk_invoice_status() +".", "No leido", walkInvoices.get(0).getClient_id(), null));
-        return walkInvoices;
+                "El estado del paseo de tu perro " + dog.getDog_name() +" ha sido actualizado a " + walkInvoice.get().getWalk_invoice_status() +".", "No leido", walkInvoice.get().getClient_id(), null));
+        return walkInvoice;
     }
 
     @PostMapping(value = "/cancelPetition")

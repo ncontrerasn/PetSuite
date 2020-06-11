@@ -11,6 +11,6 @@ public interface IRequestPetition {
     List<WalkPetition> myPetition(String user);
     DogWalker_Dto walkerInPetition(Cadena user);
     void deletePetition(Integer Petition_id);
-    Dog_Dto denyOrAcceptPetition(WalkInvoice_Dto walkInvoice_Dto);
+    Boolean denyOrAcceptPetition(WalkInvoice_Dto walkInvoice_Dto);
     
 }

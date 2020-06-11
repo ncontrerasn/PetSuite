@@ -80,17 +80,20 @@ public class RequestPetitionService implements IRequestPetition{
     public void deletePetition(Integer Petition_id) { walkPetitionRepository.deletePetition(Petition_id); }
 
     @Override
-    public Dog_Dto denyOrAcceptPetition(WalkInvoice_Dto walkInvoice_Dto) {
+    public Boolean denyOrAcceptPetition(WalkInvoice_Dto walkInvoice_Dto) {
         String status=walkInvoice_Dto.getWalk_invoice_status();
-        if(status.equals("Aceptar"))
+        if(status.equals("Aceptar")){
             createInvoiceService.createWalkInvoice(walkInvoice_Dto);
+        return true;
+        }
         else{
             WalkPetition petition= walkPetitionRepository.findPetitionsByDogAndByUser(walkInvoice_Dto.getDog_id().toString(),walkInvoice_Dto.getClient_id());
             petition.setWalk_petition_walker_user(null);
             petition.setPrice(null);
             walkPetitionRepository.save(petition);
+            return false;
         }
-        return null;
+        
     }
 
 }
