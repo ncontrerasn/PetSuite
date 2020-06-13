@@ -20,8 +20,12 @@ public class NotificationController {
 
     @Autowired
     DeleteNotificationService deleteNotificationService;
+
     @Autowired
     ShowNotificationService notificationService;
+
+    @Autowired
+    CreateNotificationService createNotificationService;
 
     @PostMapping("/readNotification")
     public boolean changeStatus(@Valid @RequestBody Entero id) {
@@ -35,9 +39,14 @@ public class NotificationController {
     
     @PostMapping("/showMyNotifications")
     public List<Notification> getNotificationList(@Valid @RequestBody NotificationUserData_Dto userData) { return notificationService.getNotificationList(userData.getUser_id(), userData.getStatus());}
-     
-    
-    
+
+    @PostMapping("/sendNotification")//recibir del front una notificacion con todos los datos pero con el id en null, es posible que mande de una vez el destinatario y el emisor en esa notificacion? en caso contrario hacer una consulta aqui
+    public boolean sendNotification(@Valid @RequestBody Notification notification) {
+        Notification notification1 = createNotificationService.createNotification(notification);
+        if(notification1 != null)
+            return true;
+        return false;
+    }
 
 }
 
