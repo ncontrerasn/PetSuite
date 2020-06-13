@@ -140,8 +140,8 @@ public class SearchDogDayCareService implements ISearchDogDayCare{
     }
 
     @Override
-    public List<DogDayCare_Dto> searchDayCareByScore(Flotante score) {
-        System.out.println(score.getFlotante()+0.5f);
+    public List<DogDayCare_Dto> searchDayCareByScore(Flotante score)
+    {
 
         List<String> usersToReturns = new ArrayList<>();
 

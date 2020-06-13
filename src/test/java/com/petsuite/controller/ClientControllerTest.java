@@ -1,11 +1,15 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycare;
+import com.petsuite.Services.model.DogDaycareService;
 import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.DogRepository;
 import com.petsuite.Services.basics.Cadena;
+import com.petsuite.Services.services.SearchDogDayCareService;
+import com.petsuite.Services.services.interfaces.ISearchDogDayCare;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -31,9 +35,82 @@ class ClientControllerTest {
     @Mock
     DogDaycareRepository dogDaycareRepository;
 
+    @Mock
+    SearchDogDayCareService searchDogDayCare;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    List<DogDaycare> dayCaresList()
+    {
+        List<DogDaycare> daycares = new ArrayList<>();
+
+        DogDaycare daycare = new DogDaycare();
+
+        daycare.setPhone("2315467228");
+        daycare.setE_mail("test@unal.edu.co");
+        daycare.setDog_daycare_score((float)5.0);
+        daycare.setName("pepito");
+        daycare.setDog_daycare_address("zona x");
+        daycare.setDog_daycare_type(true);
+        daycare.setUser("htovars");
+        daycare.setRole("ROLE_DOGDAYCARE");
+        daycare.setPassword("1234");
+
+        daycares.add(daycare);
+
+        daycare = new DogDaycare();
+
+        daycare.setPhone("23414215125");
+        daycare.setE_mail("test2@unal.edu.co");
+        daycare.setDog_daycare_score((float)4.0);
+        daycare.setName("pepito loco");
+        daycare.setDog_daycare_address("zona y");
+        daycare.setDog_daycare_type(true);
+        daycare.setUser("ncontrerasn");
+        daycare.setRole("ROLE_DOGDAYCARE");
+        daycare.setPassword("1234");
+
+        daycares.add(daycare);
+
+        return daycares;
+    }
+
+    List<DogDayCare_Dto> dayCaresDTOList()
+    {
+        List<DogDayCare_Dto> daycares = new ArrayList<>();
+
+        DogDayCare_Dto daycare = new DogDayCare_Dto();
+
+        daycare.setDog_daycare_phone("2315467228");
+        daycare.setDog_daycare_e_mail("test@unal.edu.co");
+        daycare.setDog_daycare_score((float)5.0);
+        daycare.setDog_daycare_name("pepito");
+        daycare.setDog_daycare_address("zona x");
+        daycare.setDog_daycare_type(true);
+        daycare.setUser("htovars");
+        daycare.setRole("ROLE_DOGDAYCARE");
+        daycare.setPassword("1234");
+
+        daycares.add(daycare);
+
+        daycare = new DogDayCare_Dto();
+
+        daycare.setDog_daycare_phone("23414215125");
+        daycare.setDog_daycare_e_mail("test2@unal.edu.co");
+        daycare.setDog_daycare_score((float)4.0);
+        daycare.setDog_daycare_name("pepito loco");
+        daycare.setDog_daycare_address("zona y");
+        daycare.setDog_daycare_type(true);
+        daycare.setUser("ncontrerasn");
+        daycare.setRole("ROLE_DOGDAYCARE");
+        daycare.setPassword("1234");
+
+        daycares.add(daycare);
+
+        return daycares;
     }
 
     @Test
@@ -76,49 +153,23 @@ class ClientControllerTest {
         Cadena name = new Cadena();
         name.setCadena("pepito");
 
-        List<DogDaycare> daycares = new ArrayList<>();
+        DogDaycareService daycareService= new DogDaycareService();
+
+        daycareService.setDogdaycare_Service_Name("parque de juegos");
+
+        List<DogDayCare_Dto> daycares = new ArrayList<>();
 
         List<String> users = new ArrayList<>();
 
-        DogDaycare daycare = new DogDaycare();
+        daycares = dayCaresDTOList();
 
-        daycare.setPhone("2315467228");
-        daycare.setE_mail("test@unal.edu.co");
-        daycare.setDog_daycare_score((float)5.0);
-        daycare.setName("pepito");
-        daycare.setDog_daycare_address("zona x");
-        daycare.setDog_daycare_type(true);
-        daycare.setUser("htovars");
-        daycare.setRole("ROLE_DOGDAYCARE");
-        daycare.setPassword("1234");
+        users.add(daycares.get(0).getUser());
 
-        daycares.add(daycare);
-        users.add(daycare.getUser());
+        users.add(daycares.get(1).getUser());
 
-        daycare = new DogDaycare();
+        when(searchDogDayCare.searchDayCareByName(name)).thenReturn(daycares);
 
-        daycare.setPhone("23414215125");
-        daycare.setE_mail("test2@unal.edu.co");
-        daycare.setDog_daycare_score((float)4.0);
-        daycare.setName("pepito loco");
-        daycare.setDog_daycare_address("zona y");
-        daycare.setDog_daycare_type(true);
-        daycare.setUser("ncontrerasn");
-        daycare.setRole("ROLE_DOGDAYCARE");
-        daycare.setPassword("1234");
-
-        daycares.add(daycare);
-        users.add(daycare.getUser());
-
-        when(dogDaycareRepository.searchByName(anyString())).thenReturn(users);
-
-        Optional<DogDaycare> DC = Optional.of(daycares.get(0));
-
-        Optional<DogDaycare> DC2 = Optional.of(daycares.get(1));
-
-        when(dogDaycareRepository.findById(anyString())).thenReturn(DC,DC2);
-
-        assertEquals(2, clientController.searchDayCareByNameAndService(name).size());
+        assertEquals(2, clientController.searchDayCareByName(name).size());
 
     }
 }
