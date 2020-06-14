@@ -1,6 +1,7 @@
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.*;
 import com.petsuite.Services.repository.*;
@@ -102,6 +103,11 @@ public class GetAllDataService implements IGetAllData {
     @Override
     public Optional<DogDaycareInvoice> findInvoiceById(int id) {
     return dogDaycareInvoiceRepository.findById(id);
+    }
+
+    @Override
+    public List<Integer> getCurrentDogIdListInChargeOfDogDayCare(String user) {
+        return dogDaycareInvoiceRepository.getCurrentDogListInChargeOfDogDayCare(user, "En progreso");
     }
 
 }

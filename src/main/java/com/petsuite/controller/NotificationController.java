@@ -30,7 +30,7 @@ public class NotificationController {
     @PostMapping("/readNotification")
     public boolean changeStatus(@Valid @RequestBody Entero id) {
         Integer res = changeNotificationStatusService.changeNotificationStatus(id.getEntero(), "Leido");
-        if(res==1){
+        if(res == 1){
             deleteNotificationService.deleteNotification(id.getEntero());
             return true;
         }

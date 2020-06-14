@@ -15,7 +15,7 @@ public interface DogRepository extends JpaRepository<Dog, Integer>{
     @Query(value = "SELECT * FROM dog where user=?1", nativeQuery = true)
     List<Dog> findByUser(String user);
     
-     @Query(value = "SELECT * FROM dog where dog_id=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM dog where dog_id=?1", nativeQuery = true)
     Dog findByDogId(Integer dog_id);
 
     @Transactional

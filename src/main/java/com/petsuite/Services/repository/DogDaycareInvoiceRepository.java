@@ -19,25 +19,23 @@ public interface DogDaycareInvoiceRepository extends JpaRepository<DogDaycareInv
     
     @Query(value = "SELECT * FROM dog_daycare_invoice WHERE dog_daycare_id = ?1", nativeQuery = true)
     List<DogDaycareInvoice> findInvoicesByDogDayCare(String dog_daycare_id);
-    
-     
+
     @Query(value = "SELECT dogdaycare_service_name FROM dog_daycare_service NATURAL JOIN service_invoice NATURAL JOIN dog_daycare_invoice  WHERE dog_daycare_invoice_id = ?1", nativeQuery = true)
     List<String> findNameServicesByInvoiceId(Integer invoice_id);
-    
-    
+
     @Query(value = "SELECT dog_name FROM dog NATURAL JOIN dog_daycare_invoice  WHERE dog_daycare_invoice_id = ?1", nativeQuery = true)
     String findDogNameByInvoiceId(Integer invoice_id);
     
-     @Query(value = "SELECT * FROM dog_daycare_invoice WHERE dog_daycare_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM dog_daycare_invoice WHERE dog_daycare_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
     List<DogDaycareInvoice> findInvoicesByDogDayCareAndStatus(String dog_daycare_id, String status);
-    
-    
-     @Query(value = "SELECT * FROM dog_daycare_invoice WHERE client_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM dog_daycare_invoice WHERE client_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
     List<DogDaycareInvoice> findInvoicesByClientAndStatus(String client_id, String status);
 
     @Query(value = "SELECT count(*) dog_daycare_invoice_id FROM dog_daycare_invoice WHERE dog_daycare_invoice_id= ?1", nativeQuery = true)
     Integer numberById(Integer invoiceId);
-    
-    
+
+    @Query(value = "SELECT dog_id FROM dog_daycare_invoice WHERE user = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+    List<Integer> getCurrentDogListInChargeOfDogDayCare(String client_id, String status);
 
 }

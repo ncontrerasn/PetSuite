@@ -11,11 +11,13 @@ import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.WalkInvoice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,6 +100,17 @@ public class DogDayCareInvoiceController {
             createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus cuidados",
                     cancellation_Dto.getUser_whoCancel() +" ha cancelado el servicio que tenía contigo.", "No leido", cancellation_Dto.getUser_Cancelled(), null));
         return res;
+    }
+
+    @PostMapping(value = "/myCurrentDogList")
+    public List<Dog_Dto> getMyCurrentDogList(@Valid @RequestBody Cadena cadena){
+        List<Integer> integers = getAllData.getCurrentDogIdListInChargeOfDogDayCare(cadena.getCadena());
+        List<Dog_Dto> dog_dtos = new ArrayList<>();
+        for(int i = 0; i < integers.size(); i++){
+            Entero entero = new Entero(integers.get(i));
+            dog_dtos.add(findDogService.find(entero));
+        }
+        return dog_dtos;
     }
 
     private String getJWTToken(String username) {
