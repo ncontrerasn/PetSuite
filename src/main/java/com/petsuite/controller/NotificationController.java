@@ -42,6 +42,8 @@ public class NotificationController {
 
     @PostMapping("/sendNotification")//recibir del front una notificacion con todos los datos pero con el id en null, es posible que mande de una vez el destinatario y el emisor en esa notificacion? en caso contrario hacer una consulta aqui
     public boolean sendNotification(@Valid @RequestBody Notification notification) {
+         //El front tiene orden de recibir en el Subject el nombre del perro, a continuacion se hace el subject completo
+        notification.setNotification_subject("Hay una emergencia con tu perro "+ notification.getNotification_subject());
         Notification notification1 = createNotificationService.createNotification(notification);
         if(notification1 != null)
             return true;

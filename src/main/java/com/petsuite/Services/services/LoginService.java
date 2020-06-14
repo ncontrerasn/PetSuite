@@ -114,6 +114,6 @@ public class LoginService implements ILogin {
                 }
             }
         }
-        return null;
+        return 0;
     }
 }
