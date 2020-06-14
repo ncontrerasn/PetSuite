@@ -35,7 +35,7 @@ public interface DogDaycareInvoiceRepository extends JpaRepository<DogDaycareInv
     @Query(value = "SELECT count(*) dog_daycare_invoice_id FROM dog_daycare_invoice WHERE dog_daycare_invoice_id= ?1", nativeQuery = true)
     Integer numberById(Integer invoiceId);
 
-    @Query(value = "SELECT dog_id FROM dog_daycare_invoice WHERE user = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
+    @Query(value = "SELECT dog_id FROM dog_daycare_invoice WHERE dog_daycare_id = ?1 AND dog_daycare_invoice_status = ?2", nativeQuery = true)
     List<Integer> getCurrentDogListInChargeOfDogDayCare(String client_id, String status);
 
 }

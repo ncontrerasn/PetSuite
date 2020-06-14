@@ -8,10 +8,8 @@ import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Cancellation_Dto;
 import com.petsuite.Services.dto.Dog_Dto;
-import com.petsuite.Services.model.WalkInvoice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -53,8 +51,6 @@ public class DogDayCareInvoiceController {
 
     @Autowired
     CreateNotificationService createNotificationService;
-    @Autowired
-    
     
     @GetMapping("/all")
     public List<DogDaycareInvoice> getAllInvoices() { return getAllData.getAllInvoices(); }
@@ -69,8 +65,7 @@ public class DogDayCareInvoiceController {
         createNotificationService.createNotification(new Notification(null, "Un nuevo usuario desea tus Servicios",
                     dogDaycareInovice.getDog_daycare_invoice_client_id()+" desea contratarte para que cuides a su perro "+ dog.getDog_name()+".", "No leido", dogDaycareInovice.getDog_daycare_invoice_dogdaycare_id(), null));
         
-        return dogDaycareInovice; 
-    
+        return dogDaycareInovice;
     }
 
     @PostMapping("/consultPrice")//Retorna una estructura de tipo DogDaycare vacia si ya esta utilizado el nombre de usuario
