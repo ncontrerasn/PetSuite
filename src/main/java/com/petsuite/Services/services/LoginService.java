@@ -25,7 +25,7 @@ public class LoginService implements ILogin {
     @Override
     public Object clientLogin(InfoUser_Dto user){
         
-        
+        System.out.println("El usuario que le llega es: "+ user.getUser());
         String sqlA = "SELECT * FROM info_user where user = ?";
         String user_user = user.getUser();
         String user_password = user.getPassword();
@@ -43,6 +43,7 @@ public class LoginService implements ILogin {
         
         if (!ul.isEmpty()){
             u = ul.get(0);
+            System.out.println("Cuantoloencontrees: "+ u.getUser() );
             if (u.getPassword().equals(user_password)){
                 
                 if("ROLE_CLIENT".equals(u.getRole())){

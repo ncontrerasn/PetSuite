@@ -90,6 +90,7 @@ public class DogDayCareInvoiceController {
     
     @PostMapping(value = "/cancelPetition")
     public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){
+        System.out.println("El clientte imprime: "+ cancellation_Dto);
         boolean res = cancelRequestPetitionService.cancelCare(cancellation_Dto);
         if(res)
             createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus cuidados",

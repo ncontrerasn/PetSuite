@@ -59,7 +59,7 @@ public class WalkPetitionController {
         Entero dog_id= new Entero(walkPetition_Dto.getDog_id());
         String dogName=findDogService.find(dog_id).getDog_name();
         if(petition != null){
-            System.out.println("Vamos a crear notificacion");
+            
             createNotificationService.createNotification(new Notification(null, "Tienes una propuesta de precio",
                     "El paseador " + walkPetition_Dto.getWalk_petition_walker_user() + " quiere pasear a tu perro " +
                             dogName + ". Dirígete a la pesataña de paseos pendientes.", "No leido",

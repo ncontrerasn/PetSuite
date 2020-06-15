@@ -53,12 +53,15 @@ public class CancelRequestPetitionService implements ICancelRequestPetition {
         String userWhoCancel = cancellation_Dto.getUser_whoCancel();
         String userCancelled = cancellation_Dto.getUser_Cancelled();
         String roleUserWhoCancel = infoUserRepository.findRoleBySuer(userWhoCancel);
+        if(walkInvoiceRepository.findById(cancellation_Dto.getId_petition()).get().getWalk_invoice_status().equals("Aceptar")){
 
         //Borramos la factura
         walkInvoiceRepository.delete(walkInvoiceRepository.findById(cancellation_Dto.getId_petition()).get());
         //verificamos que se haya borrado bien
         int numberWithThatid = walkInvoiceRepository.numberById(cancellation_Dto.getId_petition());
         if (numberWithThatid == 0) return true;
+        return false;
+        }
         return false;
     }
 

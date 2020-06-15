@@ -87,7 +87,7 @@ public class WalkInvoiceController {
         int dogId = walkInvoice.get().getDog_id();
         Entero entero1 = new Entero(dogId);
         Dog_Dto dog = findDogService.find(entero1);
-        createNotificationService.createNotification(new Notification(null, "Tienes una actulización en el estado de uno de tus paseos",
+        createNotificationService.createNotification(new Notification(null, "Tienes una actualización en el estado de uno de tus paseos",
                 "El estado del paseo de tu perro " + dog.getDog_name() +" ha sido actualizado a " + walkInvoice.get().getWalk_invoice_status() +".", "No leido", walkInvoice.get().getClient_id(), null));
         return walkInvoice;
     }
