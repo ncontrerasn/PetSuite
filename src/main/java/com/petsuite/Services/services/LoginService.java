@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.Client_Dto;
@@ -15,13 +10,8 @@ import com.petsuite.controller.TokenController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-/**
- *
- * @author sergi
- */
 
 @Service
 public class LoginService implements ILogin {
@@ -34,6 +24,8 @@ public class LoginService implements ILogin {
 
     @Override
     public Object clientLogin(InfoUser_Dto user){
+        
+        
         String sqlA = "SELECT * FROM info_user where user = ?";
         String user_user = user.getUser();
         String user_password = user.getPassword();
@@ -44,13 +36,17 @@ public class LoginService implements ILogin {
                 rs.getString("phone"),
                 rs.getString("password"),
                 rs.getString("name"),
-                rs.getString("role")
+                rs.getString("role"),
+                null
         ));
         InfoUser u;
+        
         if (!ul.isEmpty()){
             u = ul.get(0);
             if (u.getPassword().equals(user_password)){
+                
                 if("ROLE_CLIENT".equals(u.getRole())){
+                    
                     String sqlC = "SELECT * FROM info_user natural join client where user = ?";
                     List<Client_Dto> ul2= jdbcTemplate.query(sqlC, new Object[]{user.getUser()}, (rs, rowNum) -> new Client_Dto(
                             rs.getString("name"),
@@ -118,6 +114,6 @@ public class LoginService implements ILogin {
                 }
             }
         }
-        return null;
+        return 0;
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.dto.DogDayCare_Service_Dto;
@@ -12,10 +7,6 @@ import com.petsuite.Services.services.interfaces.ICreateServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author sergi
- */
 @Service
 public class CreateService implements ICreateServiceService{
 

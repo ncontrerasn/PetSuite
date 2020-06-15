@@ -1,7 +1,6 @@
 package com.petsuite.Services.services;
 
 import com.petsuite.Services.model.DogDaycareService;
-import com.petsuite.Services.repository.DogDaycareRepository;
 import com.petsuite.Services.repository.DogDaycareServiceRepository;
 import com.petsuite.Services.services.interfaces.IGetServicesService;
 import org.springframework.beans.factory.annotation.Autowired;

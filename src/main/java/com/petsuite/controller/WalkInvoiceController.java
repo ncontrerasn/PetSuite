@@ -1,7 +1,9 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.model.Dog;
+import com.petsuite.Services.model.Notification;
 import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/walkinvoices")
@@ -19,7 +22,7 @@ import java.util.List;
 public class WalkInvoiceController {
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     CreateInvoiceService createInvoiceService;
@@ -35,12 +38,15 @@ public class WalkInvoiceController {
 
     @Autowired
     UpdateService updateService;
+
     @Autowired
     ChangeStatusRequestPetitionService changeStatusRequestPetitionService;
     
     @Autowired
     CancelRequestPetitionService cancelRequestPetitionService;
 
+    @Autowired
+    CreateNotificationService createNotificationService;
 
     @GetMapping("/all")
     public List<WalkInvoice> getAllInvoices() { return getAllData.getAllWalkInvoices(); }
@@ -76,10 +82,24 @@ public class WalkInvoiceController {
     public List<Dog> findDogsByWalkerAndStatusAccepted(@Valid @RequestBody Cadena cadena){ return findDogService.findDogsByWalkerAndStatusAccepted(cadena); }
 
     @PostMapping("/updateInvoiceStatus")
-    public List<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{ return changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero); }
+    public Optional<WalkInvoice> updateInvoiceStatus(@Valid @RequestBody Entero entero) throws InterruptedException{
+        Optional<WalkInvoice> walkInvoice = changeStatusRequestPetitionService.updateWalkInvoiceStatus(entero);
+        int dogId = walkInvoice.get().getDog_id();
+        Entero entero1 = new Entero(dogId);
+        Dog_Dto dog = findDogService.find(entero1);
+        createNotificationService.createNotification(new Notification(null, "Tienes una actulización en el estado de uno de tus paseos",
+                "El estado del paseo de tu perro " + dog.getDog_name() +" ha sido actualizado a " + walkInvoice.get().getWalk_invoice_status() +".", "No leido", walkInvoice.get().getClient_id(), null));
+        return walkInvoice;
+    }
+
     @PostMapping(value = "/cancelPetition")
-    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){ return cancelRequestPetitionService.cancelWalk(cancellation_Dto); }
-    
+    public Boolean cancelPetition(@Valid @RequestBody Cancellation_Dto cancellation_Dto){
+        boolean res = cancelRequestPetitionService.cancelWalk(cancellation_Dto);
+        if(res)
+            createNotificationService.createNotification(new Notification(null, "Se ha cancelado uno de tus paseos",
+                cancellation_Dto.getUser_whoCancel() +" ha cancelado el paseo que tenía pactado contigo.", "No leido", cancellation_Dto.getUser_Cancelled(), null));
+        return res;
+    }
 
 }
 

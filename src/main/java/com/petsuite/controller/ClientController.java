@@ -1,19 +1,17 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.basics.Flotante;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
-
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.services.*;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
-
 import com.petsuite.Services.model.Client;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.DogDaycareService;
 import com.petsuite.Services.model.WalkPetition;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +42,7 @@ public class ClientController {
     RegisterService registerService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     FindDogService findDogService;
@@ -85,8 +83,17 @@ public class ClientController {
     @PostMapping("/update")
     public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){ return  updateService.UpdateClient(user_dto); }
 
-    @PostMapping("/searchdaycarebyname")
+    @PostMapping("/searchdaycarebynameandservice")
     public List<DogDayCare_Dto> searchDayCareByNameAndService(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByNameAndService(name); }
+
+    @PostMapping("/searchdaycarebyname")
+    public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByName(name); }
+
+    @PostMapping("/searchdaycarebyservice")
+    public List<DogDayCare_Dto> searchDayCareByService(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByService(name); }
+
+    @PostMapping("/searchdaycarebyscore")
+    public List<DogDayCare_Dto> searchDayCareByScore(@Valid @RequestBody Flotante score){ return searchDogDayCare.searchDayCareByScore(score); }
 
     @PostMapping("/mywalker")
     public DogWalker_Dto walkerInPetition(@Valid @RequestBody Cadena user){ return  requestPetitionService.walkerInPetition(user); }

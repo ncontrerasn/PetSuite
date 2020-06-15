@@ -5,7 +5,6 @@ import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkPetition;
-
 import java.util.List;
 
 public interface IFindDog {

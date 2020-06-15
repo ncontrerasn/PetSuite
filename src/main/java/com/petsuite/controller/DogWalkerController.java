@@ -30,7 +30,7 @@ public class DogWalkerController {
     RegisterService registerService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @Autowired
     QualifyService qualifyService;

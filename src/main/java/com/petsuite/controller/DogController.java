@@ -5,7 +5,7 @@ import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.services.FindDogService;
-import com.petsuite.Services.services.GetAllData;
+import com.petsuite.Services.services.GetAllDataService;
 import com.petsuite.Services.services.RegisterService;
 import com.petsuite.Services.services.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class DogController {
     RegisterService registerService;
 
     @Autowired
-    GetAllData getAllData;
+    GetAllDataService getAllData;
 
     @GetMapping("/all")
     public List<Dog> getAllDogs() { return getAllData.getAllDogs(); }

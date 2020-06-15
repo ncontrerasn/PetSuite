@@ -1,21 +1,16 @@
 package com.petsuite.Services.services;
 
-import com.petsuite.Services.basics.Entero;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
 import com.petsuite.Services.dto.DogWalker_Dto;
 import com.petsuite.Services.dto.Dog_Dto;
-import com.petsuite.Services.model.WalkInvoice;
 import com.petsuite.Services.repository.*;
-import com.petsuite.Services.services.interfaces.iUpdate;
+import com.petsuite.Services.services.interfaces.IUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class UpdateService implements iUpdate {
+public class UpdateService implements IUpdate {
 
     @Autowired
     InfoUserRepository infoUserRepository;

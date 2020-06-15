@@ -12,7 +12,6 @@ import com.petsuite.Services.repository.WalkInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.petsuite.Services.services.interfaces.IQualify;
-
 import java.util.Optional;
 
 @Service

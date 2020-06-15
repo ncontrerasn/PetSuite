@@ -1,10 +1,11 @@
 package com.petsuite.Services.services.interfaces;
 
 import com.petsuite.Services.dto.DogDayCare_Dto;
+import com.petsuite.Services.dto.Dog_Dto;
 import com.petsuite.Services.dto.WalkPetition_Dto;
 import com.petsuite.Services.model.*;
-
 import java.util.List;
+import java.util.Optional;
 
 public interface IGetAllData {
 
@@ -17,5 +18,7 @@ public interface IGetAllData {
     List<WalkInvoice> getAllWalkInvoices();
     List<DogWalker> getAllWalkers();
     List<WalkPetition_Dto> getAllPetitions();
+    Optional<DogDaycareInvoice> findInvoiceById(int id);
+    List<Integer> getCurrentDogIdListInChargeOfDogDayCare(String user);
 
 }

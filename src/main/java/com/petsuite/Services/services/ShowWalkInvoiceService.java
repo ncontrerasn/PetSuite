@@ -2,7 +2,6 @@ package com.petsuite.Services.services;
 
 import com.petsuite.Services.basics.Cadena;
 import com.petsuite.Services.basics.CadenaDoble;
-import com.petsuite.Services.basics.Flotante;
 import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkInvoice;
@@ -12,7 +11,6 @@ import com.petsuite.Services.repository.WalkInvoiceRepository;
 import com.petsuite.Services.services.interfaces.IShowWalkInvoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -84,12 +82,8 @@ public class ShowWalkInvoiceService implements IShowWalkInvoice {
         }else if(roleUserWhoCancel.equals("ROLE_DOGWALKER"))
         {
         walkInvoices = walkInvoiceRepository.findByWalkerAndStatus(cadena.getCadena(), "Aceptar");
-                  
-       
-
         }
-        
-        
+
         List<WalkInvoice_Dto> listaReal= new ArrayList<>();
         for (int i = 0; i < walkInvoices.size(); i++)
         {

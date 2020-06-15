@@ -5,7 +5,6 @@ import com.petsuite.Services.basics.CadenaDoble;
 import com.petsuite.Services.dto.WalkInvoice_Dto;
 import com.petsuite.Services.model.Dog;
 import com.petsuite.Services.model.WalkInvoice;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +19,5 @@ public interface IShowWalkInvoice {
     List<WalkInvoice_Dto> findByStatusProgress(Cadena cadena);
     List<WalkInvoice> findByStatusEndedWalker(Cadena cadena);
     List<WalkInvoice_Dto> findByStatusEndedClient(Cadena cadena);
-
 
 }
