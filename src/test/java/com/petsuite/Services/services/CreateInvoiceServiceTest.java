@@ -32,7 +32,7 @@ class CreateInvoiceServiceTest {
     CreateInvoiceService createInvoiceService;
 
     @Mock
-    ProposePrice proposePrice;
+    ProposePriceService proposePriceService;
 
     @Mock
     DogDaycareInvoiceRepository dogDaycareInvoiceRepository;
@@ -88,7 +88,7 @@ class CreateInvoiceServiceTest {
         dogDayCareInvoice.setDog_daycare_id("htovars");
         dogDayCareInvoice.setDog_id(2);
 
-        when(proposePrice.requestPriceDogDayCareInvoice(any())).thenReturn(dogDayCareInvoice_dto);
+        when(proposePriceService.requestPriceDogDayCareInvoice(any())).thenReturn(dogDayCareInvoice_dto);
 
         when(dogDaycareInvoiceRepository.saveAndFlush(any())).thenReturn(dogDayCareInvoice);
 

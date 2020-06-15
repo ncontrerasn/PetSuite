@@ -27,16 +27,16 @@ public class CancelRequestPetitionService implements ICancelRequestPetition {
     Service_InvoiceRepository service_invoiceRepository;
 
     @Override
-    public Boolean cancelCare(Cancellation_Dto cancellation_Dto) {
-        System.out.println("Diego intenta cancelar un cuidado con la razon de : " + cancellation_Dto.getReasonCancellation());
+    public Boolean cancelCare(Cancellation_Dto cancellation_Dto)
+    {
         String userWhoCancel = cancellation_Dto.getUser_whoCancel();
         String userCancelled = cancellation_Dto.getUser_Cancelled();
         String roleUserWhoCancel = infoUserRepository.findRoleBySuer(userWhoCancel);
 
         //para borrar la factura hay que hacer un borrado en cascada
         List<DogDayCareService_DogDayCareInvoice> myIntermediateList = service_invoiceRepository.findIntermediateServicesIvoiceByInvoiceId(cancellation_Dto.getId_petition());
-        for (int i = 0; i < myIntermediateList.size(); i++) {
-            System.out.println("Diego borro un untermedio servicio");
+        for (int i = 0; i < myIntermediateList.size(); i++)
+        {
             service_invoiceRepository.delete(myIntermediateList.get(i));
         }
         //Borramos la factura
@@ -48,20 +48,17 @@ public class CancelRequestPetitionService implements ICancelRequestPetition {
     }
 
     @Override
-    public Boolean cancelWalk(Cancellation_Dto cancellation_Dto) {
-        System.out.println("Diego quiere cancelar un paseo con la razón: " + cancellation_Dto.getReasonCancellation());
+    public Boolean cancelWalk(Cancellation_Dto cancellation_Dto)
+    {
         String userWhoCancel = cancellation_Dto.getUser_whoCancel();
         String userCancelled = cancellation_Dto.getUser_Cancelled();
         String roleUserWhoCancel = infoUserRepository.findRoleBySuer(userWhoCancel);
-        if(walkInvoiceRepository.findById(cancellation_Dto.getId_petition()).get().getWalk_invoice_status().equals("Aceptar")){
 
         //Borramos la factura
         walkInvoiceRepository.delete(walkInvoiceRepository.findById(cancellation_Dto.getId_petition()).get());
         //verificamos que se haya borrado bien
         int numberWithThatid = walkInvoiceRepository.numberById(cancellation_Dto.getId_petition());
         if (numberWithThatid == 0) return true;
-        return false;
-        }
         return false;
     }
 
