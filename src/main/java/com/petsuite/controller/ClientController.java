@@ -1,5 +1,6 @@
 package com.petsuite.controller;
 
+import com.petsuite.Services.basics.Flotante;
 import com.petsuite.Services.dto.Client_Dto;
 import com.petsuite.Services.dto.DogDayCareInvoice_Dto;
 import com.petsuite.Services.dto.DogDayCare_Dto;
@@ -82,8 +83,17 @@ public class ClientController {
     @PostMapping("/update")
     public Client_Dto updateAll(@Valid @RequestBody Client_Dto user_dto){ return  updateService.UpdateClient(user_dto); }
 
-    @PostMapping("/searchdaycarebyname")
+    @PostMapping("/searchdaycarebynameandservice")
     public List<DogDayCare_Dto> searchDayCareByNameAndService(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByNameAndService(name); }
+
+    @PostMapping("/searchdaycarebyname")
+    public List<DogDayCare_Dto> searchDayCareByName(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByName(name); }
+
+    @PostMapping("/searchdaycarebyservice")
+    public List<DogDayCare_Dto> searchDayCareByService(@Valid @RequestBody Cadena name){ return searchDogDayCare.searchDayCareByService(name); }
+
+    @PostMapping("/searchdaycarebyscore")
+    public List<DogDayCare_Dto> searchDayCareByScore(@Valid @RequestBody Flotante score){ return searchDogDayCare.searchDayCareByScore(score); }
 
     @PostMapping("/mywalker")
     public DogWalker_Dto walkerInPetition(@Valid @RequestBody Cadena user){ return  requestPetitionService.walkerInPetition(user); }
